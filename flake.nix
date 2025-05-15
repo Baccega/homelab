@@ -22,7 +22,6 @@
           modules = [
             disko.nixosModules.disko
             ./hosts/laika/configuration.nix
-            ./hosts/laika/hardware-configuration.nix
             {
               _module.args.nixinate = {
                 host = "192.168.1.112";
