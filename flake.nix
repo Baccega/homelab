@@ -4,6 +4,7 @@
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
     nixinate.url = "github:matthewcroughan/nixinate";
+    sops-nix.url = "github:Mic92/sops-nix";
   };
 
   outputs =
@@ -12,6 +13,7 @@
       nixpkgs,
       nixinate,
       disko,
+      sops-nix,
       ...
     }:
     {
@@ -21,11 +23,12 @@
           system = "x86_64-linux";
           modules = [
             disko.nixosModules.disko
+            sops-nix.nixosModules.sops
             ./hosts/laika/configuration.nix
             {
               _module.args.nixinate = {
-                host = "192.168.1.112";
-                sshUser = "root";
+                host = "192.168.1.60";
+                sshUser = "sandro";
                 buildOn = "remote";
                 substituteOnTarget = true;
                 hermetic = false;
