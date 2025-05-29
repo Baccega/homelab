@@ -1,4 +1,7 @@
 { config, pkgs, ... }:
+let
+  constants = import ../constants.nix;
+in
 {
     boot.supportedFilesystems = [ "nfs" ];
     services.rpcbind.enable = true;
@@ -9,7 +12,7 @@
             mountConfig = {
                 Options = "noatime";
             };
-            what = "192.168.1.52:/volume1/data/movies";
+            what = "${constants.nas.ip}:/volume1/data/movies";
             where = "/mnt/movies";
         }
         {
@@ -17,7 +20,7 @@
             mountConfig = {
                 Options = "noatime";
             };
-            what = "192.168.1.52:/volume1/data/tv_shows";
+            what = "${constants.nas.ip}:/volume1/data/tv_shows";
             where = "/mnt/tv_shows";
         }
         {
@@ -25,7 +28,7 @@
             mountConfig = {
                 Options = "noatime";
             };
-            what = "192.168.1.52:/volume1/data/downloads";
+            what = "${constants.nas.ip}:/volume1/data/downloads";
             where = "/mnt/downloads";
         }
     ];

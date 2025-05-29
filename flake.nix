@@ -19,6 +19,9 @@
       home-manager,
       ...
     }:
+    let
+      constants = import ./constants.nix;
+    in
     {
       apps = nixinate.nixinate.aarch64-darwin self;
       nixosConfigurations = {
@@ -31,7 +34,7 @@
             ./hosts/laika/configuration.nix
             {
               _module.args.nixinate = {
-                host = "192.168.1.60";
+                host = constants.laika.ip;
                 sshUser = "sandro";
                 buildOn = "remote";
                 substituteOnTarget = true;

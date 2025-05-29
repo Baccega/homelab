@@ -6,6 +6,9 @@
 	config,
 	...
 }:
+let
+  constants = import ../../constants.nix;
+in
 {
 	imports = [
 		(modulesPath + "/installer/scan/not-detected.nix")
@@ -23,7 +26,7 @@
 	networking = {
 		hostName = "laika"; 
 		interfaces.wlp2s0.ipv4.addresses = [{
-			address = "192.168.1.60";
+			address = constants.laika.ip;
 			prefixLength = 24;
 		}];
 	};
