@@ -13,6 +13,8 @@
             generateKey = true;
         };
         secrets = {
+            laika-docker-env = {};
+            root-password = {};
             sandro-password = {};
             "wireless.env" = {};
         };

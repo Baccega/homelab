@@ -1,7 +1,7 @@
 services:
   heimdall:
     image: ghcr.io/linuxserver/heimdall
-    container_name: heimdall
+    container_name: heimdall-${TEST}-${TEST2}
     environment:
       - PUID=1000
       - PGID=1000

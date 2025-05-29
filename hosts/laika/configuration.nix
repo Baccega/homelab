@@ -3,6 +3,7 @@
 	lib,
 	pkgs,
 	inputs,
+	config,
 	...
 }:
 {
@@ -35,6 +36,7 @@
 		stateVersion = "25.11";
 	};
 
+	# Run docker-compose
 	systemd.services.my-docker-compose = {
 		description = "Start docker compose services";
 		after = [ "docker.service" "network.target" ];
@@ -43,12 +45,14 @@
 		path = [ pkgs.docker pkgs.docker-compose ];
 
 		script = ''
-			${pkgs.docker-compose}/bin/docker-compose up -d --remove-orphans
+			${pkgs.docker-compose}/bin/docker-compose \
+			--env-file ${config.sops.secrets.laika-docker-env.path} \
+			up -d --remove-orphans
 		'';
 		serviceConfig = {
 			Type = "oneshot";
 			RemainAfterExit = true;
-			User = "sandro";
+			User = "root";
 			WorkingDirectory = "/home/sandro";
 		};
 	};
