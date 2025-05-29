@@ -35,12 +35,21 @@
 		stateVersion = "25.11";
 	};
 
-	# Run docker-compose automatically
 	systemd.services.my-docker-compose = {
+		description = "Start docker compose services";
+		after = [ "docker.service" "network.target" ];
+		requires = [ "docker.service" ];
+		wantedBy = [ "multi-user.target" ];
+		path = [ pkgs.docker pkgs.docker-compose ];
+
 		script = ''
-			docker-compose -f /home/sandro/docker-compose.yml
+			${pkgs.docker-compose}/bin/docker-compose up -d --remove-orphans
 		'';
-		wantedBy = ["multi-user.target"];
-		after = ["docker.service" "docker.socket"];
+		serviceConfig = {
+			Type = "oneshot";
+			RemainAfterExit = true;
+			User = "sandro";
+			WorkingDirectory = "/home/sandro";
+		};
 	};
 }

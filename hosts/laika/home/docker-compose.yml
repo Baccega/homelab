@@ -1,3 +1,16 @@
 services:
-  hello_world:
-    image: hello-world
+  heimdall:
+    image: ghcr.io/linuxserver/heimdall
+    container_name: heimdall
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Vienna
+    volumes:
+      - /home/sandro/heimdall:/config
+    networks:
+      - default
+    ports:
+      - 10080:80
+      - 10443:443
+    restart: unless-stopped
