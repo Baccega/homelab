@@ -33,7 +33,7 @@
 		username = "sandro";
 		homeDirectory = "/home/sandro";
 		file."docker-compose.yml".source = ./home/docker-compose.yml;
-		stateVersion = "25.11";
+		stateVersion = "25.05";
 	};
 
 	# Run docker-compose
