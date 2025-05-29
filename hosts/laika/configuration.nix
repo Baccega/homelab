@@ -27,9 +27,18 @@
 		}];
 	};
 
+	# Home manager
+	home-manager.users.sandro.home = { 
+		username = "sandro";
+		homeDirectory = "/home/sandro";
+		file."docker-compose.yml".source = ./home/docker-compose.yml;
+		stateVersion = "25.11";
+	};
+
+	# Run docker-compose automatically
 	systemd.services.my-docker-compose = {
 		script = ''
-			docker-compose -f ${./docker-compose.yml}
+			docker-compose -f /home/sandro/docker-compose.yml
 		'';
 		wantedBy = ["multi-user.target"];
 		after = ["docker.service" "docker.socket"];

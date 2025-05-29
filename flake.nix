@@ -5,6 +5,8 @@
     disko.inputs.nixpkgs.follows = "nixpkgs";
     nixinate.url = "github:matthewcroughan/nixinate";
     sops-nix.url = "github:Mic92/sops-nix";
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -14,6 +16,7 @@
       nixinate,
       disko,
       sops-nix,
+      home-manager,
       ...
     }:
     {
@@ -24,6 +27,7 @@
           modules = [
             disko.nixosModules.disko
             sops-nix.nixosModules.sops
+            home-manager.nixosModules.home-manager
             ./hosts/laika/configuration.nix
             {
               _module.args.nixinate = {
