@@ -14,6 +14,7 @@
 		../../modules/base.nix
 		../../modules/home-wifi.nix
 		../../modules/sops.nix
+		../../modules/nfs.nix
 		../../users/root.nix
 		../../users/sandro.nix
 	];
