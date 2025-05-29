@@ -11,7 +11,7 @@
         isNormalUser = true;
         uid = 1000;
         extraGroups = [
-            "wheel" "networkmanager"
+            "wheel" "networkmanager" "docker"
         ];
         hashedPasswordFile = config.sops.secrets.sandro-password.path;
         # shell = pkgs.fish;
