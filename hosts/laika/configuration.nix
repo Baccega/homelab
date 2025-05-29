@@ -26,4 +26,12 @@
 			prefixLength = 24;
 		}];
 	};
+
+	systemd.services.my-docker-compose = {
+		script = ''
+			docker-compose -f ${./docker-compose.yml}
+		'';
+		wantedBy = ["multi-user.target"];
+		after = ["docker.service" "docker.socket"];
+	};
 }
