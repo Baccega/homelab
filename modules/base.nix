@@ -41,6 +41,7 @@
 
     # Enable the OpenSSH daemon.
     services.openssh.enable = true;
+    services.openssh.settings.PasswordAuthentication = false;
 
     # Optimize nix store
     nix.settings.auto-optimise-store = true;
