@@ -40,10 +40,26 @@ in
 	};
 
 	system.activationScripts.runDockerCompose = ''
-		echo "🐳 Running docker-compose up:"
-		${pkgs.docker-compose}/bin/docker-compose \
+		echo "🔄 Restarting systemd docker-compose service"
+		/run/current-system/sw/bin/systemctl restart docker-compose.service
+	'';
+
+	systemd.services.docker-compose = {
+		description = "Run docker-compose (root) from Home Manager hook";
+		after = [ "docker.service" "network.target" ];
+		requires = [ "docker.service" ];
+		serviceConfig = {
+			Type = "oneshot";
+			RemainAfterExit = false;
+			User = "root";
+			WorkingDirectory = "/home/sandro";
+		};
+		script = ''
+			${pkgs.docker-compose}/bin/docker-compose \
 			--env-file ${config.sops.secrets.laika-docker-env.path} \
 			-f /home/sandro/docker-compose.yml \
-	 		up -d --remove-orphans
-	'';
+			up -d --remove-orphans
+		'';
+	};
+
 }
