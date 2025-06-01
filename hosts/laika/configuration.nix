@@ -39,34 +39,11 @@ in
 		stateVersion = "25.05";
 	};
 
-	# Run docker-compose
-	systemd.services.docker-compose = {
-		description = "Start docker compose services";
-		after = [ "docker.service" "network.target" ];
-		requires = [ "docker.service" ];
-		wantedBy = [ "multi-user.target" ];
-		path = [ pkgs.docker pkgs.docker-compose ];
-
-		script = ''
-			${pkgs.docker-compose}/bin/docker-compose \
+	system.activationScripts.runDockerCompose = ''
+		echo "🐳 Running docker-compose up:"
+		${pkgs.docker-compose}/bin/docker-compose \
 			--env-file ${config.sops.secrets.laika-docker-env.path} \
-			up -d --remove-orphans
-		'';
-		serviceConfig = {
-			Type = "oneshot";
-			RemainAfterExit = true;
-			User = "root";
-			WorkingDirectory = "/home/sandro";
-		};
-	};
-	systemd.paths.docker-compose-watcher = {
-		wantedBy = [ "multi-user.target" ];
-		pathConfig = {
-			PathModified = [
-				"/home/sandro/docker-compose.yml" 
-				config.sops.secrets.laika-docker-env.path
-			];
-			Unit = "docker-compose.service";
-		};
-	};
+			-f /home/sandro/docker-compose.yml \
+	 		up -d --remove-orphans
+	'';
 }
