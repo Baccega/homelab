@@ -1,16 +1,15 @@
 services:
-  heimdall:
-    image: ghcr.io/linuxserver/heimdall
-    container_name: heimdall-${TEST}-${TEST2}
+  bazarr2:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr2
     environment:
-      - PUID=1000
-      - PGID=1000
+      - PUID=${PUID}
+      - PGID=${PGID}
       - TZ=Europe/Vienna
     volumes:
-      - /home/sandro/heimdall:/config
-    networks:
-      - default
+      - /home/sandro/bazarr:/config
+      - /mnt/tv_shows:/tv
+      - /mnt/movies:/movies
     ports:
-      - 10080:80
-      - 10443:443
+      - 6767:6767
     restart: unless-stopped

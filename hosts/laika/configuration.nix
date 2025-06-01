@@ -40,7 +40,7 @@ in
 	};
 
 	# Run docker-compose
-	systemd.services.my-docker-compose = {
+	systemd.services.docker-compose = {
 		description = "Start docker compose services";
 		after = [ "docker.service" "network.target" ];
 		requires = [ "docker.service" ];
@@ -57,6 +57,16 @@ in
 			RemainAfterExit = true;
 			User = "root";
 			WorkingDirectory = "/home/sandro";
+		};
+	};
+	systemd.paths.docker-compose-watcher = {
+		wantedBy = [ "multi-user.target" ];
+		pathConfig = {
+			PathModified = [
+				"/home/sandro/docker-compose.yml" 
+				config.sops.secrets.laika-docker-env.path
+			];
+			Unit = "docker-compose.service";
 		};
 	};
 }
