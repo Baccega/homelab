@@ -13,6 +13,8 @@
                 ll = "lsd -lh";
                 la = "lsd -lah";
                 cat = "bat";
+                gs = "git status";
+                ga = "git commit --amend";
             };
 
             functions = {

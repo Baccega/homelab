@@ -1,4 +1,4 @@
-# My Fish configuration
+# My Fish configuration (On MacOS)
 # Author: Baccega Sandro
 
 # --- Functions replacements
