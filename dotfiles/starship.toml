@@ -1,0 +1,25 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# My starship configuration
+# Author: Baccega Sandro
+
+command_timeout = 10000
+
+[python]
+detect_extensions = ["py", "ipynb"]
+
+# Using custom conda module that activates only in python repositories
+[conda]
+disabled = true
+
+[cmd_duration]
+min_time = 500
+format = "⏳ [$duration](bold yellow)"
+
+[custom.myconda]
+shell = ["bash", "--noprofile", "--norc"]
+command = "echo $CONDA_DEFAULT_ENV || 'base'"
+detect_extensions = ["py", "ipynb"]
+style = "bold green"
+format = "\\[[$output]($style)\\]"
