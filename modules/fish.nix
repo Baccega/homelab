@@ -54,6 +54,12 @@
                     echo "Starting up Fish shell 🐟"
                     set_color normal
                 '';
+                
+                __fish_command_not_found_handler = ''
+                    echo "❌ Command not found:"(set_color purple) $argv
+                    echo (set_color cyan)"🔎 Try '(set_color yellow)nix search $argv(set_color cyan)' or check your spelling."
+                    return 127
+                '';
             };
         };
     };
