@@ -15,6 +15,7 @@
                 cat = "bat";
                 gs = "git status";
                 ga = "git commit --amend";
+                gc = "git checkout";
             };
 
             functions = {

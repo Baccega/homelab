@@ -8,6 +8,7 @@
 }:
 let
   constants = import ../../constants.nix;
+  hostname_format = "🐶[$hostname]($style) 🚀 ";
 in
 {
 	imports = [
@@ -20,7 +21,8 @@ in
 		../../modules/sops.nix
 		../../modules/nfs.nix
 		../../users/root.nix
-		../../users/sandro.nix
+		(import ../../users/sandro.nix { inherit config pkgs hostname_format; })
+		
 	];
 
 	networking = {

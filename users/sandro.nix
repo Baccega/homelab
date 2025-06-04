@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  hostname_format,
   ...
 }:
 let
@@ -10,7 +11,7 @@ in
 {
     imports = [
         (import ../modules/fish.nix { inherit config pkgs username; })
-        (import ../modules/starship.nix { inherit config pkgs username; })
+        (import ../modules/starship.nix { inherit config pkgs username hostname_format; })
     ];
 
     sops.secrets.sandro-password.neededForUsers = true;
