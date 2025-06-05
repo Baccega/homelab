@@ -6,16 +6,59 @@
 
 command_timeout = 10000
 
+format = """[╭─](bold overlay1)$username$hostname[─](fg:current_line) $directory $git_branch$git_state$git_status
+$character"""
+
+right_format = """$cmd_duration"""
+
+[git_branch]
+format = "[[─](fg:current_line) $symbol$branch(:$remote_branch)]($style) "
+
+[git_status]
+conflicted = "⚔️"
+ahead = "🏎💨"
+behind = "😰"
+diverged = "😵‍💫"
+up_to_date = "✓"
+untracked = "👻"
+stashed = "📦"
+modified = "📝"
+staged = "[++\\($count\\)](green)"
+renamed = "✏️"
+deleted = "🗑"
+
+[hostname]
+format = "$hostname "
+ssh_only = true
+
+[username]
+format = "[ $user]($style)"
+show_always = false
+
+[cmd_duration]
+min_time = 500
+format = "⏳ [$duration](bold yellow)"
+
+[directory]
+style = "blue"
+format = "[$path]($style)"
+truncate_to_repo = true
+
+[fill]
+symbol = ' '
+style = 'fg:current_line'
+
+[character]
+format = """
+[$symbol](fg:overlay1) """
+success_symbol = "[╰─❯](#ffffff)"
+
 [python]
 detect_extensions = ["py", "ipynb"]
 
 # Using custom conda module that activates only in python repositories
 [conda]
 disabled = true
-
-[cmd_duration]
-min_time = 500
-format = "⏳ [$duration](bold yellow)"
 
 [custom.myconda]
 shell = ["bash", "--noprofile", "--norc"]
