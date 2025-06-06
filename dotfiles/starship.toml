@@ -6,7 +6,7 @@
 
 command_timeout = 10000
 
-format = """[╭─](bold overlay1)$username$hostname[─](fg:current_line) $directory $git_branch$git_state$git_status
+format = """[╭](bold overlay1)$username$hostname[─](fg:current_line) $directory $git_branch$git_state$git_status$nodejs$package
 $character"""
 
 right_format = """$cmd_duration"""
@@ -28,7 +28,7 @@ renamed = "✏️"
 deleted = "🗑"
 
 [hostname]
-format = "$hostname "
+format = "[─](fg:current_line) $hostname "
 ssh_only = true
 
 [username]
@@ -52,6 +52,13 @@ style = 'fg:current_line'
 format = """
 [$symbol](fg:overlay1) """
 success_symbol = "[╰─❯](#ffffff)"
+
+[nodejs]
+format = '[─](fg:current_line) [󰎙 $version](bold green) '
+
+[package]
+symbol = " "
+format = '[─](fg:current_line) [$symbol$version]($style)'
 
 [python]
 detect_extensions = ["py", "ipynb"]
