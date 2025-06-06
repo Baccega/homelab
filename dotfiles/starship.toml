@@ -1,68 +1,163 @@
-# Get editor completions based on the config schema
-"$schema" = 'https://starship.rs/config-schema.json'
-
 # My starship configuration
 # Author: Baccega Sandro
+# Inspired from: Gruvbox Rainbow Preset
+"$schema" = 'https://starship.rs/config-schema.json'
 
-command_timeout = 10000
+format = """
+[](color_orange)\
+$username\
+$hostname\ 
+[ ](bg:color_orange)\
+[](bg:color_yellow fg:color_orange)\
+$directory\
+[](fg:color_yellow bg:color_aqua)\
+$git_branch\
+$git_status\
+[](fg:color_aqua bg:color_blue)\
+$c\
+$cpp\
+$rust\
+$golang\
+$nodejs\
+$php\
+$java\
+$kotlin\
+$haskell\
+$python\
+[ ](fg:color_blue)\
 
-format = """[╭─](bold overlay1)$username$hostname[─](fg:current_line) $directory $git_branch$git_state$git_status
-$character"""
+$line_break$character"""
 
-right_format = """$cmd_duration"""
+palette = 'gruvbox_dark'
 
-[git_branch]
-format = "[[─](fg:current_line) $symbol$branch(:$remote_branch)]($style) "
-
-[git_status]
-conflicted = "⚔️"
-ahead = "🏎💨"
-behind = "😰"
-diverged = "😵‍💫"
-up_to_date = "✓"
-untracked = "👻"
-stashed = "📦"
-modified = "📝"
-staged = "[++\\($count\\)](green)"
-renamed = "✏️"
-deleted = "🗑"
-
-[hostname]
-format = "$hostname "
-ssh_only = true
+[palettes.gruvbox_dark]
+color_fg0 = '#fbf1c7'
+color_bg1 = '#3c3836'
+color_bg3 = '#665c54'
+color_blue = '#458588'
+color_aqua = '#689d6a'
+color_green = '#98971a'
+color_orange = '#d65d0e'
+color_purple = '#b16286'
+color_red = '#cc241d'
+color_yellow = '#d79921'
 
 [username]
-format = "[ $user]($style)"
-show_always = false
+show_always = true
+style_user = "bg:color_orange fg:color_fg0"
+style_root = "bg:color_orange fg:color_fg0"
+format = '[$user]($style)'
 
-[cmd_duration]
-min_time = 500
-format = "⏳ [$duration](bold yellow)"
+[hostname]
+format = "[󰩃 $hostname]($style)"
+style = "bg:color_orange fg:color_fg0"
+ssh_only = false
 
 [directory]
-style = "blue"
-format = "[$path]($style)"
-truncate_to_repo = true
+style = "fg:color_fg0 bg:color_yellow"
+format = "[ $path ]($style)"
+truncate_to_repo = false
 
-[fill]
-symbol = ' '
-style = 'fg:current_line'
+[directory.substitutions]
+"~" = " "
+"Desktop" = " "
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = "󰝚 "
+"Pictures" = " "
+"Github" = " "
+"SynologyDrive" = "󰣳 "
+"Chax/storywise/frontend" = " /  "
+"Chax/storywise/backend" = " /  "
+"Chax/storywise/common" = " / "
+"Chax" = " "
 
-[character]
-format = """
-[$symbol](fg:overlay1) """
-success_symbol = "[╰─❯](#ffffff)"
+[git_branch]
+symbol = ""
+style = "bg:color_aqua"
+format = '[[ $symbol $branch ](fg:color_fg0 bg:color_aqua)]($style)'
+truncation_length = 30
+truncation_symbol = '…'
+
+[git_status]
+style = "bg:color_aqua"
+format = '[[($all_status$ahead_behind)](fg:color_fg0 bg:color_aqua)]($style)'
+conflicted = "󰞇 "
+ahead = "󰞬 "
+behind = "󰀠 "
+diverged = "󱡷 "
+untracked = "󰊠 "
+stashed = " "
+modified = " "
+staged = "++\\($count\\) "
+renamed = " "
+deleted = " "
+
+[nodejs]
+symbol = "󰎙"
+style = "bg:color_blue"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
+
+[c]
+symbol = " "
+style = "bg:color_blue"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
+
+[cpp]
+symbol = " "
+style = "bg:color_blue"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
+
+[rust]
+symbol = ""
+style = "bg:color_blue"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
+
+[golang]
+symbol = ""
+style = "bg:color_blue"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
+
+[php]
+symbol = ""
+style = "bg:color_blue"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
+
+[java]
+symbol = ""
+style = "bg:color_blue"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
+
+[kotlin]
+symbol = ""
+style = "bg:color_blue"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
+
+[haskell]
+symbol = ""
+style = "bg:color_blue"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
 
 [python]
-detect_extensions = ["py", "ipynb"]
+symbol = ""
+style = "bg:color_blue"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
 
-# Using custom conda module that activates only in python repositories
+[docker_context]
+symbol = ""
+style = "bg:color_bg3"
+format = '[[ $symbol( $context) ](fg:#83a598 bg:color_bg3)]($style)'
+
 [conda]
-disabled = true
+style = "bg:color_bg3"
+format = '[[ $symbol( $environment) ](fg:#83a598 bg:color_bg3)]($style)'
 
-[custom.myconda]
-shell = ["bash", "--noprofile", "--norc"]
-command = "echo $CONDA_DEFAULT_ENV || 'base'"
-detect_extensions = ["py", "ipynb"]
-style = "bold green"
-format = "\\[[$output]($style)\\]"
+[pixi]
+style = "bg:color_bg3"
+format = '[[ $symbol( $version)( $environment) ](fg:color_fg0 bg:color_bg3)]($style)'
+
+[line_break]
+disabled = false
+
+[character]
+disabled = false
