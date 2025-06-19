@@ -8,7 +8,7 @@
 }:
 let
   constants = import ../../constants.nix;
-  hostname_format = "🐶[$hostname]($style) 🚀 ";
+  hostname_format = "[ $hostname]($style)";
 in
 {
 	imports = [
