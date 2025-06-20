@@ -12,6 +12,7 @@ in
     imports = [
         (import ../modules/fish.nix { inherit config pkgs username; })
         (import ../modules/starship.nix { inherit config pkgs username hostname_format; })
+        (import ../modules/fonts.nix)
     ];
 
     sops.secrets.sandro-password.neededForUsers = true;

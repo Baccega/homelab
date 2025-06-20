@@ -20,6 +20,7 @@ in
 		../../modules/home-wifi.nix
 		../../modules/sops.nix
 		../../modules/nfs.nix
+		../../modules/kmscon.nix
 		../../users/root.nix
 		(import ../../users/sandro.nix { inherit config pkgs hostname_format; })
 		
@@ -63,5 +64,4 @@ in
 			up -d --remove-orphans
 		'';
 	};
-
 }
