@@ -46,6 +46,9 @@
     # Optimize nix store
     nix.settings.auto-optimise-store = true;
 
+    # Enable flakes permanently
+    nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
     # Garbage collection
     nix.gc = {
         automatic = true;
