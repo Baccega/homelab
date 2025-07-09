@@ -21,6 +21,18 @@ function cat
     bat $argv
 end
 
+function gs
+    git status $argv
+end
+
+function ga
+    git commit --amend $argv
+end
+
+function gc
+    git checkout $argv
+end
+
 # Make pnpm ci work as expected
 function pnpm
     if [ $argv[1] = "ci" ]
