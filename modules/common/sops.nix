@@ -4,7 +4,7 @@
 }:
 {
     sops = {
-        defaultSopsFile = ../secrets/secrets.json;
+        defaultSopsFile = ../../secrets/secrets.json;
         defaultSopsFormat = "json";
 
         age = {

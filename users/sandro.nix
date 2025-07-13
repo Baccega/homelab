@@ -10,9 +10,9 @@ let
 in
 {
     imports = [
-        (import ../modules/fish.nix { inherit config pkgs username; })
-        (import ../modules/starship.nix { inherit config pkgs username hostname_format; })
-        (import ../modules/fonts.nix)
+        (import ../modules/common/fish.nix { inherit config pkgs username; })
+        (import ../modules/common/starship.nix { inherit config pkgs username hostname_format; })
+        (import ../modules/common/fonts.nix)
     ];
 
     sops.secrets.sandro-password.neededForUsers = true;

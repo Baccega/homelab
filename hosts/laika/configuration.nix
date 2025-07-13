@@ -16,11 +16,11 @@ in
 		(modulesPath + "/profiles/qemu-guest.nix")
 		./disk-config.nix
 		./hardware-configuration.nix
-		../../modules/base.nix
-		../../modules/home-wifi.nix
-		../../modules/sops.nix
-		../../modules/nfs.nix
-		../../modules/kmscon.nix
+		../../modules/common/base.nix
+		../../modules/common/sops.nix
+		../../modules/common/kmscon.nix
+		../../modules/network/home-wifi.nix
+		../../modules/network/nfs.nix
 		../../users/root.nix
 		(import ../../users/sandro.nix { inherit config pkgs hostname_format; })
 		

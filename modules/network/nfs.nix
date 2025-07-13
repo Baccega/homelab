@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-  constants = import ../constants.nix;
+  constants = import ../../constants.nix;
 in
 {
     boot.supportedFilesystems = [ "nfs" ];
