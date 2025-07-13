@@ -21,6 +21,7 @@ in
 		../../modules/common/kmscon.nix
 		../../modules/network/home-wifi.nix
 		../../modules/network/nfs.nix
+		../../modules/services/home-assistant.nix
 		../../users/root.nix
 		(import ../../users/sandro.nix { inherit config pkgs hostname_format; })
 		
@@ -32,6 +33,11 @@ in
 			address = constants.laika.ip;
 			prefixLength = 24;
 		}];
+
+		firewall.allowedTCPPorts = [ 
+			6767  # Bazaar
+			8123  # Home assistant
+		];
 	};
 
 	# Home manager
