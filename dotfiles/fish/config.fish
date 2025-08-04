@@ -8,30 +8,18 @@ function ls
     lsd $argv
 end
 
-function ll
-    ls -lh $argv
-end
-
-function la
-    ls -lah $argv
-end
+abbr -a -- ll 'ls -lh'
+abbr -a -- la 'ls -lah'
 
 # Using bat instead of cat
 function cat
     bat $argv
 end
 
-function gs
-    git status $argv
-end
-
-function ga
-    git commit --amend $argv
-end
-
-function gc
-    git checkout $argv
-end
+abbr -a -- gs 'git status'
+abbr -a -- ga 'git commit --amend'
+abbr -a -- gco 'git checkout'
+abbr -a -- gcp 'git cherry-pick'
 
 # Make pnpm ci work as expected
 function pnpm
