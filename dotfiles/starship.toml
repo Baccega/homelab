@@ -67,9 +67,14 @@ truncate_to_repo = false
 "Pictures" = " "
 "Github" = " "
 "SynologyDrive" = "󰣳 "
-"Chax/storywise/frontend" = " /  "
-"Chax/storywise/backend" = " /  "
-"Chax/storywise/common" = " / "
+"Chax/storywise/frontend" = " /  "
+"Chax/storywise/backend" = " /  "
+"Chax/storywise/common" = " /  "
+"Chax/storywise" = " / "
+"Chax/radishmed-portal/frontend" = " /  "
+"Chax/radishmed-portal/backend" = " /  "
+"Chax/radishmed-portal/common" = " /  "
+"Chax/radishmed-portal" = " / "
 "Chax" = " "
 
 [git_branch]
