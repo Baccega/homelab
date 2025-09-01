@@ -1,0 +1,5 @@
+[core]
+	excludesfile = ~/.gitignore
+[user]
+	name = Sandro Baccega
+	email = mail.sandro.baccega@gmail.com
