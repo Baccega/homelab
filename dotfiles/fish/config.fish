@@ -20,6 +20,7 @@ abbr -a -- gs 'git status'
 abbr -a -- ga 'git commit --amend'
 abbr -a -- gco 'git checkout'
 abbr -a -- gcp 'git cherry-pick'
+abbr -a -- rad 'docker exec -it radishmed-portal_devcontainer-devcontainer-1'
 
 # Make pnpm ci work as expected
 function pnpm
