@@ -29,12 +29,47 @@
     # List packages installed in system profile. To search, run:
     # $ nix search wget
     environment.systemPackages = with pkgs; map lib.lowPrio [
+        # Core command-line tools
+        coreutils
+        findutils
+        file
+        which
+        less
+        unzip
+        zip
+        tar
+        gzip
+        
+        # Networking and downloading
         curl
+        wget
+        iputils
+        inetutils
+        nmap
+        traceroute
+        openssh
+        rsync
+
+        # System monitoring & debugging
+        htop
+        lsof
+        pciutils
+        usbutils
+        
+        # Development tools
         gitMinimal
         tig
-        wget
-        htop
+        
+        # Containers & virtualization
         docker-compose
+        
+        # Text editing & convenience
+        vim
+        nano
+
+        # Optional quality-of-life utilities
+        ncdu    # disk usage viewer
+        man-pages
     ];
 
     # Docker
