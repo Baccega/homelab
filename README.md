@@ -14,6 +14,8 @@ All of the hostnames are 🐶 inspired.
 
 - **Laika**: 🧪 My old laptop, used for testing out NixOS.
 
-  The name comes of course from the famous [Soviet space dog](https://en.wikipedia.org/wiki/Laika), seemed fitting for a test laptop 😄
+  Named after the famous [Soviet space dog](https://en.wikipedia.org/wiki/Laika), seemed fitting for a test laptop 😄
 
--
+- **Zero**: 👻 A phantom machine, used for installing NixOS on a new host.
+
+  Named after [Zero](https://the-nightmare-before-christmas.fandom.com/wiki/Zero), Jack's pet ghost-dog who serves of Tim Burton's The Nightmare Before Christmas
