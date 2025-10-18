@@ -30,7 +30,7 @@ in
     nixpkgs.config.allowUnfree = true;
 
     # List packages installed in system profile. To search, run:
-    # $ nix search wget
+    # $ nix search nixpkgs wget
     environment.systemPackages = with pkgs; map lib.lowPrio [
         # Core command-line tools
         coreutils
@@ -40,7 +40,6 @@ in
         less
         unzip
         zip
-        tar
         gzip
         
         # Networking and downloading
@@ -75,6 +74,7 @@ in
         man-pages
     ];
 
+    # Set default gateway and DNS servers
     networking = {
 		defaultGateway = constants.network.gateway;
 		nameservers = constants.network.dns;
