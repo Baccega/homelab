@@ -1,4 +1,7 @@
 { config, pkgs, ... }:
+let
+  constants = import ../../constants.nix;
+in
 {
     boot.loader.grub = {
         # no need to se2t devices, disko will add all devices that have a EF02 partition to the list already
@@ -71,6 +74,11 @@
         ncdu    # disk usage viewer
         man-pages
     ];
+
+    networking = {
+		defaultGateway = constants.network.gateway;
+		nameservers = constants.network.dns;
+	};
 
     # Docker
     virtualisation.docker.enable = true;

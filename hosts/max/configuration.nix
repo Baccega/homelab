@@ -33,8 +33,7 @@ in
 		}];
 
 		firewall.allowedTCPPorts = [ 
-			# 6767  # Bazaar
-			# 8123  # Home assistant
+			6767  # Bazaar
 		];
 	};
 

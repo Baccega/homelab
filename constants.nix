@@ -1,4 +1,8 @@
 {
+    network = {
+        gateway = "192.168.1.1";
+        dns = [ "1.1.1.1" "8.8.8.8" ];
+    };
     laika = {
         hostname = "laika";
         ip = "192.168.1.60";
