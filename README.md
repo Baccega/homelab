@@ -18,6 +18,6 @@ All of the hostnames are 🐶 inspired.
 
 - **Zero**: 👻 A phantom machine, used for installing NixOS on a new host.
 
-  Named after [Zero](https://the-nightmare-before-christmas.fandom.com/wiki/Zero), Jack's pet ghost-dog who serves of Tim Burton's The Nightmare Before Christmas
+  Named after [Zero](https://the-nightmare-before-christmas.fandom.com/wiki/Zero), Jack's pet ghost-dog from Tim Burton's The Nightmare Before Christmas
 
 - **Max**: 🐶 My main server, very good boy.
