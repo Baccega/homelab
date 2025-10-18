@@ -33,6 +33,7 @@
         gitMinimal
         tig
         wget
+        htop
         docker-compose
     ];
 

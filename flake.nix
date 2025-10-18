@@ -43,6 +43,24 @@
             }
           ];
         };
+        max = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            disko.nixosModules.disko
+            sops-nix.nixosModules.sops
+            home-manager.nixosModules.home-manager
+            ./hosts/max/configuration.nix
+            {
+              _module.args.nixinate = {
+                host = constants.max.ip;
+                sshUser = "sandro";
+                buildOn = "remote";
+                substituteOnTarget = true;
+                hermetic = false;
+              };
+            }
+          ];
+        };
         zero = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [

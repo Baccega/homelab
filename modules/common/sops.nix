@@ -14,6 +14,7 @@
         };
         secrets = {
             laika-docker-env = {};
+            max-docker-env = {};
             root-password = {};
             sandro-password = {};
             "wireless.env" = {};

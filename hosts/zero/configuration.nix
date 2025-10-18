@@ -27,4 +27,10 @@ in
 	];
 
   	users.users.root.initialPassword = "1234";
+
+	users.users.sandro.openssh.authorizedKeys.keys = [
+		constants.ssh_keys.macbook_pro_chax
+	];
+
+  	users.users.sandro.initialPassword = "1234";
 }
