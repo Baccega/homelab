@@ -42,6 +42,10 @@ in
 		username = "sandro";
 		homeDirectory = "/home/sandro";
 		file."docker-compose.yml".source = ./home/docker-compose.yml;
+		file."docker-constants.env".text = ''
+			DNS_PRIMARY=${builtins.elemAt constants.network.dns 0}
+			DNS_SECONDARY=${builtins.elemAt constants.network.dns 1}
+		'';
 		stateVersion = "25.05";
 	};
 
@@ -63,6 +67,7 @@ in
 		script = ''
 			${pkgs.docker-compose}/bin/docker-compose \
 			--env-file ${config.sops.secrets.max-docker-env.path} \
+			--env-file /home/sandro/docker-constants.env \
 			-f /home/sandro/docker-compose.yml \
 			up -d --remove-orphans
 		'';
