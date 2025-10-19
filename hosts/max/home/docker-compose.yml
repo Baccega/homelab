@@ -20,9 +20,9 @@ services:
   #     - 32469:32469
   #   volumes:
   #     - /home/sandro/plex:/config
-  #     - nfsvolume-tv:/tv
-  #     - nfsvolume-movies:/movies
-  #     - nfsvolume-videocassette:/videocassette
+  #     - /mnt/tv_shows:/tv
+  #     - /mnt/movies:/movies
+  #     - /mnt/videocassette:/videocassette
   #   devices:
   #     - /dev/dri:/dev/dri # For GPU access
   #   networks:
@@ -38,8 +38,8 @@ services:
   #     - TZ=Europe/Vienna
   #   volumes:
   #     - /home/sandro/sonarr:/config
-  #     - nfsvolume-tv:/tv
-  #     - nfsvolume-downloads:/downloads
+  #     - /mnt/tv_shows:/tv
+  #     - /mnt/downloads:/downloads
   #   networks:
   #     - default
   #   ports:
@@ -55,8 +55,8 @@ services:
   #     - TZ=Europe/Vienna
   #   volumes:
   #     - /home/sandro/radarr:/config
-  #     - nfsvolume-movies:/movies
-  #     - nfsvolume-downloads:/downloads
+  #     - /mnt/movies:/movies
+  #     - /mnt/downloads:/downloads
   #   networks:
   #     - default
   #   ports:
@@ -88,7 +88,7 @@ services:
       - WEBUI_PORT=8080
     volumes:
       - /home/sandro/qbittorrent:/config
-      - nfsvolume-downloads:/downloads
+      - /mnt/downloads:/downloads
     networks:
       - default
     ports:
@@ -108,7 +108,7 @@ services:
       - TZ=Europe/Vienna
     volumes:
       - /home/sandro/sabnzbd:/config
-      - nfsvolume-downloads:/config/downloads/complete
+      - /mnt/downloads:/config/downloads/complete
     ports:
       - 8081:8080
     restart: unless-stopped
@@ -211,13 +211,3 @@ services:
   #     # Optional, if Pi-hole should get some more processing time
   #     - SYS_NICE
   #   restart: unless-stopped
-
-volumes:
-  nfsvolume-tv:
-    external: true
-  nfsvolume-movies:
-    external: true
-  nfsvolume-downloads:
-    external: true
-  nfsvolume-videocassette:
-    external: true

@@ -31,6 +31,14 @@ in
             what = "${constants.nas.ip}:/volume1/data/downloads";
             where = "/mnt/downloads";
         }
+        {
+            type = "nfs";
+            mountConfig = {
+                Options = "noatime";
+            };
+            what = "${constants.nas.ip}:/volume1/photo/Videocassette e VHS";
+            where = "/mnt/videocassette";
+        }
     ];
 
     systemd.automounts = [
@@ -54,6 +62,13 @@ in
                 TimeoutIdleSec = "600";
             };
             where = "/mnt/downloads";
+        }
+        {
+            wantedBy = [ "multi-user.target" ];
+            automountConfig = {
+                TimeoutIdleSec = "600";
+            };
+            where = "/mnt/videocassette";
         }
     ];
 }
