@@ -19,8 +19,13 @@
             sandro-password = {};
             "wireless.env" = {};
             qbittorrent-password = {};
+            sabnzbd-username = {};
             sabnzbd-password = {};
             sabnzbd-api-key = {};
+            sabnzbd-nzb-key = {};
+            usenet-host = {};
+            usenet-username = {};
+            usenet-password = {};
         };
     };
 

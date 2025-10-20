@@ -16,57 +16,82 @@ in
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
-      User = "sandro";
+      User = "root";
     };
     script = ''
       mkdir -p /home/sandro/qbittorrent/qBittorrent
-      
+
       # Read password from SOPS secret
       QBIT_PASSWORD=$(cat ${config.sops.secrets.qbittorrent-password.path})
       
-      cat > /home/sandro/qbittorrent/qBittorrent/qBittorrent.conf << 'EOF'
+      cat > /home/sandro/qbittorrent/qBittorrent/qBittorrent.conf << EOF
       [Application]
-      FileLogger\Enabled=true
-      FileLogger\Age=6
-      FileLogger\DeleteOld=true
-      FileLogger\Backup=true
+      FileLogger\Age=1
       FileLogger\AgeType=1
+      FileLogger\Backup=true
+      FileLogger\DeleteOld=true
+      FileLogger\Enabled=true
+      FileLogger\MaxSizeBytes=66560
+      FileLogger\Path=/config/qBittorrent/logs
+
+      [AutoRun]
+      enabled=false
+      program=
 
       [BitTorrent]
-      Session\DefaultSavePath=/downloads
-      Session\TempPath=/downloads/incomplete
+      Session\AddTorrentStopped=false
+      Session\AlternativeGlobalDLSpeedLimit=0
+      Session\AlternativeGlobalUPSpeedLimit=0
+      Session\BandwidthSchedulerEnabled=true
+      Session\DefaultSavePath=/downloads/
+      Session\ExcludedFileNames=
+      Session\GlobalDLSpeedLimit=7000
+      Session\GlobalUPSpeedLimit=500
       Session\Port=6881
       Session\QueueingSystemEnabled=true
-      Session\MaxActiveDownloads=3
-      Session\MaxActiveTorrents=5
-      Session\MaxActiveUploads=3
-      Session\GlobalMaxSeedingMinutes=0
-      Session\GlobalMaxRatio=-1
+      Session\SSL\Port=55097
+      Session\ShareLimitAction=Stop
+      Session\TempPath=/downloads/incomplete/
+      Session\UseAlternativeGlobalSpeedLimit=true
 
-      [Preferences]
-      General\Locale=en
-      WebUI\Address=*
-      WebUI\Port=8080
-      WebUI\LocalHostAuth=false
-      WebUI\CSRFProtection=true
-      WebUI\ClickjackingProtection=true
-      WebUI\SecureCookie=true
-      WebUI\CustomHTTPHeaders=
-      WebUI\CustomHTTPHeadersEnabled=false
-      WebUI\ReverseProxySupportEnabled=false
-      WebUI\TrustedReverseProxiesList=
-      WebUI\UseUPnP=false
-      WebUI\Username=admin
-      WebUI\Password_PBKDF2="$QBIT_PASSWORD"
+      [Core]
+      AutoDeleteAddedTorrentFile=Never
 
       [LegalNotice]
       Accepted=true
 
+      [Meta]
+      MigrationVersion=8
+
       [Network]
-      Proxy\Type=3
-      Proxy\IP=${constants.max.hostname}
-      Proxy\Port=1080
-      Proxy\OnlyForTorrents=true
+      PortForwardingEnabled=false
+      Proxy\AuthEnabled=false
+      Proxy\HostnameLookupEnabled=false
+      Proxy\IP=${constants.network.forwardProxy}
+      Proxy\Password=
+      Proxy\Port=@Variant(\0\0\0\x85\x4\x38)
+      Proxy\Profiles\BitTorrent=true
+      Proxy\Profiles\Misc=true
+      Proxy\Profiles\RSS=true
+      Proxy\Type=SOCKS5
+      Proxy\Username=
+
+      [Preferences]
+      Connection\PortRangeMin=6881
+      Connection\UPnP=false
+      Downloads\SavePath=/downloads/
+      Downloads\TempPath=/downloads/incomplete/
+      General\Locale=en
+      MailNotification\req_auth=true
+      Scheduler\end_time=@Variant(\0\0\0\xf\x5%q\xa0)
+      WebUI\Address=*
+      WebUI\AuthSubnetWhitelist=@Invalid()
+      WebUI\Password_PBKDF2="$QBIT_PASSWORD"
+      WebUI\ServerDomains=*
+
+      [RSS]
+      AutoDownloader\DownloadRepacks=true
+      AutoDownloader\SmartEpisodeFilter=s(\\d+)e(\\d+), (\\d+)x(\\d+), "(\\d{4}[.\\-]\\d{1,2}[.\\-]\\d{1,2})", "(\\d{1,2}[.\\-]\\d{1,2}[.\\-]\\d{4})"
       EOF
     '';
   };
