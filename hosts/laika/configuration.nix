@@ -46,12 +46,13 @@ in
 		homeDirectory = "/home/sandro";
 		file."docker-compose.yml".source = ./home/docker-compose.yml;
 		stateVersion = "25.05";
-	};
 
-	system.activationScripts.runDockerCompose = ''
-		echo "🔄 Restarting systemd docker-compose service"
-		/run/current-system/sw/bin/systemctl restart docker-compose.service
-	'';
+		# Restart docker-compose after home manager swapped the files
+		activation.restartDockerCompose = lib.hm.dag.entryAfter ["writeBoundary"] ''
+			echo "🔄 Restarting docker-compose service after Home Manager activation..."
+			/run/current-system/sw/bin/systemctl restart docker-compose.service
+		'';
+	};
 
 	systemd.services.docker-compose = {
 		description = "Run docker-compose (root) from Home Manager hook";
