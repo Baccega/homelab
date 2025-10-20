@@ -18,6 +18,9 @@
             root-password = {};
             sandro-password = {};
             "wireless.env" = {};
+            qbittorrent-password = {};
+            sabnzbd-password = {};
+            sabnzbd-api-key = {};
         };
     };
 

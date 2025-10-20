@@ -16,6 +16,8 @@ in
 		(modulesPath + "/profiles/qemu-guest.nix")
 		./disk-config.nix
 		./hardware-configuration.nix
+		./modules/qbittorrent.nix
+		./modules/sabnzbd.nix
 		../../modules/common/base.nix
 		../../modules/common/sops.nix
 		../../modules/common/kmscon.nix
@@ -46,6 +48,7 @@ in
 			DNS_PRIMARY=${builtins.elemAt constants.network.dns 0}
 			DNS_SECONDARY=${builtins.elemAt constants.network.dns 1}
 		'';
+		
 		activation.restartDockerCompose = lib.hm.dag.entryAfter ["writeBoundary"] ''
 			echo "🔄 Restarting docker-compose service after Home Manager activation..."
 			/run/current-system/sw/bin/systemctl restart docker-compose.service
@@ -55,7 +58,10 @@ in
 
 	systemd.services.docker-compose = {
 		description = "Run docker-compose (root) from Home Manager hook";
-		after = [ "docker.service" "network.target" ];
+		# Collect all services ending with -config.service
+		after = [ "docker.service" "network.target" ] ++ 
+			(lib.filter (name: lib.hasSuffix "-config.service" name) 
+				(builtins.attrNames config.systemd.services));
 		requires = [ "docker.service" ];
 		serviceConfig = {
 			Type = "oneshot";
