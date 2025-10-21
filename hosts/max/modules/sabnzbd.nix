@@ -25,7 +25,6 @@ in
       "/mnt/downloads:/config/downloads/complete"
     ];
     networks = [ "default" ];
-    restart = "unless-stopped";
   };
 
   # Generate SABnzbd config with secrets

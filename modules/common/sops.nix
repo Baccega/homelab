@@ -26,6 +26,10 @@
             usenet-host = {};
             usenet-username = {};
             usenet-password = {};
+            # github_token = {
+            #     sopsFile = ../../secrets/max-secrets.json;
+            #     sopsFile = ../../secrets/github-secrets.json;
+            # };
         };
     };
 

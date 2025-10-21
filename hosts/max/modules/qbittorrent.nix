@@ -28,7 +28,6 @@ in
       "/mnt/downloads:/downloads"
     ];
     networks = [ "default" ];
-    restart = "unless-stopped";
   };
 
   # Generate qBittorrent config with secrets
