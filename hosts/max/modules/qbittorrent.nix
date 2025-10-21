@@ -8,6 +8,29 @@ let
   constants = import ../../../constants.nix;
 in
 {
+  networking.firewall.allowedTCPPorts = [ 
+    constants.services.qbittorrent.port
+    constants.services.qbittorrent.torrentPort
+  ];
+
+  virtualisation.oci-containers.containers.qbittorrent = {
+    image = "ghcr.io/linuxserver/qbittorrent";
+    environmentFiles = [
+      config.sops.secrets.max-docker-env.path
+    ];
+    ports = [
+      "${toString constants.services.qbittorrent.port}:8080"
+      "${toString constants.services.qbittorrent.torrentPort}:6881"
+      "${toString constants.services.qbittorrent.torrentPort}:6881/udp"
+    ];
+    volumes = [
+      "/home/sandro/qbittorrent:/config"
+      "/mnt/downloads:/downloads"
+    ];
+    networks = [ "default" ];
+    restart = "unless-stopped";
+  };
+
   # Generate qBittorrent config with secrets
   systemd.services.qbittorrent-config = {
     description = "Generate qBittorrent configuration with secrets";
@@ -67,7 +90,7 @@ in
       PortForwardingEnabled=false
       Proxy\AuthEnabled=false
       Proxy\HostnameLookupEnabled=false
-      Proxy\IP=${constants.network.forwardProxy}
+      Proxy\IP=${constants.network.forwardProxy.ip}
       Proxy\Password=
       Proxy\Port=@Variant(\0\0\0\x85\x4\x38)
       Proxy\Profiles\BitTorrent=true

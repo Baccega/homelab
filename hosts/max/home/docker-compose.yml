@@ -77,44 +77,44 @@ services:
   #   depends_on:
   #     - forward-proxy
 
-  qbittorrent:
-    image: ghcr.io/linuxserver/qbittorrent
-    container_name: qbittorrent
-    environment:
-      - PUID=1050
-      - PGID=100
-      - TZ=Europe/Vienna
-      - WEBUI_PORT=8080
-    volumes:
-      - /home/sandro/qbittorrent:/config
-      - /mnt/downloads:/downloads
-    networks:
-      - default
-    ports:
-      - 6881:6881
-      - 6881:6881/udp
-      - 8080:8080
-    restart: unless-stopped
-    depends_on:
-      - forward-proxy
+  # qbittorrent:
+  #   image: ghcr.io/linuxserver/qbittorrent
+  #   container_name: qbittorrent
+  #   environment:
+  #     - PUID=1050
+  #     - PGID=100
+  #     - TZ=Europe/Vienna
+  #     - WEBUI_PORT=8080
+  #   volumes:
+  #     - /home/sandro/qbittorrent:/config
+  #     - /mnt/downloads:/downloads
+  #   networks:
+  #     - default
+  #   ports:
+  #     - 6881:6881
+  #     - 6881:6881/udp
+  #     - 8080:8080
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - forward-proxy
 
-  sabnzbd:
-    image: lscr.io/linuxserver/sabnzbd:latest
-    container_name: sabnzbd
-    environment:
-      - PUID=1050
-      - PGID=100
-      - TZ=Europe/Vienna
-    volumes:
-      - /home/sandro/sabnzbd:/config
-      - /mnt/downloads:/config/downloads/complete
-    ports:
-      - 8081:8080
-    restart: unless-stopped
-    networks:
-      - default
-    depends_on:
-      - forward-proxy
+  # sabnzbd:
+  #   image: lscr.io/linuxserver/sabnzbd:latest
+  #   container_name: sabnzbd
+  #   environment:
+  #     - PUID=1050
+  #     - PGID=100
+  #     - TZ=Europe/Vienna
+  #   volumes:
+  #     - /home/sandro/sabnzbd:/config
+  #     - /mnt/downloads:/config/downloads/complete
+  #   ports:
+  #     - 8081:8080
+  #   restart: unless-stopped
+  #   networks:
+  #     - default
+  #   depends_on:
+  #     - forward-proxy
 
   forward-proxy:
     image: ghcr.io/wfg/openvpn-client:2.1.1

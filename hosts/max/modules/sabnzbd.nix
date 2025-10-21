@@ -8,6 +8,26 @@ let
   constants = import ../../../constants.nix;
 in
 {
+  networking.firewall.allowedTCPPorts = [ 
+    constants.services.sabnzbd.port
+  ];
+
+  virtualisation.oci-containers.containers.sabnzbd = {
+    image = "lscr.io/linuxserver/sabnzbd:latest";
+    environmentFiles = [
+      config.sops.secrets.max-docker-env.path
+    ]; 
+    ports = [
+      "${toString constants.services.sabnzbd.port}:8080"
+    ];
+    volumes = [
+      "/home/sandro/sabnzbd:/config"
+      "/mnt/downloads:/config/downloads/complete"
+    ];
+    networks = [ "default" ];
+    restart = "unless-stopped";
+  };
+
   # Generate SABnzbd config with secrets
   systemd.services.sabnzbd-config = {
     description = "Generate SABnzbd configuration with secrets";
@@ -67,11 +87,11 @@ in
       inet_exposure = 4
       api_key = $SAB_API_KEY
       nzb_key = $SAB_NZB_KEY
-      socks5_proxy_url = socks5://${constants.network.forwardProxy}:1080
+      socks5_proxy_url = socks5://${constants.network.forwardProxy.ip}:${toString constants.network.forwardProxy.port}
       permissions = ""
-      download_dir = Downloads/incomplete
+      download_dir = downloads/incomplete
       download_free = ""
-      complete_dir = Downloads/complete
+      complete_dir = downloads/complete
       complete_free = ""
       fulldisk_autoresume = 0
       script_dir = ""
