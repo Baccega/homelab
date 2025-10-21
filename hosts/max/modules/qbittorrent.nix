@@ -27,7 +27,6 @@ in
       "/home/sandro/qbittorrent:/config"
       "/mnt/downloads:/downloads"
     ];
-    networks = [ "default" ];
   };
 
   # Generate qBittorrent config with secrets

@@ -80,8 +80,16 @@ in
 		nameservers = constants.network.dns;
 	};
 
-    # Docker
-    virtualisation.docker.enable = true;
+    # Podman
+    virtualisation = {
+        containers.enable = true;
+        podman = {
+            enable = true;
+            dockerCompat = true;
+            defaultNetwork.settings.dns_enabled = true;
+        };
+        oci-containers.backend = "podman";
+    };
 
     # Enable the OpenSSH daemon.
     services.openssh.enable = true;

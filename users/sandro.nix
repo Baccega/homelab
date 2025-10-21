@@ -22,7 +22,7 @@ in
         isNormalUser = true;
         uid = 1000;
         extraGroups = [
-            "wheel" "networkmanager" "docker"
+            "wheel" "networkmanager" "podman"
         ];
         hashedPasswordFile = config.sops.secrets.sandro-password.path;
         createHome = true;

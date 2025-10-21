@@ -24,7 +24,6 @@ in
       "/home/sandro/sabnzbd:/config"
       "/mnt/downloads:/config/downloads/complete"
     ];
-    networks = [ "default" ];
   };
 
   # Generate SABnzbd config with secrets
