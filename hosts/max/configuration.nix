@@ -18,6 +18,7 @@ in
 		./hardware-configuration.nix
 		./modules/qbittorrent.nix
 		./modules/sabnzbd.nix
+		./hardware/nvidia-1050ti.nix
 		../../modules/common/base.nix
 		../../modules/common/sops.nix
 		../../modules/common/kmscon.nix
