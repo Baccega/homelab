@@ -13,10 +13,14 @@ in
   ];
 
   virtualisation.oci-containers.containers.sabnzbd = {
-    image = "lscr.io/linuxserver/sabnzbd:latest";
+    image = "lscr.io/linuxserver/sabnzbd:latest";  
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
     ]; 
+    environment = {
+      PUID = toString constants.users.alfred;
+      PGID = toString constants.groups.users;
+    };
     ports = [
       "${toString constants.services.sabnzbd.port}:8080"
     ];
@@ -24,6 +28,13 @@ in
       "/home/sandro/sabnzbd:/config"
       "/mnt/downloads:/config/downloads/complete"
     ];
+  };
+
+  # Ensure container waits for NFS mount
+  systemd.services.podman-sabnzbd = {
+    wantedBy = [ "multi-user.target" ];
+    after = [ "mnt-downloads.mount" "sabnzbd-config.service" ];
+    requires = [ "mnt-downloads.mount" "sabnzbd-config.service" ];
   };
 
   # Generate SABnzbd config with secrets

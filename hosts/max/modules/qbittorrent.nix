@@ -29,6 +29,13 @@ in
     ];
   };
 
+  # Ensure container waits for NFS mount
+  systemd.services.podman-qbittorrent = {
+    wantedBy = [ "multi-user.target" ];
+    after = [ "mnt-downloads.mount" "qbittorrent-config.service" ];
+    requires = [ "mnt-downloads.mount" "qbittorrent-config.service" ];
+  };
+
   # Generate qBittorrent config with secrets
   systemd.services.qbittorrent-config = {
     description = "Generate qBittorrent configuration with secrets";
@@ -41,9 +48,9 @@ in
     };
     script = ''
       mkdir -p /home/sandro/qbittorrent/qBittorrent
-
-      # Read password from SOPS secret
-      QBIT_PASSWORD=$(cat ${config.sops.secrets.qbittorrent-password.path})
+      
+      # Read secrets from SOPS
+      QB_PASSWORD=$(cat ${config.sops.secrets.qbittorrent-password.path})
       
       cat > /home/sandro/qbittorrent/qBittorrent/qBittorrent.conf << EOF
       [Application]
@@ -107,7 +114,7 @@ in
       Scheduler\end_time=@Variant(\0\0\0\xf\x5%q\xa0)
       WebUI\Address=*
       WebUI\AuthSubnetWhitelist=@Invalid()
-      WebUI\Password_PBKDF2="$QBIT_PASSWORD"
+      WebUI\Password_PBKDF2="$QB_PASSWORD"
       WebUI\ServerDomains=*
 
       [RSS]
@@ -117,4 +124,3 @@ in
     '';
   };
 }
-

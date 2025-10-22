@@ -25,7 +25,7 @@ in
 		../../modules/network/nfs.nix
 		../../users/root.nix
 		(import ../../users/sandro.nix { inherit config pkgs hostname_format; })
-		
+		../../users/alfred.nix
 	];
 
 	networking = {

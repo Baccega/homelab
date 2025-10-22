@@ -18,14 +18,30 @@
             root-password = {};
             sandro-password = {};
             "wireless.env" = {};
-            qbittorrent-password = {};
-            sabnzbd-username = {};
-            sabnzbd-password = {};
-            sabnzbd-api-key = {};
-            sabnzbd-nzb-key = {};
-            usenet-host = {};
-            usenet-username = {};
-            usenet-password = {};
+            qbittorrent-password = {
+                owner = "sandro";
+            };
+            sabnzbd-username = {
+                owner = "sandro";
+            };
+            sabnzbd-password = {
+                owner = "sandro";
+            };
+            sabnzbd-api-key = {
+                owner = "sandro";
+            };
+            sabnzbd-nzb-key = {
+                owner = "sandro";
+            };
+            usenet-host = {
+                owner = "sandro";
+            };
+            usenet-username = {
+                owner = "sandro";
+            };
+            usenet-password = {
+                owner = "sandro";
+            };
             # github_token = {
             #     sopsFile = ../../secrets/max-secrets.json;
             #     sopsFile = ../../secrets/github-secrets.json;

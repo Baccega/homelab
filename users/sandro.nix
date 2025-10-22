@@ -20,7 +20,7 @@ in
 
     users.users.sandro = {
         isNormalUser = true;
-        uid = 1000;
+        uid = constants.users.sandro;
         extraGroups = [
             "wheel" "networkmanager" "podman"
         ];

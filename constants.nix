@@ -24,6 +24,13 @@
     ssh_keys = {
         macbook_pro_chax = "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAHjZD18KxdxjrFiWQm54dP4vDRbZLtMI3C+Pf9LUdHIjjbeAF3AJ3CgQxaA/R1Nao6QmnxrtRp9ljAwrvMhGIK0XgC9rEUcIpNGZH7SB6IYfWreWjITQxyIKgBJuwhR7dTvdaEyINPjLunJtQUJtpCdHio8CAc28aBY6JxUh0dyaUVY0w== MacBook-Pro-Chax";
     };
+    users = {
+        sandro = 1000;
+        alfred = 1050;
+    };
+    groups = {
+        users = 100;
+    };
     services = {
         qbittorrent = {
             port = 8080;
