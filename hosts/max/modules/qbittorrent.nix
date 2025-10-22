@@ -50,6 +50,7 @@ in
       mkdir -p /home/sandro/qbittorrent/qBittorrent
       
       # Read secrets from SOPS
+      QB_USERNAME=$(cat ${config.sops.secrets.qbittorrent-username.path})
       QB_PASSWORD=$(cat ${config.sops.secrets.qbittorrent-password.path})
       
       cat > /home/sandro/qbittorrent/qBittorrent/qBittorrent.conf << EOF
@@ -62,60 +63,29 @@ in
       FileLogger\MaxSizeBytes=66560
       FileLogger\Path=/config/qBittorrent/logs
 
-      [AutoRun]
-      enabled=false
-      program=
-
       [BitTorrent]
-      Session\AddTorrentStopped=false
-      Session\AlternativeGlobalDLSpeedLimit=0
-      Session\AlternativeGlobalUPSpeedLimit=0
+      Session\AlternativeGlobalDLSpeedLimit=5000
+      Session\AlternativeGlobalUPSpeedLimit=1000
       Session\BandwidthSchedulerEnabled=true
-      Session\DefaultSavePath=/downloads/
       Session\ExcludedFileNames=
-      Session\GlobalDLSpeedLimit=7000
-      Session\GlobalUPSpeedLimit=500
-      Session\Port=6881
-      Session\QueueingSystemEnabled=true
-      Session\SSL\Port=55097
-      Session\ShareLimitAction=Stop
-      Session\TempPath=/downloads/incomplete/
+      Session\Port=9124
+      Session\QueueingSystemEnabled=false
+      Session\SSL\Port=24458
       Session\UseAlternativeGlobalSpeedLimit=true
 
       [Core]
       AutoDeleteAddedTorrentFile=Never
 
-      [LegalNotice]
-      Accepted=true
-
       [Meta]
       MigrationVersion=8
 
-      [Network]
-      PortForwardingEnabled=false
-      Proxy\AuthEnabled=false
-      Proxy\HostnameLookupEnabled=false
-      Proxy\IP=${constants.network.forwardProxy.ip}
-      Proxy\Password=
-      Proxy\Port=@Variant(\0\0\0\x85\x4\x38)
-      Proxy\Profiles\BitTorrent=true
-      Proxy\Profiles\Misc=true
-      Proxy\Profiles\RSS=true
-      Proxy\Type=SOCKS5
-      Proxy\Username=
-
       [Preferences]
-      Connection\PortRangeMin=6881
-      Connection\UPnP=false
-      Downloads\SavePath=/downloads/
-      Downloads\TempPath=/downloads/incomplete/
       General\Locale=en
       MailNotification\req_auth=true
       Scheduler\end_time=@Variant(\0\0\0\xf\x5%q\xa0)
-      WebUI\Address=*
       WebUI\AuthSubnetWhitelist=@Invalid()
       WebUI\Password_PBKDF2="$QB_PASSWORD"
-      WebUI\ServerDomains=*
+      WebUI\Username=$QB_USERNAME
 
       [RSS]
       AutoDownloader\DownloadRepacks=true

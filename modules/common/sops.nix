@@ -18,6 +18,9 @@
             root-password = {};
             sandro-password = {};
             "wireless.env" = {};
+            qbittorrent-username = {
+                owner = "sandro";
+            };
             qbittorrent-password = {
                 owner = "sandro";
             };
