@@ -40,6 +40,7 @@ in
 	home-manager.users.sandro.home = {
 		username = "sandro";
 		homeDirectory = "/home/sandro";
+		file."useful-commands.md".source = ./home/useful-commands.md;
 		# file."docker-compose.yml".source = ./home/docker-compose.yml;
 		# file."docker-constants.env".text = ''
 		# 	DNS_PRIMARY=${builtins.elemAt constants.network.dns 0}
