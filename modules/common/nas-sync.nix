@@ -13,31 +13,30 @@ in
             type = lib.types.str;
             description = "Unique name for this sync operation";
           };
+          nfsMount = lib.mkOption {
+            type = lib.types.str;
+            description = "NFS mount point to use as base";
+            example = "/mnt/configurations";
+          };
           source = lib.mkOption {
             type = lib.types.str;
             description = "Source path on NAS (relative to mounted NFS share)";
-            example = "data/movies";
+            example = "/my-app";
           };
           target = lib.mkOption {
             type = lib.types.str;
             description = "Target local path";
-            example = "/var/lib/movies";
-          };
-          nfsMount = lib.mkOption {
-            type = lib.types.str;
-            description = "NFS mount point to use as base";
-            default = "/mnt/movies";
-            example = "/mnt/movies";
+            example = "/home/sandro/my-app";
           };
           user = lib.mkOption {
             type = lib.types.int;
             description = "User to own the synced files";
-            default = 0;
+            default = constants.users.alfred;
           };
           group = lib.mkOption {
             type = lib.types.int;
             description = "Group to own the synced files";
-            default = 0;
+            default = constants.groups.users;
           };
           mode = lib.mkOption {
             type = lib.types.str;
