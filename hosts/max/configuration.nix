@@ -24,6 +24,7 @@ in
 		../../modules/common/sops.nix
 		../../modules/common/kmscon.nix
 		../../modules/network/nfs.nix
+		../../modules/common/nas-sync.nix
 		../../users/root.nix
 		(import ../../users/sandro.nix { inherit config pkgs hostname_format; })
 		../../users/alfred.nix

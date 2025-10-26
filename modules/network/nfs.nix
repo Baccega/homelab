@@ -12,6 +12,14 @@ in
             mountConfig = {
                 Options = "noatime,nfsvers=4.1";
             };
+            what = "${constants.nas.ip}:/volume1/configurations";
+            where = "/mnt/configurations";
+        }
+        {
+            type = "nfs";
+            mountConfig = {
+                Options = "noatime,nfsvers=4.1";
+            };
             what = "${constants.nas.ip}:/volume1/data/movies";
             where = "/mnt/movies";
         }
@@ -42,6 +50,11 @@ in
     ];
 
     systemd.automounts = [
+        {
+            wantedBy = [ "multi-user.target" ];
+            after = [ "network.target" ];
+            where = "/mnt/configurations";
+        }
         {
             wantedBy = [ "multi-user.target" ];
             after = [ "network.target" ];

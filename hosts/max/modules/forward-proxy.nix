@@ -34,7 +34,21 @@ in
   # Ensure container starts before other services
   systemd.services.podman-forward-proxy = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" ];
+    after = [ "network.target" "nas-sync.service" ];
+  };
+
+  services.nas-sync = {
+    enable = true;
+    syncPaths = [
+      {
+        name = "vpn-configurations-files";
+        nfsMount = "/mnt/configurations";
+        source = "vpn";
+        target = "/home/sandro/vpn";
+        user = constants.users.alfred;
+        group = constants.groups.users;
+      }
+    ];
   };
 }
 
