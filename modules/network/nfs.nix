@@ -44,30 +44,22 @@ in
     systemd.automounts = [
         {
             wantedBy = [ "multi-user.target" ];
-            automountConfig = {
-                TimeoutIdleSec = "600";
-            };
+            after = [ "network.target" ];
             where = "/mnt/movies";
         }
         {
             wantedBy = [ "multi-user.target" ];
-            automountConfig = {
-                TimeoutIdleSec = "600";
-            };
+            after = [ "network.target" ];
             where = "/mnt/tv_shows";
         }
         {
             wantedBy = [ "multi-user.target" ];
-            automountConfig = {
-                TimeoutIdleSec = "600";
-            };
+            after = [ "network.target" ];
             where = "/mnt/downloads";
         }
         {
             wantedBy = [ "multi-user.target" ];
-            automountConfig = {
-                TimeoutIdleSec = "600";
-            };
+            after = [ "network.target" ];
             where = "/mnt/videocassette";
         }
     ];

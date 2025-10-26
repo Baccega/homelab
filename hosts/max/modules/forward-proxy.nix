@@ -34,7 +34,7 @@ in
   # Ensure container starts before other services
   systemd.services.podman-forward-proxy = {
     wantedBy = [ "multi-user.target" ];
-    before = [ "podman-qbittorrent.service" "podman-sabnzbd.service" ];
+    after = [ "network.target" ];
   };
 }
 
