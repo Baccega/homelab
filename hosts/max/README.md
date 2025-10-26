@@ -1,6 +1,6 @@
 # Max Host Configuration
 
-This directory contains the NixOS configuration for the `max` host, which serves as a media download server.
+This directory contains the NixOS configuration for the `max` host.
 
 ## Structure
 
@@ -9,53 +9,38 @@ max/
 ├── configuration.nix          # Main host configuration
 ├── disk-config.nix           # Disk partitioning setup
 ├── hardware-configuration.nix # Hardware-specific settings
+├── hardware/
+│   └── nvidia-1050ti.nix     # NVIDIA GPU configuration
 ├── home/
-│   └── docker-compose.yml    # Docker services
+│   ├── docker-compose.yml    # Reference Docker services (migrating to Podman)
+│   └── useful-commands.md    # Podman and systemd management commands
 └── modules/
     ├── qbittorrent.nix       # qBittorrent configuration with SOPS secrets
-    └── sabnzbd.nix           # SABnzbd configuration with SOPS secrets
+    ├── sabnzbd.nix           # SABnzbd configuration with SOPS secrets
+    └── forward-proxy.nix     # OpenVPN SOCKS5 proxy configuration
 ```
 
 ## Services
 
-### Docker Services
+### Container Services (Podman)
 
-All Docker services are managed via `docker-compose.yml`:
+- **qBittorrent**: BitTorrent client with VPN proxy (port 8080, podman-qbittorrent.service)
+- **SABnzbd**: Usenet download client (port 8081, podman-sabnzbd.service)
+  - sabnzbd-config.service
+- **forward-proxy**: OpenVPN SOCKS5 proxy for download clients (port 1080, podman-forward-proxy.service)
 
-- **qBittorrent**: BitTorrent client with VPN proxy (port 8080)
-- **SABnzbd**: Usenet download client (port 8081)
-- **forward-proxy**: OpenVPN SOCKS5 proxy for download clients
+### Systemd Services
+
+- **backup-<SERVICE_NAME>-configs**: Automated backup service using rsync to NFS-mounted NAS
+- **nas-sync-<SERVICE_NAME>-configs**: One-way sync service from NAS to local filesystem (If there are no local configuration files in the host)
+- **mnt-<MOUNT_POINT_FOLDER>.mount**: Automated mounting of NAS shares for media and configurations
 
 ## Service Execution Flow
 
-1. **Boot**: `sops-nix.service` decrypts secrets
-2. **Config Generation**:
-   - `qbittorrent-config.service` generates qBittorrent config
+1. **Boot**:
+   - NFS automounts establish connections to NAS
+2. **NAS Sync**: One-way sync services pull configuration data from NAS
+3. **Config Generation**:
    - `sabnzbd-config.service` generates SABnzbd config
-3. **Home Manager**: Deploys `docker-compose.yml`
-4. **Docker**: `docker-compose.service` starts containers
-
-## Troubleshooting
-
-### Check config generation
-
-```bash
-systemctl status qbittorrent-config.service
-systemctl status sabnzbd-config.service
-```
-
-### Check Docker services
-
-```bash
-docker-compose -f /home/sandro/docker-compose.yml ps
-docker-compose -f /home/sandro/docker-compose.yml logs qbittorrent
-docker-compose -f /home/sandro/docker-compose.yml logs sabnzbd
-```
-
-### Manually regenerate configs
-
-```bash
-sudo systemctl restart qbittorrent-config.service
-sudo systemctl restart sabnzbd-config.service
-sudo systemctl restart docker-compose.service
-```
+4. **Container Services**: Podman systemd services start containers
+5. **Backup Services**: Automated backup jobs sync local data to NAS

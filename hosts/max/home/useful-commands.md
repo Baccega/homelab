@@ -17,12 +17,19 @@ systemctl status podman-<SERVICE_NAME>
 
 # Restart via systemd (NixOS way)
 sudo systemctl restart podman-<SERVICE_NAME>
+```
 
-# Check config generation services
-systemctl status <SERVICE_NAME>-config
+## Systemd
+
+```bash
+# Check status of systemd services
+systemctl status <SERVICE_NAME>
+
+# Restart via systemd (NixOS way)
+sudo systemctl restart <SERVICE_NAME>
 
 # View last 50 lines of systemd logs
-journalctl -u podman-<SERVICE_NAME> -n 50
+journalctl -u <SERVICE_NAME> -n 50
 ```
 
 ## SOPS secrets
