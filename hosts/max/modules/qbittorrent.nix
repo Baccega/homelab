@@ -79,6 +79,16 @@ in
       [Meta]
       MigrationVersion=8
 
+      [Network]
+      Cookies=@Invalid()
+      Proxy\AuthEnabled=false
+      Proxy\HostnameLookupEnabled=true
+      Proxy\IP=${constants.network.forwardProxy.ip}
+      Proxy\Password=
+      Proxy\Port=@Variant(\0\0\0\x85\x4\x38)
+      Proxy\Type=SOCKS5
+      Proxy\Username=
+
       [Preferences]
       General\Locale=en
       MailNotification\req_auth=true

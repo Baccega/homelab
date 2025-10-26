@@ -18,6 +18,7 @@ in
 		./hardware-configuration.nix
 		./modules/qbittorrent.nix
 		./modules/sabnzbd.nix
+		./modules/forward-proxy.nix
 		./hardware/nvidia-1050ti.nix
 		../../modules/common/base.nix
 		../../modules/common/sops.nix
@@ -41,34 +42,6 @@ in
 		username = "sandro";
 		homeDirectory = "/home/sandro";
 		file."useful-commands.md".source = ./home/useful-commands.md;
-		# file."docker-compose.yml".source = ./home/docker-compose.yml;
-		# file."docker-constants.env".text = ''
-		# 	DNS_PRIMARY=${builtins.elemAt constants.network.dns 0}
-		# 	DNS_SECONDARY=${builtins.elemAt constants.network.dns 1}
-		# '';
-		
 		stateVersion = "25.05";
 	};
-
-	# systemd.services.docker-compose = {
-	# 	description = "Run docker-compose (root) from Home Manager hook";
-	# 	# Collect all services ending with -config.service
-	# 	after = [ "docker.service" "network.target" ] ++ 
-	# 		(lib.filter (name: lib.hasSuffix "-config.service" name) 
-	# 			(builtins.attrNames config.systemd.services));
-	# 	requires = [ "docker.service" ];
-	# 	serviceConfig = {
-	# 		Type = "oneshot";
-	# 		RemainAfterExit = false;
-	# 		User = "root";
-	# 		WorkingDirectory = "/home/sandro";
-	# 	};
-	# 	script = ''
-	# 		${pkgs.docker-compose}/bin/docker-compose \
-	# 		--env-file ${config.sops.secrets.max-docker-env.path} \
-	# 		--env-file /home/sandro/docker-constants.env \
-	# 		-f /home/sandro/docker-compose.yml \
-	# 		up -d --remove-orphans
-	# 	'';
-	# };
 }
