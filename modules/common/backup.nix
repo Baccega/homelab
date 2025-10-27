@@ -166,11 +166,11 @@ in
           if jobConfig.schedule == "daily" then {
             OnCalendar = "daily";
             Persistent = true;
-            RandomizedDelaySec = "1h";
+            RandomizedDelaySec = "3h";
           } else if jobConfig.schedule == "weekly" then {
             OnCalendar = "weekly";
             Persistent = true;
-            RandomizedDelaySec = "2h";
+            RandomizedDelaySec = "5h";
           } else {
             OnCalendar = jobConfig.schedule;
             Persistent = true;
