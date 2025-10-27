@@ -25,12 +25,12 @@ in
       "/mnt/tv_shows:/tv"
       "/mnt/downloads:/downloads"
     ];
+    networks = [ "media-stack" ];
   };
 
   systemd.services.podman-sonarr = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "mnt-downloads.mount" "mnt-tv_shows.mount" "nas-sync-sonarr-configs.service" ];
-    requires = [ "mnt-downloads.mount" "mnt-tv_shows.mount" "nas-sync-sonarr-configs.service" ];
+    after = [ "mnt-downloads.mount" "mnt-tv_shows.mount" "nas-sync-sonarr-configs.service" "podman-create-network-media-stack.service" ];
   };
 
   services.nas-sync = {

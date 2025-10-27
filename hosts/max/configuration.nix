@@ -49,4 +49,11 @@ in
 		file."useful-commands.md".source = ./home/useful-commands.md;
 		stateVersion = "25.05";
 	};
+
+	systemd.services.podman-create-network-media-stack = {
+		description = "Create podman media-stack network";
+		serviceConfig.Type = "oneshot";
+		serviceConfig.ExecStart = "${pkgs.bash}/bin/bash -c '${pkgs.podman}/bin/podman network exists media-stack || ${pkgs.podman}/bin/podman network create media-stack'";
+		wantedBy = [ "multi-user.target" ];
+	}; 
 }

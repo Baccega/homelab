@@ -28,13 +28,13 @@ in
       "/home/sandro/sabnzbd:/config"
       "/mnt/downloads:/config/downloads/complete"
     ];
+    networks = [ "media-stack" ];
   };
 
   # Ensure container waits for NFS mount
   systemd.services.podman-sabnzbd = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "mnt-downloads.mount" "sabnzbd-config.service" ];
-    requires = [ "mnt-downloads.mount" "sabnzbd-config.service" ];
+    after = [ "mnt-downloads.mount" "sabnzbd-config.service" "podman-create-network-media-stack.service"  ];
   };
 
   # Generate SABnzbd config with secrets

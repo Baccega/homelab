@@ -25,12 +25,12 @@ in
       "/mnt/movies:/movies"
       "/mnt/downloads:/downloads"
     ];
+    networks = [ "media-stack" ];
   };
 
   systemd.services.podman-radarr = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "mnt-downloads.mount" "mnt-movies.mount" "nas-sync-radarr-configs.service" ];
-    requires = [ "mnt-downloads.mount" "mnt-movies.mount" "nas-sync-radarr-configs.service" ];
+    after = [ "mnt-downloads.mount" "mnt-movies.mount" "nas-sync-radarr-configs.service" "podman-create-network-media-stack.service" ];
   };
 
   services.nas-sync = {

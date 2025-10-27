@@ -23,12 +23,12 @@ in
     volumes = [
       "/home/sandro/prowlarr:/config"
     ];
+    networks = [ "media-stack" ];
   };
 
   systemd.services.podman-prowlarr = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "nas-sync-prowlarr-configs.service" ];
-    requires = [ "nas-sync-prowlarr-configs.service" ];
+    after = [ "nas-sync-prowlarr-configs.service" "podman-create-network-media-stack.service" ];
   };
 
   services.nas-sync = {

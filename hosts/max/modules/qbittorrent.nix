@@ -27,12 +27,12 @@ in
       "/home/sandro/qbittorrent:/config"
       "/mnt/downloads:/downloads"
     ];
+    networks = [ "media-stack" ];
   };
 
   systemd.services.podman-qbittorrent = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "mnt-downloads.mount" "nas-sync-qbittorrent-configs.service" ];
-    requires = [ "mnt-downloads.mount" "nas-sync-qbittorrent-configs.service" ];
+    after = [ "mnt-downloads.mount" "nas-sync-qbittorrent-configs.service" "podman-create-network-media-stack.service"  ];
   };
 
   services.nas-sync = {
