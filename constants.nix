@@ -39,5 +39,14 @@
         sabnzbd = {
             port = 8081;
         };
+        sonarr = {
+            port = 8989;
+        };
+        radarr = {
+            port = 7878;
+        };
+        prowlarr = {
+            port = 9696;
+        };
     };
 }

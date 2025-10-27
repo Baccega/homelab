@@ -19,6 +19,9 @@ in
 		./modules/qbittorrent.nix
 		./modules/sabnzbd.nix
 		./modules/forward-proxy.nix
+		./modules/sonarr.nix
+		./modules/radarr.nix
+		./modules/prowlarr.nix
 		./hardware/nvidia-1050ti.nix
 		../../modules/common/base.nix
 		../../modules/common/sops.nix
