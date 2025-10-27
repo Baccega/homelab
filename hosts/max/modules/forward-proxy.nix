@@ -49,5 +49,18 @@ in
       }
     ];
   };
+
+  backup = {
+    enable = true;
+    jobs = [
+      {
+        name = "vpn-configs";
+        source = "/home/sandro/vpn";
+        nfsMount = "/mnt/configurations";
+        destination = "vpn";
+        schedule = "daily";
+      }
+    ];
+  };
 }
 
