@@ -35,9 +35,9 @@ in
 	];
 
 	networking = {
-		hostName = constants.max.hostname; 
+		hostName = constants.hosts.max.hostname; 
 		interfaces.eno1.ipv4.addresses = [{
-			address = constants.max.ip;
+			address = constants.hosts.max.ip;
 			prefixLength = 24;
 		}];
 	};

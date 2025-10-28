@@ -30,7 +30,7 @@ in
 	networking = {
 		hostName = "laika"; 
 		interfaces.wlp2s0.ipv4.addresses = [{
-			address = constants.laika.ip;
+			address = constants.hosts.laika.ip;
 			prefixLength = 24;
 		}];
 

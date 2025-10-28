@@ -12,7 +12,7 @@ in
             mountConfig = {
                 Options = "noatime,nfsvers=4.1";
             };
-            what = "${constants.nas.ip}:/volume1/configurations";
+            what = "${constants.hosts.nas.ip}:/volume1/configurations";
             where = "/mnt/configurations";
         }
         {
@@ -20,7 +20,7 @@ in
             mountConfig = {
                 Options = "noatime,nfsvers=4.1";
             };
-            what = "${constants.nas.ip}:/volume1/data/movies";
+            what = "${constants.hosts.nas.ip}:/volume1/data/movies";
             where = "/mnt/movies";
         }
         {
@@ -28,7 +28,7 @@ in
             mountConfig = {
                 Options = "noatime,nfsvers=4.1";
             };
-            what = "${constants.nas.ip}:/volume1/data/tv_shows";
+            what = "${constants.hosts.nas.ip}:/volume1/data/tv_shows";
             where = "/mnt/tv_shows";
         }
         {
@@ -36,7 +36,7 @@ in
             mountConfig = {
                 Options = "noatime,nfsvers=4.1";
             };
-            what = "${constants.nas.ip}:/volume1/data/downloads";
+            what = "${constants.hosts.nas.ip}:/volume1/data/downloads";
             where = "/mnt/downloads";
         }
         {
@@ -44,7 +44,7 @@ in
             mountConfig = {
                 Options = "noatime,nfsvers=4.1";
             };
-            what = "${constants.nas.ip}:/volume1/photo/Videocassette e VHS";
+            what = "${constants.hosts.nas.ip}:/volume1/photo/Videocassette e VHS";
             where = "/mnt/videocassette";
         }
     ];
