@@ -42,8 +42,8 @@ in
 
 	# Home manager
 	home-manager.users.sandro.home = { 
-		username = "sandro";
-		homeDirectory = "/home/sandro";
+		username = constants.users.sandro.name;
+		homeDirectory = constants.users.sandro.home;
 		file."docker-compose.yml".source = ./home/docker-compose.yml;
 		stateVersion = "25.05";
 	};
@@ -56,12 +56,12 @@ in
 			Type = "oneshot";
 			RemainAfterExit = false;
 			User = "root";
-			WorkingDirectory = "/home/sandro";
+			WorkingDirectory = constants.users.sandro.home;
 		};
 		script = ''
 			${pkgs.docker-compose}/bin/docker-compose \
 			--env-file ${config.sops.secrets.laika-docker-env.path} \
-			-f /home/sandro/docker-compose.yml \
+			-f ${constants.users.sandro.home}/docker-compose.yml \
 			up -d --remove-orphans
 		'';
 	};

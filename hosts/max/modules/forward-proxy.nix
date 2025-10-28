@@ -18,7 +18,7 @@ in
       "${toString constants.network.forwardProxy.port}:1080"
     ];
     volumes = [
-      "/home/sandro/vpn:/vpn:ro"
+      "${constants.users.sandro.home}/vpn:/vpn:ro"
     ];
     environment = {
       OPENVPN_CONFIG = "/vpn/ch-zur.prod.surfshark.comsurfshark_openvpn_udp.ovpn";
@@ -45,7 +45,7 @@ in
         name = "vpn-configs";
         nfsMount = constants.mountPoints.configurations.path;
         source = "vpn";
-        target = "/home/sandro/vpn";
+        target = "${constants.users.sandro.home}/vpn";
       }
     ];
   };
@@ -55,7 +55,7 @@ in
     jobs = [
       {
         name = "vpn-configs";
-        source = "/home/sandro/vpn";
+        source = "${constants.users.sandro.home}/vpn";
         nfsMount = constants.mountPoints.configurations.path;
         destination = "vpn";
         schedule = "daily";

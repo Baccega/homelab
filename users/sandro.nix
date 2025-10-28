@@ -20,13 +20,13 @@ in
 
     users.users.sandro = {
         isNormalUser = true;
-        uid = constants.users.sandro;
+        uid = constants.users.sandro.uid;
         extraGroups = [
             "wheel" "networkmanager" "podman"
         ];
         hashedPasswordFile = config.sops.secrets.sandro-password.path;
         createHome = true;
-        home = "/home/sandro";
+        home = constants.users.sandro.home;
 
         openssh.authorizedKeys.keys = [
             constants.ssh_keys.macbook_pro_chax

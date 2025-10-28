@@ -35,7 +35,7 @@
             {
               _module.args.nixinate = {
                 host = constants.hosts.laika.ip;
-                sshUser = "sandro";
+                sshUser = constants.users.sandro.name;
                 buildOn = "remote";
                 substituteOnTarget = true;
                 hermetic = false;
@@ -53,7 +53,7 @@
             {
               _module.args.nixinate = {
                 host = constants.hosts.max.ip;
-                sshUser = "sandro";
+                sshUser = constants.users.sandro.name;
                 buildOn = "remote";
                 substituteOnTarget = true;
                 hermetic = false;

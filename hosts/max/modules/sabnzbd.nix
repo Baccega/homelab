@@ -18,14 +18,14 @@ in
       config.sops.secrets.max-docker-env.path
     ]; 
     environment = {
-      PUID = toString constants.users.alfred;
+      PUID = toString constants.users.alfred.uid;
       PGID = toString constants.groups.users;
     };
     ports = [
       "${toString constants.services.sabnzbd.port}:8080"
     ];
     volumes = [
-      "/home/sandro/sabnzbd:/config"
+      "${constants.users.sandro.home}/sabnzbd:/config"
       "${constants.mountPoints.downloads.path}:/config/downloads/complete"
     ];
     networks = [ "media-stack" ];
@@ -48,7 +48,7 @@ in
       User = "root";
     };
     script = ''
-      mkdir -p /home/sandro/sabnzbd
+      mkdir -p ${constants.users.sandro.home}/sabnzbd
       
       # Read secrets from SOPS
       SAB_USERNAME=$(cat ${config.sops.secrets.sabnzbd-username.path})
@@ -59,7 +59,7 @@ in
       USENET_USERNAME=$(cat ${config.sops.secrets.usenet-username.path})
       USENET_PASSWORD=$(cat ${config.sops.secrets.usenet-password.path})
       
-      cat > /home/sandro/sabnzbd/sabnzbd.ini << EOF
+      cat > ${constants.users.sandro.home}/sabnzbd/sabnzbd.ini << EOF
       __version__ = 19
       __encoding__ = utf-8
       [misc]

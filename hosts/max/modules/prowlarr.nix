@@ -21,7 +21,7 @@ in
       "${toString constants.services.prowlarr.port}:9696"
     ];
     volumes = [
-      "/home/sandro/prowlarr:/config"
+      "${constants.users.sandro.home}/prowlarr:/config"
     ];
     networks = [ "media-stack" ];
   };
@@ -38,8 +38,8 @@ in
         name = "prowlarr-configs";
         nfsMount = constants.mountPoints.configurations.path;
         source = "prowlarr";
-        target = "/home/sandro/prowlarr/Backups/";
-        user = constants.users.alfred;
+        target = "${constants.users.sandro.home}/prowlarr/Backups/";
+        user = constants.users.alfred.uid;
         group = constants.groups.users;
       }
     ];
@@ -50,7 +50,7 @@ in
     jobs = [
       {
         name = "prowlarr-configs";
-        source = "/home/sandro/prowlarr/Backups/";
+        source = "${constants.users.sandro.home}/prowlarr/Backups/";
         nfsMount = constants.mountPoints.configurations.path;
         destination = "prowlarr";
         exclude = [ "logs/" ];

@@ -24,7 +24,7 @@ in
       "${toString constants.services.qbittorrent.torrentPort}:6881/udp"
     ];
     volumes = [
-      "/home/sandro/qbittorrent:/config"
+      "${constants.users.sandro.home}/qbittorrent:/config"
       "${constants.mountPoints.downloads.path}:/downloads"
     ];
     networks = [ "media-stack" ];
@@ -42,8 +42,8 @@ in
         name = "qbittorrent-configs";
         nfsMount = constants.mountPoints.configurations.path;
         source = "qbittorrent";
-        target = "/home/sandro/qbittorrent";
-        user = constants.users.alfred;
+        target = "${constants.users.sandro.home}/qbittorrent";
+        user = constants.users.alfred.uid;
         group = constants.groups.users;
       }
     ];
@@ -54,7 +54,7 @@ in
     jobs = [
       {
         name = "qbittorrent-configs";
-        source = "/home/sandro/qbittorrent";
+        source = "${constants.users.sandro.home}/qbittorrent";
         nfsMount = constants.mountPoints.configurations.path;
         destination = "qbittorrent";
         exclude = [ "qBittorrent/logs/" ];

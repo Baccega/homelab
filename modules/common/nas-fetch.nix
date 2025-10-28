@@ -31,7 +31,7 @@ in
           user = lib.mkOption {
             type = lib.types.int;
             description = "User to own the synced files";
-            default = constants.users.alfred;
+            default = constants.users.alfred.uid;
           };
           group = lib.mkOption {
             type = lib.types.int;

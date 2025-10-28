@@ -21,7 +21,7 @@ in
       "${toString constants.services.radarr.port}:7878"
     ];
     volumes = [
-      "/home/sandro/radarr:/config"
+      "${constants.users.sandro.home}/radarr:/config"
       "${constants.mountPoints.movies.path}:/movies"
       "${constants.mountPoints.downloads.path}:/downloads"
     ];
@@ -40,8 +40,8 @@ in
         name = "radarr-configs";
         nfsMount = constants.mountPoints.configurations.path;
         source = "radarr";
-        target = "/home/sandro/radarr/Backups/";
-        user = constants.users.alfred;
+        target = "${constants.users.sandro.home}/radarr/Backups/";
+        user = constants.users.alfred.uid;
         group = constants.groups.users;
       }
     ];
@@ -52,7 +52,7 @@ in
     jobs = [
       {
         name = "radarr-configs";
-        source = "/home/sandro/radarr/Backups/";
+        source = "${constants.users.sandro.home}/radarr/Backups/";
         nfsMount = constants.mountPoints.configurations.path;
         destination = "radarr";
         exclude = [ "logs/" ];

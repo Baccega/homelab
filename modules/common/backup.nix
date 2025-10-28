@@ -43,7 +43,7 @@ in
           };
           user = lib.mkOption {
             type = lib.types.int;
-            default = constants.users.alfred;
+            default = constants.users.alfred.uid;
             description = "User to run the backup as";
           };
           group = lib.mkOption {

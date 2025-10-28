@@ -44,8 +44,8 @@ in
 
 	# Home manager
 	home-manager.users.sandro.home = {
-		username = "sandro";
-		homeDirectory = "/home/sandro";
+		username = constants.users.sandro.name;
+		homeDirectory = constants.users.sandro.home;
 		file."useful-commands.md".source = ./home/useful-commands.md;
 		stateVersion = "25.05";
 	};

@@ -21,7 +21,7 @@ in
       "${toString constants.services.sonarr.port}:8989"
     ];
     volumes = [
-      "/home/sandro/sonarr:/config"
+      "${constants.users.sandro.home}/sonarr:/config"
       "${constants.mountPoints.tv_shows.path}:/tv"
       "${constants.mountPoints.downloads.path}:/downloads"
     ];
@@ -40,8 +40,8 @@ in
         name = "sonarr-configs";
         nfsMount = constants.mountPoints.configurations.path;
         source = "sonarr";
-        target = "/home/sandro/sonarr/Backups/";
-        user = constants.users.alfred;
+        target = "${constants.users.sandro.home}/sonarr/Backups/";
+        user = constants.users.alfred.uid;
         group = constants.groups.users;
       }
     ];
@@ -52,7 +52,7 @@ in
     jobs = [
       {
         name = "sonarr-configs";
-        source = "/home/sandro/sonarr/Backups/";
+        source = "${constants.users.sandro.home}/sonarr/Backups/";
         nfsMount = constants.mountPoints.configurations.path;
         destination = "sonarr";
         exclude = [ "logs/" ];
