@@ -28,7 +28,7 @@ in
 
   systemd.services.podman-prowlarr = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "nas-fetch-prowlarr-configs.service" "podman-create-network-media-stack.service" ];
+    after = [ "nas-fetch-prowlarr-configs.service" "podman-create-network-media-stack.service" "podman-forward-proxy.service" ];
   };
 
   services.nas-fetch = {

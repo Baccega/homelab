@@ -27,15 +27,14 @@ in
       "--cap-add=NET_ADMIN"
       "--cap-add=NET_RAW"
       "--device=/dev/net/tun"
-      "--network=bridge"
     ];
+    networks = [ "media-stack" ];
   };
 
   # Ensure container starts before other services
   systemd.services.podman-forward-proxy = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" "nas-fetch-vpn-configs.service" ];
-    requires = [ "network.target" "nas-fetch-vpn-configs.service" ];
+    after = [ "network.target" "nas-fetch-vpn-configs.service" "podman-create-network-media-stack.service" ];
   };
 
   services.nas-fetch = {
