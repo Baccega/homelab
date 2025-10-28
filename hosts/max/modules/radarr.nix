@@ -22,15 +22,15 @@ in
     ];
     volumes = [
       "/home/sandro/radarr:/config"
-      "/mnt/movies:/movies"
-      "/mnt/downloads:/downloads"
+      "${constants.mountPoints.movies.path}:/movies"
+      "${constants.mountPoints.downloads.path}:/downloads"
     ];
     networks = [ "media-stack" ];
   };
 
   systemd.services.podman-radarr = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "mnt-downloads.mount" "mnt-movies.mount" "nas-fetch-radarr-configs.service" "podman-create-network-media-stack.service" ];
+    after = [ "${constants.mountPoints.downloads.name}.mount" "${constants.mountPoints.movies.name}.mount" "nas-fetch-radarr-configs.service" "podman-create-network-media-stack.service" ];
   };
 
   services.nas-fetch = {
@@ -38,7 +38,7 @@ in
     syncPaths = [
       {
         name = "radarr-configs";
-        nfsMount = "/mnt/configurations";
+        nfsMount = constants.mountPoints.configurations.path;
         source = "radarr";
         target = "/home/sandro/radarr/Backups/";
         user = constants.users.alfred;
@@ -53,7 +53,7 @@ in
       {
         name = "radarr-configs";
         source = "/home/sandro/radarr/Backups/";
-        nfsMount = "/mnt/configurations";
+        nfsMount = constants.mountPoints.configurations.path;
         destination = "radarr";
         exclude = [ "logs/" ];
         schedule = "daily";

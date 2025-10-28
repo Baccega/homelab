@@ -25,14 +25,14 @@ in
     ];
     volumes = [
       "/home/sandro/qbittorrent:/config"
-      "/mnt/downloads:/downloads"
+      "${constants.mountPoints.downloads.path}:/downloads"
     ];
     networks = [ "media-stack" ];
   };
 
   systemd.services.podman-qbittorrent = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "mnt-downloads.mount" "nas-fetch-qbittorrent-configs.service" "podman-create-network-media-stack.service"  ];
+    after = [ "${constants.mountPoints.downloads.name}.mount" "nas-fetch-qbittorrent-configs.service" "podman-create-network-media-stack.service"  ];
   };
 
   services.nas-fetch = {
@@ -40,7 +40,7 @@ in
     syncPaths = [
       {
         name = "qbittorrent-configs";
-        nfsMount = "/mnt/configurations";
+        nfsMount = constants.mountPoints.configurations.path;
         source = "qbittorrent";
         target = "/home/sandro/qbittorrent";
         user = constants.users.alfred;
@@ -55,7 +55,7 @@ in
       {
         name = "qbittorrent-configs";
         source = "/home/sandro/qbittorrent";
-        nfsMount = "/mnt/configurations";
+        nfsMount = constants.mountPoints.configurations.path;
         destination = "qbittorrent";
         exclude = [ "qBittorrent/logs/" ];
         schedule = "daily";

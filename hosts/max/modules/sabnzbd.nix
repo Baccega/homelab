@@ -26,7 +26,7 @@ in
     ];
     volumes = [
       "/home/sandro/sabnzbd:/config"
-      "/mnt/downloads:/config/downloads/complete"
+      "${constants.mountPoints.downloads.path}:/config/downloads/complete"
     ];
     networks = [ "media-stack" ];
   };
@@ -34,7 +34,7 @@ in
   # Ensure container waits for NFS mount
   systemd.services.podman-sabnzbd = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "mnt-downloads.mount" "sabnzbd-config.service" "podman-create-network-media-stack.service"  ];
+    after = [ "${constants.mountPoints.downloads.name}.mount" "sabnzbd-config.service" "podman-create-network-media-stack.service"  ];
   };
 
   # Generate SABnzbd config with secrets

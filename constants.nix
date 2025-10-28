@@ -7,6 +7,28 @@
             port = 1080;
         };
     };
+    mountPoints = {
+        configurations = {
+            path = "/mnt/configurations";
+            name = "configurations";
+        };
+        movies = {
+            path = "/mnt/movies";
+            name = "movies";
+        };
+        tv_shows = {
+            path = "/mnt/tv_shows";
+            name = "tv_shows";
+        };
+        downloads = {
+            path = "/mnt/downloads";
+            name = "downloads";
+        };
+        videocassette = {
+            path = "/mnt/videocassette";
+            name = "videocassette";
+        };
+    };
     laika = {
         hostname = "laika";
         ip = "192.168.1.60";

@@ -36,7 +36,7 @@ in
     syncPaths = [
       {
         name = "prowlarr-configs";
-        nfsMount = "/mnt/configurations";
+        nfsMount = constants.mountPoints.configurations.path;
         source = "prowlarr";
         target = "/home/sandro/prowlarr/Backups/";
         user = constants.users.alfred;
@@ -51,7 +51,7 @@ in
       {
         name = "prowlarr-configs";
         source = "/home/sandro/prowlarr/Backups/";
-        nfsMount = "/mnt/configurations";
+        nfsMount = constants.mountPoints.configurations.path;
         destination = "prowlarr";
         exclude = [ "logs/" ];
         schedule = "daily";

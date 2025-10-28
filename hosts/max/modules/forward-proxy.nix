@@ -43,7 +43,7 @@ in
     syncPaths = [
       {
         name = "vpn-configs";
-        nfsMount = "/mnt/configurations";
+        nfsMount = constants.mountPoints.configurations.path;
         source = "vpn";
         target = "/home/sandro/vpn";
       }
@@ -56,7 +56,7 @@ in
       {
         name = "vpn-configs";
         source = "/home/sandro/vpn";
-        nfsMount = "/mnt/configurations";
+        nfsMount = constants.mountPoints.configurations.path;
         destination = "vpn";
         schedule = "daily";
       }

@@ -22,15 +22,15 @@ in
     ];
     volumes = [
       "/home/sandro/sonarr:/config"
-      "/mnt/tv_shows:/tv"
-      "/mnt/downloads:/downloads"
+      "${constants.mountPoints.tv_shows.path}:/tv"
+      "${constants.mountPoints.downloads.path}:/downloads"
     ];
     networks = [ "media-stack" ];
   };
 
   systemd.services.podman-sonarr = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "mnt-downloads.mount" "mnt-tv_shows.mount" "nas-fetch-sonarr-configs.service" "podman-create-network-media-stack.service" ];
+    after = [ "${constants.mountPoints.downloads.name}.mount" "${constants.mountPoints.tv_shows.name}.mount" "nas-fetch-sonarr-configs.service" "podman-create-network-media-stack.service" ];
   };
 
   services.nas-fetch = {
@@ -38,7 +38,7 @@ in
     syncPaths = [
       {
         name = "sonarr-configs";
-        nfsMount = "/mnt/configurations";
+        nfsMount = constants.mountPoints.configurations.path;
         source = "sonarr";
         target = "/home/sandro/sonarr/Backups/";
         user = constants.users.alfred;
@@ -53,7 +53,7 @@ in
       {
         name = "sonarr-configs";
         source = "/home/sandro/sonarr/Backups/";
-        nfsMount = "/mnt/configurations";
+        nfsMount = constants.mountPoints.configurations.path;
         destination = "sonarr";
         exclude = [ "logs/" ];
         schedule = "daily";

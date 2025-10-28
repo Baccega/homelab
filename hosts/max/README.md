@@ -33,7 +33,7 @@ max/
 
 - **backup-<SERVICE_NAME>-configs**: Automated backup service using rsync to NFS-mounted NAS
 - **nas-fetch-<SERVICE_NAME>-configs**: One-way fetch service from NAS to local filesystem (If there are no local configuration files in the host)
-- **mnt-<MOUNT_POINT_FOLDER>.mount**: Automated mounting of NAS shares for media and configurations
+- **<MOUNT_POINT_NAME>.mount**: Automated mounting of NAS shares for media and configurations (e.g., downloads.mount, movies.mount, tv_shows.mount, configurations.mount)
 
 ## Service Execution Flow
 
