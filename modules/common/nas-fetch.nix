@@ -3,7 +3,7 @@ let
   constants = import ../../constants.nix;
 in
 {
-  options.services.nas-sync = {
+  options.services.nas-fetch = {
     enable = lib.mkEnableOption "NAS sync service";
     
     syncPaths = lib.mkOption {
@@ -50,13 +50,13 @@ in
     };
   };
 
-  config = lib.mkIf config.services.nas-sync.enable {
+  config = lib.mkIf config.services.nas-fetch.enable {
     # Ensure rsync is available
     environment.systemPackages = with pkgs; [ rsync ];
 
     # Create systemd services for each sync path
     systemd.services = lib.listToAttrs (map (syncPath: {
-      name = "nas-sync-${syncPath.name}";
+      name = "nas-fetch-${syncPath.name}";
       value = {
         description = "Sync ${syncPath.name} from NAS";
         wantedBy = [ "multi-user.target" ];
@@ -66,7 +66,7 @@ in
         serviceConfig = {
           Type = "oneshot";
           User = "root";
-          ExecStart = pkgs.writeShellScript "nas-sync-${syncPath.name}.sh" ''
+          ExecStart = pkgs.writeShellScript "nas-fetch-${syncPath.name}.sh" ''
             set -euo pipefail
             
             # Source and target paths
@@ -111,6 +111,6 @@ in
           '';
         };
       };
-    }) config.services.nas-sync.syncPaths);
+    }) config.services.nas-fetch.syncPaths);
   };
 }

@@ -32,10 +32,10 @@ in
 
   systemd.services.podman-qbittorrent = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "mnt-downloads.mount" "nas-sync-qbittorrent-configs.service" "podman-create-network-media-stack.service"  ];
+    after = [ "mnt-downloads.mount" "nas-fetch-qbittorrent-configs.service" "podman-create-network-media-stack.service"  ];
   };
 
-  services.nas-sync = {
+  services.nas-fetch = {
     enable = true;
     syncPaths = [
       {

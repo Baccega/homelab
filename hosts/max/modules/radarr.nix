@@ -30,10 +30,10 @@ in
 
   systemd.services.podman-radarr = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "mnt-downloads.mount" "mnt-movies.mount" "nas-sync-radarr-configs.service" "podman-create-network-media-stack.service" ];
+    after = [ "mnt-downloads.mount" "mnt-movies.mount" "nas-fetch-radarr-configs.service" "podman-create-network-media-stack.service" ];
   };
 
-  services.nas-sync = {
+  services.nas-fetch = {
     enable = true;
     syncPaths = [
       {

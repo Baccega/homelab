@@ -30,10 +30,10 @@ in
 
   systemd.services.podman-sonarr = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "mnt-downloads.mount" "mnt-tv_shows.mount" "nas-sync-sonarr-configs.service" "podman-create-network-media-stack.service" ];
+    after = [ "mnt-downloads.mount" "mnt-tv_shows.mount" "nas-fetch-sonarr-configs.service" "podman-create-network-media-stack.service" ];
   };
 
-  services.nas-sync = {
+  services.nas-fetch = {
     enable = true;
     syncPaths = [
       {

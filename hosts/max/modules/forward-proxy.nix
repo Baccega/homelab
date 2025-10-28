@@ -34,11 +34,11 @@ in
   # Ensure container starts before other services
   systemd.services.podman-forward-proxy = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" "nas-sync-vpn-configs.service" ];
-    requires = [ "network.target" "nas-sync-vpn-configs.service" ];
+    after = [ "network.target" "nas-fetch-vpn-configs.service" ];
+    requires = [ "network.target" "nas-fetch-vpn-configs.service" ];
   };
 
-  services.nas-sync = {
+  services.nas-fetch = {
     enable = true;
     syncPaths = [
       {

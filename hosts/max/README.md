@@ -32,14 +32,14 @@ max/
 ### Systemd Services
 
 - **backup-<SERVICE_NAME>-configs**: Automated backup service using rsync to NFS-mounted NAS
-- **nas-sync-<SERVICE_NAME>-configs**: One-way sync service from NAS to local filesystem (If there are no local configuration files in the host)
+- **nas-fetch-<SERVICE_NAME>-configs**: One-way fetch service from NAS to local filesystem (If there are no local configuration files in the host)
 - **mnt-<MOUNT_POINT_FOLDER>.mount**: Automated mounting of NAS shares for media and configurations
 
 ## Service Execution Flow
 
 1. **Boot**:
    - NFS automounts establish connections to NAS
-2. **NAS Sync**: One-way sync services pull configuration data from NAS
+2. **NAS Fetch**: Fetch service to pull configuration data from NAS
 3. **Config Generation**:
    - `sabnzbd-config.service` generates SABnzbd config
 4. **Container Services**: Podman systemd services start containers

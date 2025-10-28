@@ -28,10 +28,10 @@ in
 
   systemd.services.podman-prowlarr = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "nas-sync-prowlarr-configs.service" "podman-create-network-media-stack.service" ];
+    after = [ "nas-fetch-prowlarr-configs.service" "podman-create-network-media-stack.service" ];
   };
 
-  services.nas-sync = {
+  services.nas-fetch = {
     enable = true;
     syncPaths = [
       {
