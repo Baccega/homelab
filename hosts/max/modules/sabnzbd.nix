@@ -26,7 +26,7 @@ in
     ];
     volumes = [
       "${constants.users.sandro.home}/sabnzbd:/config"
-      "${constants.mountPoints.downloads.path}:/config/downloads/complete"
+      "${constants.mountPoints.downloads.path}:/downloads"
     ];
     networks = [ "media-stack" ];
   };
