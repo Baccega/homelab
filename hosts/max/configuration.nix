@@ -22,6 +22,7 @@ in
 		./modules/sonarr.nix
 		./modules/radarr.nix
 		./modules/prowlarr.nix
+		./modules/plex.nix
 		./hardware/nvidia-1050ti.nix
 		../../modules/common/base.nix
 		../../modules/common/sops.nix
