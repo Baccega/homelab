@@ -40,7 +40,7 @@ in
         name = "sabnzbd-configs";
         nfsMount = constants.mountPoints.configurations.path;
         source = "sabnzbd";
-        target = "${constants.users.sandro.home}/sabnzbd";
+        target = "${constants.users.sandro.home}/sabnzbd/backups";
         user = constants.users.alfred.uid;
         group = constants.groups.users;
       }
@@ -52,10 +52,9 @@ in
     jobs = [
       {
         name = "sabnzbd-configs";
-        source = "${constants.users.sandro.home}/sabnzbd";
+        source = "${constants.users.sandro.home}/sabnzbd/backups";
         nfsMount = constants.mountPoints.configurations.path;
         destination = "sabnzbd";
-        exclude = [ "logs/" "downloads/" "Downloads/" ];
         schedule = "daily";
       }
     ];
