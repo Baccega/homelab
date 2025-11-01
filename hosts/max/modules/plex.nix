@@ -31,26 +31,16 @@ in
     environment = {
       VERSION = "docker";
     };
-    ports = [
-      "32400:32400"
-      "8324:8324"
-      "32469:32469"
-      "1900:1900/udp"
-      "5353:5353/udp"
-      "32410:32410/udp"
-      "32412:32412/udp"
-      "32413:32413/udp"
-      "32414:32414/udp"
-    ];
     volumes = [
       "${constants.users.sandro.home}/plex:/config"
       "${constants.mountPoints.tv_shows.path}:/tv"
       "${constants.mountPoints.movies.path}:/movies"
       "${constants.mountPoints.videocassette.path}:/videocassette"
     ];
-    networks = [ "media-stack" ];
+    networks = [ constants.network.maxNetworkStack.name ];
     extraOptions = [
       "--device=nvidia.com/gpu=all"
+      "--ip=${constants.services.plex.ip}"
     ];
   };
 
@@ -61,7 +51,7 @@ in
       "${constants.mountPoints.movies.name}.mount"
       "${constants.mountPoints.videocassette.name}.mount"
       "nas-fetch-plex-configs.service"
-      "podman-create-network-media-stack.service"
+      "podman-create-network-${constants.network.maxNetworkStack.name}.service"
     ];
   };
 

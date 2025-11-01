@@ -1,10 +1,11 @@
 {
     network = {
         gateway = "192.168.1.1";
+        subnet = "192.168.1.0/24";
         dns = [ "1.1.1.1" "8.8.8.8" ];
-        forwardProxy = {
-            ip = "192.168.1.55";
-            port = 1080;
+        maxNetworkStack = {
+            name = "max-network-stack";
+            ipRange = "192.168.1.200/28";
         };
     };
     mountPoints = {
@@ -63,21 +64,33 @@
         users = 100;
     };
     services = {
+        forwardProxy = {
+            ip = "192.168.1.200";
+            port = 1080;
+        };
+        plex = {
+            ip = "192.168.1.201";
+        };
         qbittorrent = {
             port = 8080;
             torrentPort = 6881;
+            ip = "192.168.1.202";
         };
         sabnzbd = {
-            port = 8081;
+            port = 8080;
+            ip = "192.168.1.203";
         };
         sonarr = {
             port = 8989;
+            ip = "192.168.1.204";
         };
         radarr = {
             port = 7878;
+            ip = "192.168.1.205";
         };
         prowlarr = {
             port = 9696;
+            ip = "192.168.1.206";
         };
     };
 }

@@ -51,10 +51,34 @@ in
 		stateVersion = "25.05";
 	};
 
-	systemd.services.podman-create-network-media-stack = {
-		description = "Create podman media-stack network";
-		serviceConfig.Type = "oneshot";
-		serviceConfig.ExecStart = "${pkgs.bash}/bin/bash -c '${pkgs.podman}/bin/podman network exists media-stack || ${pkgs.podman}/bin/podman network create media-stack'";
+	systemd.services.podman-create-network-max-network-stack = {
+		description = "Create podman max-network-stack ipvlan network";
+		after = [ "network.target" ];
 		wantedBy = [ "multi-user.target" ];
+		
+		serviceConfig = {
+			Type = "oneshot";
+			RemainAfterExit = true;
+			ExecStart = pkgs.writeShellScript "create-podman-network" ''
+				set -e
+				NETWORK_NAME="${constants.network.maxNetworkStack.name}"
+				if ${pkgs.podman}/bin/podman network exists "$NETWORK_NAME" 2>/dev/null; then
+					echo "Network $NETWORK_NAME already exists"
+					exit 0
+				fi
+				
+				# Create the network
+				echo "Creating network: $NETWORK_NAME"
+				${pkgs.podman}/bin/podman network create \
+					--driver ipvlan \
+					--opt parent=eno1 \
+					--subnet ${constants.network.subnet} \
+					--gateway ${constants.network.gateway} \
+					--ip-range ${constants.network.maxNetworkStack.ipRange} \
+					"$NETWORK_NAME"
+				
+				echo "Network $NETWORK_NAME created successfully"
+			'';
+		};
 	}; 
 }

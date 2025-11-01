@@ -17,20 +17,20 @@ in
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
     ];
-    ports = [
-      "${toString constants.services.sonarr.port}:8989"
-    ];
     volumes = [
       "${constants.users.sandro.home}/sonarr:/config"
       "${constants.mountPoints.tv_shows.path}:/tv"
       "${constants.mountPoints.downloads.path}:/downloads"
     ];
-    networks = [ "media-stack" ];
+    networks = [ constants.network.maxNetworkStack.name ];
+    extraOptions = [
+      "--ip=${constants.services.sonarr.ip}"
+    ];
   };
 
   systemd.services.podman-sonarr = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "${constants.mountPoints.downloads.name}.mount" "${constants.mountPoints.tv_shows.name}.mount" "nas-fetch-sonarr-configs.service" "podman-create-network-media-stack.service" ];
+    after = [ "${constants.mountPoints.downloads.name}.mount" "${constants.mountPoints.tv_shows.name}.mount" "nas-fetch-sonarr-configs.service" "podman-create-network-${constants.network.maxNetworkStack.name}.service" ];
   };
 
   services.nas-fetch = {

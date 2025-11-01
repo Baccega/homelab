@@ -17,20 +17,20 @@ in
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
     ];
-    ports = [
-      "${toString constants.services.radarr.port}:7878"
-    ];
     volumes = [
       "${constants.users.sandro.home}/radarr:/config"
       "${constants.mountPoints.movies.path}:/movies"
       "${constants.mountPoints.downloads.path}:/downloads"
     ];
-    networks = [ "media-stack" ];
+    networks = [ constants.network.maxNetworkStack.name ];
+    extraOptions = [
+      "--ip=${constants.services.radarr.ip}"
+    ];
   };
 
   systemd.services.podman-radarr = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "${constants.mountPoints.downloads.name}.mount" "${constants.mountPoints.movies.name}.mount" "nas-fetch-radarr-configs.service" "podman-create-network-media-stack.service" ];
+    after = [ "${constants.mountPoints.downloads.name}.mount" "${constants.mountPoints.movies.name}.mount" "nas-fetch-radarr-configs.service" "podman-create-network-${constants.network.maxNetworkStack.name}.service" ];
   };
 
   services.nas-fetch = {

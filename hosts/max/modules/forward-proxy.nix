@@ -9,14 +9,11 @@ let
 in
 {
   networking.firewall.allowedTCPPorts = [ 
-    constants.network.forwardProxy.port
+    constants.services.forwardProxy.port
   ];
 
   virtualisation.oci-containers.containers.forward-proxy = {
     image = "curve25519xsalsa20poly1305/openvpn:latest";
-    ports = [
-      "${toString constants.network.forwardProxy.port}:1080"
-    ];
     volumes = [
       "${constants.users.sandro.home}/vpn:/vpn:ro"
     ];
@@ -27,14 +24,15 @@ in
       "--cap-add=NET_ADMIN"
       "--cap-add=NET_RAW"
       "--device=/dev/net/tun"
+      "--ip=${constants.services.forwardProxy.ip}"
     ];
-    networks = [ "media-stack" ];
+    networks = [ constants.network.maxNetworkStack.name ];
   };
 
   # Ensure container starts before other services
   systemd.services.podman-forward-proxy = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" "nas-fetch-vpn-configs.service" "podman-create-network-media-stack.service" ];
+    after = [ "network.target" "nas-fetch-vpn-configs.service" "podman-create-network-${constants.network.maxNetworkStack.name}.service" ];
   };
 
   services.nas-fetch = {

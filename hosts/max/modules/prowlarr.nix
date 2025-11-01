@@ -17,18 +17,18 @@ in
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
     ];
-    ports = [
-      "${toString constants.services.prowlarr.port}:9696"
-    ];
     volumes = [
       "${constants.users.sandro.home}/prowlarr:/config"
     ];
-    networks = [ "media-stack" ];
+    networks = [ constants.network.maxNetworkStack.name ];
+    extraOptions = [
+      "--ip=${constants.services.prowlarr.ip}"
+    ];
   };
 
   systemd.services.podman-prowlarr = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "nas-fetch-prowlarr-configs.service" "podman-create-network-media-stack.service" "podman-forward-proxy.service" ];
+    after = [ "nas-fetch-prowlarr-configs.service" "podman-create-network-${constants.network.maxNetworkStack.name}.service" "podman-forward-proxy.service" ];
   };
 
   services.nas-fetch = {
