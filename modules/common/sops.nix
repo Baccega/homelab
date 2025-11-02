@@ -18,31 +18,7 @@
             root-password = {};
             sandro-password = {};
             "wireless.env" = {};
-            qbittorrent-username = {
-                owner = "sandro";
-            };
-            qbittorrent-password = {
-                owner = "sandro";
-            };
-            sabnzbd-username = {
-                owner = "sandro";
-            };
-            sabnzbd-password = {
-                owner = "sandro";
-            };
-            sabnzbd-api-key = {
-                owner = "sandro";
-            };
-            sabnzbd-nzb-key = {
-                owner = "sandro";
-            };
-            usenet-host = {
-                owner = "sandro";
-            };
-            usenet-username = {
-                owner = "sandro";
-            };
-            usenet-password = {
+            code-server-password = {
                 owner = "sandro";
             };
             # github_token = {
