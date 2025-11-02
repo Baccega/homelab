@@ -23,6 +23,7 @@ in
 		./modules/radarr.nix
 		./modules/prowlarr.nix
 		./modules/plex.nix
+		./modules/home-assistant.nix
 		./hardware/nvidia-1050ti.nix
 		../../modules/common/base.nix
 		../../modules/common/sops.nix
