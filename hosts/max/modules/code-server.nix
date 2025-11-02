@@ -36,5 +36,10 @@ in
     wantedBy = [ "multi-user.target" ];
     after = [ "podman-create-network-${constants.network.maxNetworkStack.name}.service" ];
   };
+
+  # Grant alfred read access to /home/sandro via group permissions
+  systemd.tmpfiles.rules = [
+    "d ${constants.users.sandro.home} 0755 ${constants.users.sandro.name} ${toString constants.groups.users} -"
+  ]; 
 }
 
