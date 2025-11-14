@@ -50,7 +50,7 @@ in
     jobs = [
       {
         name = "prowlarr-configs";
-        source = "${constants.users.sandro.home}/prowlarr/Backups/";
+        source = "${constants.users.sandro.home}/prowlarr/Backups";
         nfsMount = constants.mountPoints.configurations.path;
         destination = "prowlarr";
         exclude = [ "logs/" ];

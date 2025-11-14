@@ -53,7 +53,7 @@ in
     jobs = [
       {
         name = "home-assistant-configs";
-        source = "${constants.users.sandro.home}/home-assistant/backups/";
+        source = "${constants.users.sandro.home}/home-assistant/backups";
         nfsMount = constants.mountPoints.configurations.path;
         destination = "home-assistant";
         schedule = "daily";

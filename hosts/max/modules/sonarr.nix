@@ -52,10 +52,9 @@ in
     jobs = [
       {
         name = "sonarr-configs";
-        source = "${constants.users.sandro.home}/sonarr/Backups/";
+        source = "${constants.users.sandro.home}/sonarr/Backups";
         nfsMount = constants.mountPoints.configurations.path;
         destination = "sonarr";
-        exclude = [ "logs/" ];
         schedule = "daily";
       }
     ];

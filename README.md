@@ -8,6 +8,12 @@ To deploy a new build to a remote machine I'm using [nixinate](https://github.co
 nix run .#apps.nixinate.HOSTNAME
 ```
 
+To update the flake inputs, run the following command:
+
+```
+nix flake update
+```
+
 ## Hosts
 
 All of the hostnames are 🐶 inspired.
