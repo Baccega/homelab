@@ -31,7 +31,7 @@ in
 
   systemd.services.podman-homeassistant = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "podman-create-network-${constants.network.maxNetworkStack.name}.service" "nas-fetch-home-assistant-configs.service" ];
+    after = [ "create-podman-network-${constants.network.maxNetworkStack.name}.service" "nas-fetch-home-assistant-configs.service" ];
   };
 
   services.nas-fetch = {

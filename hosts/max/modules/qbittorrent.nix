@@ -30,7 +30,7 @@ in
 
   systemd.services.podman-qbittorrent = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "${constants.mountPoints.downloads.name}.mount" "nas-fetch-qbittorrent-configs.service" "podman-forward-proxy.service" "podman-create-network-${constants.network.maxNetworkStack.name}.service" ];
+    after = [ "${constants.mountPoints.downloads.name}.mount" "nas-fetch-qbittorrent-configs.service" "podman-forward-proxy.service" "create-podman-network-${constants.network.maxNetworkStack.name}.service" ];
   };
 
   services.nas-fetch = {

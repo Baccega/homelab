@@ -58,7 +58,7 @@ in
 		"d ${constants.users.sandro.home} 0755 ${constants.users.sandro.name} ${toString constants.groups.users} -"
 	];
 
-	systemd.services.podman-create-network-max-network-stack = {
+	systemd.services.create-podman-network-max-network-stack = {
 		description = "Create podman max-network-stack ipvlan network";
 		after = [ "network.target" ];
 		wantedBy = [ "multi-user.target" ];
@@ -82,6 +82,7 @@ in
 					--subnet ${constants.network.subnet} \
 					--gateway ${constants.network.gateway} \
 					--ip-range ${constants.network.maxNetworkStack.ipRange} \
+					--route ${constants.network.subnet},${constants.network.gateway} \
 					"$NETWORK_NAME"
 				
 				echo "Network $NETWORK_NAME created successfully"

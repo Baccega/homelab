@@ -34,7 +34,7 @@ in
 
   systemd.services.podman-code-server = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "podman-create-network-${constants.network.maxNetworkStack.name}.service" ];
+    after = [ "create-podman-network-${constants.network.maxNetworkStack.name}.service" ];
   };
 }
 

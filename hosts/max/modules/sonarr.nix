@@ -30,7 +30,7 @@ in
 
   systemd.services.podman-sonarr = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "${constants.mountPoints.downloads.name}.mount" "${constants.mountPoints.tv_shows.name}.mount" "nas-fetch-sonarr-configs.service" "podman-create-network-${constants.network.maxNetworkStack.name}.service" ];
+    after = [ "${constants.mountPoints.downloads.name}.mount" "${constants.mountPoints.tv_shows.name}.mount" "nas-fetch-sonarr-configs.service" "create-podman-network-${constants.network.maxNetworkStack.name}.service" ];
   };
 
   services.nas-fetch = {

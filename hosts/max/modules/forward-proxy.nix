@@ -32,7 +32,7 @@ in
   # Ensure container starts before other services
   systemd.services.podman-forward-proxy = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" "nas-fetch-vpn-configs.service" "podman-create-network-${constants.network.maxNetworkStack.name}.service" ];
+    after = [ "network.target" "nas-fetch-vpn-configs.service" "create-podman-network-${constants.network.maxNetworkStack.name}.service" ];
   };
 
   services.nas-fetch = {

@@ -51,7 +51,7 @@ in
       "${constants.mountPoints.movies.name}.mount"
       "${constants.mountPoints.videocassette.name}.mount"
       "nas-fetch-plex-configs.service"
-      "podman-create-network-${constants.network.maxNetworkStack.name}.service"
+      "create-podman-network-${constants.network.maxNetworkStack.name}.service"
     ];
   };
 
