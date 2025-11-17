@@ -26,6 +26,7 @@ sudo systemctl restart podman-<SERVICE_NAME>
 systemctl status <SERVICE_NAME>
 
 # Restart via systemd (NixOS way)
+# sudo systemctl restart "podman-*"
 sudo systemctl restart <SERVICE_NAME>
 
 # View last 50 lines of systemd logs
