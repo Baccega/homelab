@@ -13,7 +13,7 @@ in
   ];
 
   virtualisation.oci-containers.containers.forward-proxy = {
-    image = "curve25519xsalsa20poly1305/openvpn:latest";
+    image = "docker.io/curve25519xsalsa20poly1305/openvpn:latest";
     volumes = [
       "${constants.users.sandro.home}/vpn:/vpn:ro"
     ];
