@@ -29,6 +29,7 @@ in
     networks = [ constants.network.maxNetworkStack.name ];
     extraOptions = [
       "--ip=${constants.services.codeServer.ip}"
+      "--label=io.containers.autoupdate=registry"
     ];
   };
 

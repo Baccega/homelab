@@ -26,6 +26,7 @@ in
       "--ip=${constants.services.homeAssistant.ip}"
       "--cap-add=NET_ADMIN"
       "--cap-add=NET_RAW"
+      "--label=io.containers.autoupdate=registry"
     ];
   };
 

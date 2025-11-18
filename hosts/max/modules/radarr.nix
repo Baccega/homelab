@@ -25,6 +25,7 @@ in
     networks = [ constants.network.maxNetworkStack.name ];
     extraOptions = [
       "--ip=${constants.services.radarr.ip}"
+      "--label=io.containers.autoupdate=registry"
     ];
   };
 

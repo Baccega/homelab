@@ -25,6 +25,7 @@ in
       "--cap-add=NET_RAW"
       "--device=/dev/net/tun"
       "--ip=${constants.services.forwardProxy.ip}"
+      "--label=io.containers.autoupdate=registry"
     ];
     networks = [ constants.network.maxNetworkStack.name ];
   };

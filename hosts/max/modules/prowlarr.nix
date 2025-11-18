@@ -23,6 +23,7 @@ in
     networks = [ constants.network.maxNetworkStack.name ];
     extraOptions = [
       "--ip=${constants.services.prowlarr.ip}"
+      "--label=io.containers.autoupdate=registry"
     ];
   };
 

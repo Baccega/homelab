@@ -41,6 +41,7 @@ in
     extraOptions = [
       "--device=nvidia.com/gpu=all"
       "--ip=${constants.services.plex.ip}"
+      "--label=io.containers.autoupdate=registry"
     ];
   };
 

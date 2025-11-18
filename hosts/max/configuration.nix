@@ -88,5 +88,14 @@ in
 				echo "Network $NETWORK_NAME created successfully"
 			'';
 		};
-	}; 
+	};
+
+	# Enable Podman's built-in auto-update timer
+	systemd.timers.podman-auto-update = {
+		wantedBy = [ "timers.target" ];
+		timerConfig = {
+			OnCalendar = "daily";
+			RandomizedDelaySec = "1h";
+		};
+	};
 }
