@@ -21,6 +21,9 @@
             code-server-password = {
                 owner = "sandro";
             };
+            cloudflared-token = {
+                owner = "sandro";
+            };
             # github_token = {
             #     sopsFile = ../../secrets/max-secrets.json;
             #     sopsFile = ../../secrets/github-secrets.json;
