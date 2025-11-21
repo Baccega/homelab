@@ -25,6 +25,7 @@ in
 		./modules/plex.nix
 		./modules/home-assistant.nix
 		./modules/code-server.nix
+		./modules/n8n.nix
 		./hardware/nvidia-1050ti.nix
 		../../modules/common/base.nix
 		../../modules/common/sops.nix
