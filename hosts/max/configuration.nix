@@ -57,7 +57,7 @@ in
 
 	# Grant users group access to /home/sandro
 	systemd.tmpfiles.rules = [
-		"d ${constants.users.sandro.home} 0755 ${constants.users.sandro.name} ${toString constants.groups.users} -"
+		"d ${constants.users.sandro.home} 0775 ${constants.users.sandro.name} ${toString constants.groups.users} -"
 	];
 
 	systemd.services.create-podman-network-max-network-stack = {
