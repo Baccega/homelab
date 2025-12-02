@@ -29,7 +29,24 @@ in
 
   systemd.services.podman-n8n = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "create-podman-network-${constants.network.maxNetworkStack.name}.service" ];
+    after = [
+      "nas-fetch-n8n.service"
+      "create-podman-network-${constants.network.maxNetworkStack.name}.service"
+    ];
+  };
+
+  services.nas-fetch = {
+    enable = true;
+    syncPaths = [
+      {
+        name = "n8n";
+        nfsMount = constants.mountPoints.configurations.path;
+        source = "n8n";
+        target = "${constants.users.sandro.home}/n8n";
+        user = constants.users.alfred.uid;
+        group = constants.groups.users;
+      }
+    ];
   };
 
   backup = {
