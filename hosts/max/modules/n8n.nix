@@ -31,5 +31,18 @@ in
     wantedBy = [ "multi-user.target" ];
     after = [ "create-podman-network-${constants.network.maxNetworkStack.name}.service" ];
   };
+
+  backup = {
+    enable = true;
+    jobs = [
+      {
+        name = "n8n";
+        source = "${constants.users.sandro.home}/n8n";
+        nfsMount = constants.mountPoints.configurations.path;
+        destination = "n8n";
+        schedule = "daily";
+      }
+    ];
+  };
 }
 
