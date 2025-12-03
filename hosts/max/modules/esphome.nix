@@ -19,6 +19,9 @@ in
       "/dev:/dev"
       "/run/udev:/run/udev:ro"
     ];
+    environmentFiles = [
+      config.sops.secrets.max-docker-env.path
+    ];
     environment = {
       # https://esphome.io/guides/faq/#docker-reference
     #   ESPHOME_DASHBOARD_USE_PING = "true";

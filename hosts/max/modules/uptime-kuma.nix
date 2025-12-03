@@ -17,6 +17,9 @@ in
     volumes = [
       "${constants.users.sandro.home}/uptime-kuma:/app/data"
     ];
+    environmentFiles = [
+      config.sops.secrets.max-docker-env.path
+    ];
     networks = [ constants.network.maxNetworkStack.name ];
     extraOptions = [
       "--ip=${constants.services.uptimeKuma.ip}"
