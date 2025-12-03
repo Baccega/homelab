@@ -83,13 +83,6 @@ in
               exit 1
             fi
             
-            
-            # Check if source exists on NAS
-            if [ ! -e "$SOURCE" ]; then
-              echo "WARNING: Source path $SOURCE does not exist on NAS, skipping sync"
-              exit 0
-            fi
-            
             # Check if target already exists locally
             if [ -e "$TARGET" ]; then
               echo "INFO: Target path $TARGET already exists locally, skipping sync"
@@ -97,7 +90,13 @@ in
             fi
             
             # Create target directory if it doesn't exist
-            mkdir -p "$(dirname "$TARGET")"
+            mkdir -p "$TARGET"
+            
+            # Check if source exists on NAS
+            if [ ! -e "$SOURCE" ]; then
+              echo "WARNING: Source path $SOURCE does not exist on NAS, skipping sync"
+              exit 0
+            fi
             
             # Sync from NAS to local
             echo "Syncing $SOURCE to $TARGET"
