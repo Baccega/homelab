@@ -28,6 +28,7 @@ in
 		./modules/n8n.nix
 		./modules/uptime-kuma.nix
 		./modules/cloudflared.nix
+		./modules/esphome.nix
 		./hardware/nvidia-1050ti.nix
 		../../modules/common/base.nix
 		../../modules/common/sops.nix
