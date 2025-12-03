@@ -95,6 +95,7 @@ in
             # Check if source exists on NAS
             if [ ! -e "$SOURCE" ]; then
               echo "WARNING: Source path $SOURCE does not exist on NAS, skipping sync"
+              chown -R ${toString syncPath.user}:${toString syncPath.group} "$TARGET"
               exit 0
             fi
             
