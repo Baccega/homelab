@@ -13,7 +13,7 @@ in
   ];
 
   virtualisation.oci-containers.containers.n8n = {
-    image = "docker.n8n.io/n8nio/n8n";
+    image = "docker.io/n8nio/n8n:next";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
     ];
