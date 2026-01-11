@@ -29,7 +29,8 @@ in
 		./modules/uptime-kuma.nix
 		./modules/cloudflared.nix
 		./modules/esphome.nix
-		./hardware/nvidia-1050ti.nix
+		# ./hardware/nvidia-1050ti.nix
+		./hardware/intel-a750.nix
 		../../modules/common/base.nix
 		../../modules/common/sops.nix
 		../../modules/common/kmscon.nix
