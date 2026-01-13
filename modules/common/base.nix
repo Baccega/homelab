@@ -92,8 +92,18 @@ in
     };
 
     # Enable the OpenSSH daemon.
-    services.openssh.enable = true;
-    services.openssh.settings.PasswordAuthentication = false;
+    #
+    # Notes on "SSH hangs after auth":
+    # - Reverse DNS lookups (`UseDNS`) can block session startup if DNS/revDNS is slow/broken.
+    # - User rc scripts (`~/.ssh/rc`) can also block interactive sessions.
+    services.openssh = {
+        enable = true;
+        settings = {
+            PasswordAuthentication = false;
+            UseDns = false;
+            PermitUserRC = false;
+        };
+    };
 
     # Optimize nix store
     nix.settings.auto-optimise-store = true;
