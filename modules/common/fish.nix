@@ -1,5 +1,8 @@
 { config, pkgs, username, ... }:
 {   
+    # Enable fish at system level (required when shell is set to fish)
+    programs.fish.enable = true;
+
     environment.systemPackages = with pkgs; map lib.lowPrio [
         bat
         lsd

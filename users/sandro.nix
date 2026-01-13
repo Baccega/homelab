@@ -27,6 +27,7 @@ in
         hashedPasswordFile = config.sops.secrets.sandro-password.path;
         createHome = true;
         home = constants.users.sandro.home;
+        shell = pkgs.fish;
 
         openssh.authorizedKeys.keys = [
             constants.ssh_keys.macbook_pro_chax
