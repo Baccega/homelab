@@ -164,7 +164,10 @@
 
     programs.fish = {
       shellInit = ''
-        starship init fish | source
+        # Only initialize starship in interactive shells
+        if status is-interactive
+          starship init fish | source
+        end
       '';
     };
   };

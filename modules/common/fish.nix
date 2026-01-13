@@ -52,9 +52,11 @@
 
                 # fish_greeting override
                 fish_greeting = ''
-                    set_color --bold
-                    echo "Starting up Fish shell 🐟"
-                    set_color normal
+                    if status is-interactive
+                        set_color --bold
+                        echo "Starting up Fish shell 🐟"
+                        set_color normal
+                    end
                 '';
                 
                 __fish_command_not_found_handler = ''
@@ -66,13 +68,19 @@
         };
     };
 
-    # Make bash use fish on startup
+    # Make bash use fish on startup (only for interactive shells)
     programs.bash = {
         interactiveShellInit = ''
-            if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
+            # Only exec fish if:
+            # 1. We're not already in fish
+            # 2. This is an interactive shell (stdin is a TTY)
+            # 3. No command was passed (BASH_EXECUTION_STRING is empty)
+            if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && \
+                  -z ''${BASH_EXECUTION_STRING} && \
+                  -t 0 ]]
             then
-            shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
-            exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
+                shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
+                exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
             fi
         '';
     };
