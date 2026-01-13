@@ -9,11 +9,11 @@ let
   username = "sandro";
 in
 {
-    imports = [
-        (import ../modules/common/fish.nix { inherit config pkgs username; })
-        (import ../modules/common/starship.nix { inherit config pkgs username hostname_format; })
-        (import ../modules/common/fonts.nix)
-    ];
+    # imports = [
+    #     (import ../modules/common/fish.nix { inherit config pkgs username; })
+    #     (import ../modules/common/starship.nix { inherit config pkgs username hostname_format; })
+    #     (import ../modules/common/fonts.nix)
+    # ];
 
     sops.secrets.sandro-password.neededForUsers = true;
     users.mutableUsers = false;
@@ -33,4 +33,7 @@ in
             constants.ssh_keys.macbook_pro_chax
         ];
     };
+
+    # Explicitly disable home-manager bash configuration to avoid conflicts
+    home-manager.users.sandro.programs.bash.enable = false;
 }
