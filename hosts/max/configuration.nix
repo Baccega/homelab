@@ -50,14 +50,6 @@ in
 		}];
 	};
 
-	# SSH interactive sessions require working PTY support.
-	# If /dev/pts isn't mounted correctly, `ssh -tt` can hang during PTY allocation.
-	boot.specialFileSystems."/dev/pts" = {
-		device = "devpts";
-		fsType = "devpts";
-		options = [ "mode=0620" "gid=5" "ptmxmode=0666" ];
-	};
-
 	# Home manager
 	home-manager.users.sandro.home = {
 		username = constants.users.sandro.name;
