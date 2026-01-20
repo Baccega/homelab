@@ -35,8 +35,9 @@
             hostname = "laika";
             ip = "192.168.1.60";
         };
-        nas = {
-            ip = "192.168.1.52";
+        hachiko = {
+            hostname = "hachiko";
+            ip = "192.168.1.56";
         };
         zero = {
             hostname = "zero";
