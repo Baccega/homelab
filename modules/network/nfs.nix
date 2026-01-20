@@ -10,7 +10,7 @@ in
         {
             type = "nfs";
             mountConfig = {
-                Options = "noatime,nfsvers=4.1";
+                Options = "noatime,nfsvers=4";
             };
             what = "${constants.hosts.hachiko.ip}:/volume1/configurations";
             where = "/mnt/configurations";
@@ -18,7 +18,7 @@ in
         {
             type = "nfs";
             mountConfig = {
-                Options = "noatime,nfsvers=4.1";
+                Options = "noatime,nfsvers=4";
             };
             what = "${constants.hosts.hachiko.ip}:/volume1/data/movies";
             where = "/mnt/movies";
@@ -26,7 +26,7 @@ in
         {
             type = "nfs";
             mountConfig = {
-                Options = "noatime,nfsvers=4.1";
+                Options = "noatime,nfsvers=4";
             };
             what = "${constants.hosts.hachiko.ip}:/volume1/data/tv_shows";
             where = "/mnt/tv_shows";
@@ -34,7 +34,7 @@ in
         {
             type = "nfs";
             mountConfig = {
-                Options = "noatime,nfsvers=4.1";
+                Options = "noatime,nfsvers=4";
             };
             what = "${constants.hosts.hachiko.ip}:/volume1/data/downloads";
             where = "/mnt/downloads";
@@ -42,7 +42,7 @@ in
         {
             type = "nfs";
             mountConfig = {
-                Options = "noatime,nfsvers=4.1";
+                Options = "noatime,nfsvers=4";
             };
             what = "${constants.hosts.hachiko.ip}:/volume1/photo/Videocassette e VHS";
             where = "/mnt/videocassette";
