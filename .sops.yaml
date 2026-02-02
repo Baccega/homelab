@@ -8,10 +8,17 @@ keys:
   - &hosts
     - &laika age1nnnptw6k5wjge6f2u2ujm64pjprt9e7uuhpndpxkm2qdclwfnydq9863q4
     - &max age1ursksqk8z8x06rlr557mr0d5w0es23sc3nzaq54uj3z5xhy0mcrsc3xd45
+    - &nemo age1xcc484x4kj25k8pqljt5jy7urn64sqsjcfwx2uqv5gz6n3fr0gush8cr5z
 creation_rules:
-  - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
+  - path_regex: secrets/common-secrets.(yaml|json|env|ini)$
     key_groups:
       - age:
           - *sandro
           - *laika
           - *max
+          - *nemo
+  - path_regex: secrets/nemo-secrets.(yaml|json|env|ini)$
+    key_groups:
+      - age:
+          - *sandro
+          - *nemo

@@ -68,6 +68,24 @@
             ./hosts/zero/configuration.nix
           ];
         };
+        nemo = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            disko.nixosModules.disko
+            sops-nix.nixosModules.sops
+            home-manager.nixosModules.home-manager
+            ./hosts/nemo/configuration.nix
+            {
+              _module.args.nixinate = {
+                host = constants.hosts.nemo.ip;
+                sshUser = constants.users.sandro.name;
+                buildOn = "remote";
+                substituteOnTarget = true;
+                hermetic = false;
+              };
+            }
+          ];
+        };
       };
     };
 }

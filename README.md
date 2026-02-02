@@ -27,3 +27,7 @@ All of the hostnames are 🐶 inspired.
   Named after [Zero](https://the-nightmare-before-christmas.fandom.com/wiki/Zero), Jack's pet ghost-dog from Tim Burton's The Nightmare Before Christmas
 
 - **Max**: 🐶 My main server, very good boy.
+
+- **Nemo**: 🛡️ The network router, guarding the perimeter.
+
+  Named after [Nemo A534](https://en.wikipedia.org/wiki/Nemo_A534), the heroic U.S. Air Force sentry dog who protected his handler during a 1966 Viet Cong attack at Tan Son Nhut Air Base—despite being severely wounded. A fitting name for the router that guards and protects the network.

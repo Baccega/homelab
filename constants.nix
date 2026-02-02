@@ -3,6 +3,10 @@
         gateway = "192.168.1.1";
         subnet = "192.168.1.0/24";
         dns = [ "1.1.1.1" "8.8.8.8" ];
+        dhcp = {
+            rangeStart = "192.168.1.100";
+            rangeEnd = "192.168.1.199";
+        };
         maxNetworkStack = {
             name = "max-network-stack";
             ipRange = "192.168.1.200/28";
@@ -45,6 +49,16 @@
         max = {
             hostname = "max";
             ip = "192.168.1.55";
+        };
+        nemo = {
+            hostname = "nemo";
+            ip = "192.168.1.54";
+            wanInterface = "enp1s0";
+            lanInterface = "enp2s0";
+        };
+        balto = {
+            hostname = "balto";
+            ip = "192.168.1.52";
         };
     };
     ssh_keys = {
