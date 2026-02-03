@@ -66,5 +66,6 @@ in
 		username = constants.users.sandro.name;
 		homeDirectory = constants.users.sandro.home;
 		stateVersion = "25.05";
+		file."useful-commands.md".source = ./home/useful-commands.md;
 	};
 }
