@@ -70,6 +70,10 @@ in
                 hw-address = config.sops.placeholder.hachiko-lan1-interface;
                 ip-address = constants.hosts.hachiko.ip;
               }
+              {
+                hw-address = config.sops.placeholder.switch1-bridge1-interface;
+                ip-address = constants.network.switch1.ip;
+              }
             ];
           }
         ];

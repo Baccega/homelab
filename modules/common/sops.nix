@@ -37,6 +37,9 @@
             hachiko-lan1-interface = {
                 sopsFile = ../../secrets/nemo-secrets.json;
             };
+            switch1-bridge1-interface = {
+                sopsFile = ../../secrets/nemo-secrets.json;
+            };
             # github_token = {
             #     sopsFile = ../../secrets/max-secrets.json;
             #     sopsFile = ../../secrets/github-secrets.json;

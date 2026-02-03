@@ -11,6 +11,9 @@
             name = "max-network-stack";
             ipRange = "192.168.1.200/28";
         };
+        switch1 = {
+            ip = "192.168.1.2";
+        };
     };
     mountPoints = {
         configurations = {
@@ -35,6 +38,9 @@
         };
     };
     hosts = {
+        zero = {
+            hostname = "zero";
+        };
         laika = {
             hostname = "laika";
             ip = "192.168.1.60";
@@ -42,9 +48,6 @@
         hachiko = {
             hostname = "hachiko";
             ip = "192.168.1.56";
-        };
-        zero = {
-            hostname = "zero";
         };
         max = {
             hostname = "max";
