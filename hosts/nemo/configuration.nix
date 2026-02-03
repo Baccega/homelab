@@ -16,7 +16,7 @@ in
 		(modulesPath + "/profiles/qemu-guest.nix")
 		./disk-config.nix
 		./hardware-configuration.nix
-		# ./modules/dhcp.nix
+		./modules/dhcp.nix
 		# ./modules/tailscale.nix
 		# ./modules/cloudflared.nix
 		# ./modules/firewall.nix 

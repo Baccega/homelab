@@ -26,16 +26,16 @@
                 owner = "sandro";
             };
             balto-lan-interface = {
-                sopsFile = ../../secrets/nemo-secrets.json
+                sopsFile = ../../secrets/nemo-secrets.json;
             };
             laika-wlp2s0-interface = {
-                sopsFile = ../../secrets/nemo-secrets.json
+                sopsFile = ../../secrets/nemo-secrets.json;
             };
             max-eno1-interface = {
-                sopsFile = ../../secrets/nemo-secrets.json
+                sopsFile = ../../secrets/nemo-secrets.json;
             };
             hachiko-lan1-interface = {
-                sopsFile = ../../secrets/nemo-secrets.json
+                sopsFile = ../../secrets/nemo-secrets.json;
             };
             # github_token = {
             #     sopsFile = ../../secrets/max-secrets.json;

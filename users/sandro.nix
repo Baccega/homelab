@@ -33,4 +33,7 @@ in
             constants.ssh_keys.macbook_pro_chax
         ];
     };
+
+    # Explicitly disable home-manager bash configuration to avoid conflicts
+    # home-manager.users.sandro.programs.bash.enable = false;
 }

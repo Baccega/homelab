@@ -52,7 +52,7 @@
         };
         nemo = {
             hostname = "nemo";
-            ip = "192.168.1.54";
+            ip = "192.168.1.1";
             wanInterface = "enp1s0";
             lanInterface = "enp2s0";
         };

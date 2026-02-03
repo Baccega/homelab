@@ -75,7 +75,7 @@ in
         ];
       };
     };
-    owner = "kea";
+    mode = "0644";
   };
 
   # Use the template as config file instead of settings
@@ -84,7 +84,6 @@ in
     configFile = config.sops.templates."kea-dhcp4.conf".path;
   };
 
-  # Ensure kea service starts after sops-nix renders the template
   systemd.services.kea-dhcp4-server = {
     after = [ "sops-nix.service" ];
     wants = [ "sops-nix.service" ];
