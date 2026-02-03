@@ -36,10 +36,16 @@ in
 		};
 
 		# LAN interface (internal network)
-		interfaces.${constants.hosts.nemo.lanInterface}.ipv4.addresses = [{
+		interfaces.${constants.hosts.nemo.lanInterface} = {
+			useDHCP = false;
+			ipv4.addresses = [{
 			address = constants.hosts.nemo.ip;
 			prefixLength = 24;
 		}];
+		};
+
+		# Disable global DHCP (we configure interfaces explicitly)
+		useDHCP = false;
 
 		# Enable IP forwarding for routing
 		nat = {
