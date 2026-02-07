@@ -17,12 +17,6 @@ in
     openFirewall = true;            # Allow Tailscale traffic through firewall
   };
 
-  # Ensure IP forwarding is enabled (also set in main config, but explicit here)
-  boot.kernel.sysctl = {
-    "net.ipv4.ip_forward" = 1;
-    "net.ipv6.conf.all.forwarding" = 1;
-  };
-
   # Create a systemd service to advertise routes after Tailscale is up
   # You'll need to authenticate first with: sudo tailscale up
   # Then run: sudo tailscale set --advertise-routes=192.168.1.0/24 --accept-routes
