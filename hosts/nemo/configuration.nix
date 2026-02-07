@@ -30,6 +30,10 @@ in
 	networking = {
 		hostName = constants.hosts.nemo.hostname;
 
+		# Nemo is the gateway - don't set itself as its own gateway
+		# (overrides the default from base.nix, let DHCP on WAN provide the route)
+		defaultGateway = lib.mkForce null;
+
 		# WAN interface (external/internet facing)
 		interfaces.${constants.hosts.nemo.wanInterface} = {
 			useDHCP = true;  # Get IP from upstream router/ISP
