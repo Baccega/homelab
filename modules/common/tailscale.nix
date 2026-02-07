@@ -7,7 +7,7 @@
   ...
 }:
 let
-  constants = import ../../../constants.nix;
+  constants = import ../../constants.nix;
 in
 {
   # Enable Tailscale
@@ -23,25 +23,25 @@ in
   #
   # Note: You must approve the subnet routes in the Tailscale admin console:
   # https://login.tailscale.com/admin/machines
-  
+
   systemd.services.tailscale-autoconnect = {
     description = "Automatic connection to Tailscale";
     after = [ "network-pre.target" "tailscale.service" ];
     wants = [ "network-pre.target" "tailscale.service" ];
     wantedBy = [ "multi-user.target" ];
-    
+
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
     };
-    
+
     script = ''
       # Wait for tailscaled to be ready
       sleep 2
-      
+
       # Check if already authenticated
       status=$(${pkgs.tailscale}/bin/tailscale status --json 2>/dev/null | ${pkgs.jq}/bin/jq -r '.BackendState // "Unknown"')
-      
+
       if [ "$status" = "Running" ]; then
         echo "Tailscale is already connected, advertising routes..."
         ${pkgs.tailscale}/bin/tailscale set \

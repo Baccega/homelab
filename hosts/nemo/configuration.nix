@@ -17,7 +17,7 @@ in
 		./disk-config.nix
 		./hardware-configuration.nix
 		./modules/dhcp.nix
-		./modules/tailscale.nix
+		../../modules/common/tailscale.nix
 		# ./modules/cloudflared.nix
 		# ./modules/firewall.nix 
 		../../modules/common/base.nix

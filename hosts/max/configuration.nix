@@ -33,6 +33,7 @@ in
 		# ./hardware/intel-a750.nix
 		../../modules/common/base.nix
 		../../modules/common/sops.nix
+		../../modules/common/tailscale.nix
 		../../modules/common/kmscon.nix
 		../../modules/network/nfs.nix
 		../../modules/common/nas-fetch.nix
