@@ -23,7 +23,7 @@ in
 	};
 
 	users.users.root.openssh.authorizedKeys.keys = [
-		constants.ssh_keys.macbook_pro_chax
+		constants.ssh_keys.pongo
 	];
 
   	users.users.root.initialPassword = "1234";
@@ -34,7 +34,7 @@ in
 		extraGroups = [ "wheel" ];
 		initialPassword = "1234";
 		openssh.authorizedKeys.keys = [
-			constants.ssh_keys.macbook_pro_chax
+			constants.ssh_keys.pongo
 		];
 	};
 

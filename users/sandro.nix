@@ -30,7 +30,7 @@ in
         shell = pkgs.bash;
 
         openssh.authorizedKeys.keys = [
-            constants.ssh_keys.macbook_pro_chax
+            constants.ssh_keys.pongo
         ];
     };
 

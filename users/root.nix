@@ -13,7 +13,7 @@ in
         hashedPasswordFile = config.sops.secrets.root-password.path;
 
         openssh.authorizedKeys.keys = [
-            constants.ssh_keys.macbook_pro_chax
+            constants.ssh_keys.pongo
         ];
     };
 }
