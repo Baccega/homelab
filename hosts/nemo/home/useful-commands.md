@@ -9,8 +9,17 @@ sudo column -t -s, /var/lib/kea/dhcp4.leases
 # View ARP table (recently active hosts)
 ip neigh
 
-# Scan subnet for all devices
+# Scan subnets for all devices
 nmap -sn 192.168.1.0/24
+nmap -sn 192.168.20.0/24
+nmap -sn 192.168.30.0/24
+nmap -sn 192.168.40.0/24
+
+# Verify VLAN interfaces are up
+ip -br addr show vlan20 vlan30 vlan40
+
+# Check nftables rules
+sudo nft list ruleset
 ```
 
 ## Systemd

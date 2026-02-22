@@ -44,7 +44,8 @@ in
 	];
 
 	networking = {
-		hostName = constants.hosts.max.hostname; 
+		hostName = constants.hosts.max.hostname;
+		defaultGateway = lib.mkForce constants.network.vlans.servers.gateway;
 		interfaces.eno1.ipv4.addresses = [{
 			address = constants.hosts.max.ip;
 			prefixLength = 24;
@@ -85,10 +86,10 @@ in
 				${pkgs.podman}/bin/podman network create \
 					--driver ipvlan \
 					--opt parent=eno1 \
-					--subnet ${constants.network.subnet} \
-					--gateway ${constants.network.gateway} \
+					--subnet ${constants.network.vlans.servers.subnet} \
+					--gateway ${constants.network.vlans.servers.gateway} \
 					--ip-range ${constants.network.maxNetworkStack.ipRange} \
-					--route ${constants.network.subnet},${constants.network.gateway} \
+					--route ${constants.network.vlans.servers.subnet},${constants.network.vlans.servers.gateway} \
 					"$NETWORK_NAME"
 				
 				echo "Network $NETWORK_NAME created successfully"

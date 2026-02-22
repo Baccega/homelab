@@ -1,8 +1,5 @@
 # Firewall configuration for the router
-# This module configures nftables-based firewall rules
-#
-# NOTE: This module is currently disabled in configuration.nix
-# Uncomment the import when ready to enable the firewall
+# Uses nftables for VLAN-aware filtering and inter-VLAN routing policy
 {
   config,
   lib,
@@ -15,110 +12,67 @@ let
   lanInterface = constants.hosts.nemo.lanInterface;
 in
 {
-  # # Enable the NixOS firewall
-  # networking.firewall = {
-  #   enable = true;
-  #   
-  #   # Allow these ports on WAN interface
-  #   allowedTCPPorts = [
-  #     22    # SSH
-  #   ];
-  #   
-  #   allowedUDPPorts = [
-  #     41641 # Tailscale
-  #   ];
-  #   
-  #   # Trust the LAN interface completely
-  #   trustedInterfaces = [ lanInterface "tailscale0" ];
-  #   
-  #   # Enable connection tracking helpers
-  #   connectionTrackingModules = [ "ftp" ];
-  #   
-  #   # Log dropped packets (useful for debugging)
-  #   logRefusedConnections = true;
-  #   logRefusedPackets = false;
-  #   
-  #   # Additional iptables rules for NAT
-  #   extraCommands = ''
-  #     # Allow established and related connections
-  #     iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-  #     
-  #     # Allow ICMP (ping)
-  #     iptables -A INPUT -p icmp -j ACCEPT
-  #     
-  #     # Drop invalid packets
-  #     iptables -A INPUT -m conntrack --ctstate INVALID -j DROP
-  #     
-  #     # Protect against SYN floods
-  #     iptables -A INPUT -p tcp --syn -m limit --limit 1/s --limit-burst 3 -j ACCEPT
-  #   '';
-  #   
-  #   extraStopCommands = ''
-  #     iptables -F
-  #   '';
-  # };
+  networking.firewall.enable = false;
 
-  # Alternative: Use nftables for more modern firewall management
-  # networking.nftables = {
-  #   enable = true;
-  #   ruleset = ''
-  #     table inet filter {
-  #       chain input {
-  #         type filter hook input priority 0; policy drop;
-  #         
-  #         # Allow established/related
-  #         ct state established,related accept
-  #         
-  #         # Allow loopback
-  #         iifname "lo" accept
-  #         
-  #         # Allow LAN
-  #         iifname "${lanInterface}" accept
-  #         
-  #         # Allow Tailscale
-  #         iifname "tailscale0" accept
-  #         
-  #         # Allow ICMP
-  #         ip protocol icmp accept
-  #         ip6 nexthdr icmpv6 accept
-  #         
-  #         # Allow SSH from WAN
-  #         iifname "${wanInterface}" tcp dport 22 accept
-  #         
-  #         # Allow Tailscale UDP
-  #         udp dport 41641 accept
-  #         
-  #         # Log and drop everything else
-  #         log prefix "nftables-drop: " drop
-  #       }
-  #       
-  #       chain forward {
-  #         type filter hook forward priority 0; policy drop;
-  #         
-  #         # Allow established/related
-  #         ct state established,related accept
-  #         
-  #         # Allow LAN to WAN
-  #         iifname "${lanInterface}" oifname "${wanInterface}" accept
-  #         
-  #         # Allow LAN to Tailscale
-  #         iifname "${lanInterface}" oifname "tailscale0" accept
-  #         iifname "tailscale0" oifname "${lanInterface}" accept
-  #       }
-  #       
-  #       chain output {
-  #         type filter hook output priority 0; policy accept;
-  #       }
-  #     }
-  #     
-  #     table inet nat {
-  #       chain postrouting {
-  #         type nat hook postrouting priority 100;
-  #         
-  #         # Masquerade traffic going out WAN
-  #         oifname "${wanInterface}" masquerade
-  #       }
-  #     }
-  #   '';
-  # };
+  networking.nftables = {
+    enable = true;
+    ruleset = ''
+      table inet filter {
+        chain input {
+          type filter hook input priority 0; policy drop;
+
+          ct state established,related accept
+          ct state invalid drop
+
+          iifname "lo" accept
+
+          # Trust all internal interfaces (admin LAN + VLANs + Tailscale)
+          iifname "${lanInterface}" accept
+          iifname "vlan20" accept
+          iifname "vlan30" accept
+          iifname "vlan40" accept
+          iifname "tailscale0" accept
+
+          ip protocol icmp accept
+          ip6 nexthdr icmpv6 accept
+
+          iifname "${wanInterface}" tcp dport 22 accept
+          udp dport 41641 accept
+
+          log prefix "nftables-drop: " drop
+        }
+
+        chain forward {
+          type filter hook forward priority 0; policy drop;
+
+          ct state established,related accept
+          ct state invalid drop
+
+          # Admin (LAN) has full access to everything
+          iifname "${lanInterface}" accept
+
+          # Servers can reach the internet
+          iifname "vlan20" oifname "${wanInterface}" accept
+
+          # Home can reach internet, servers, and IoT
+          iifname "vlan40" oifname "${wanInterface}" accept
+          iifname "vlan40" oifname "vlan20" accept
+          iifname "vlan40" oifname "vlan30" accept
+
+          # IoT can reach servers (Home Assistant) but not the internet
+          iifname "vlan30" oifname "vlan20" accept
+
+          # Tailscale has full access
+          iifname "tailscale0" accept
+          oifname "tailscale0" accept
+
+          log prefix "nftables-forward-drop: " drop
+        }
+
+        chain output {
+          type filter hook output priority 0; policy accept;
+        }
+      }
+    '';
+  };
 }

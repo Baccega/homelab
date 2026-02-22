@@ -43,19 +43,44 @@ in
 		interfaces.${constants.hosts.nemo.lanInterface} = {
 			useDHCP = false;
 			ipv4.addresses = [{
-			address = constants.hosts.nemo.ip;
-			prefixLength = 24;
-		}];
+				address = constants.hosts.nemo.ip;
+				prefixLength = 24;
+			}];
+		};
+
+		# VLAN sub-interfaces for network segmentation
+		vlans = {
+			vlan20 = { id = constants.network.vlans.servers.id; interface = constants.hosts.nemo.lanInterface; };
+			vlan30 = { id = constants.network.vlans.iot.id;     interface = constants.hosts.nemo.lanInterface; };
+			vlan40 = { id = constants.network.vlans.home.id;    interface = constants.hosts.nemo.lanInterface; };
+		};
+
+		interfaces.vlan20 = {
+			useDHCP = false;
+			ipv4.addresses = [{ address = constants.network.vlans.servers.gateway; prefixLength = 24; }];
+		};
+		interfaces.vlan30 = {
+			useDHCP = false;
+			ipv4.addresses = [{ address = constants.network.vlans.iot.gateway; prefixLength = 24; }];
+		};
+		interfaces.vlan40 = {
+			useDHCP = false;
+			ipv4.addresses = [{ address = constants.network.vlans.home.gateway; prefixLength = 24; }];
 		};
 
 		# Disable global DHCP (we configure interfaces explicitly)
 		useDHCP = false;
 
-		# Enable IP forwarding for routing
+		# Enable NAT for all internal networks
 		nat = {
 			enable = true;
 			externalInterface = constants.hosts.nemo.wanInterface;
-			internalInterfaces = [ constants.hosts.nemo.lanInterface ];
+			internalInterfaces = [
+				constants.hosts.nemo.lanInterface
+				"vlan20"
+				"vlan30"
+				"vlan40"
+			];
 		};
 	};
 

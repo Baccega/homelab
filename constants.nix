@@ -9,10 +9,39 @@
         };
         maxNetworkStack = {
             name = "max-network-stack";
-            ipRange = "192.168.1.200/28";
+            ipRange = "192.168.20.200/28";
         };
         switch1 = {
             ip = "192.168.1.2";
+        };
+        ap1 = {
+            ip = "192.168.1.3";
+        };
+        vlans = {
+            admin = {
+                id = 1;
+                subnet = "192.168.1.0/24";
+                gateway = "192.168.1.1";
+                dhcpRange = { start = "192.168.1.100"; end = "192.168.1.199"; };
+            };
+            servers = {
+                id = 20;
+                subnet = "192.168.20.0/24";
+                gateway = "192.168.20.1";
+                dhcpRange = { start = "192.168.20.100"; end = "192.168.20.199"; };
+            };
+            iot = {
+                id = 30;
+                subnet = "192.168.30.0/24";
+                gateway = "192.168.30.1";
+                dhcpRange = { start = "192.168.30.100"; end = "192.168.30.199"; };
+            };
+            home = {
+                id = 40;
+                subnet = "192.168.40.0/24";
+                gateway = "192.168.40.1";
+                dhcpRange = { start = "192.168.40.100"; end = "192.168.40.199"; };
+            };
         };
     };
     mountPoints = {
@@ -43,25 +72,21 @@
         };
         laika = {
             hostname = "laika";
-            ip = "192.168.1.60";
+            ip = "192.168.20.2";
         };
         hachiko = {
             hostname = "hachiko";
-            ip = "192.168.1.56";
+            ip = "192.168.20.3";
         };
         max = {
             hostname = "max";
-            ip = "192.168.1.55";
+            ip = "192.168.20.4";
         };
         nemo = {
             hostname = "nemo";
             ip = "192.168.1.1";
             wanInterface = "enp1s0";
             lanInterface = "enp2s0";
-        };
-        balto = {
-            hostname = "balto";
-            ip = "192.168.1.52";
         };
     };
     ssh_keys = {
@@ -83,55 +108,55 @@
     };
     services = {
         forwardProxy = {
-            ip = "192.168.1.200";
+            ip = "192.168.20.200";
             port = 1080;
         };
         plex = {
-            ip = "192.168.1.201";
+            ip = "192.168.20.201";
         };
         qbittorrent = {
             port = 8080;
             torrentPort = 6881;
-            ip = "192.168.1.202";
+            ip = "192.168.20.202";
         };
         sabnzbd = {
             port = 8080;
-            ip = "192.168.1.203";
+            ip = "192.168.20.203";
         };
         sonarr = {
             port = 8989;
-            ip = "192.168.1.204";
+            ip = "192.168.20.204";
         };
         radarr = {
             port = 7878;
-            ip = "192.168.1.205";
+            ip = "192.168.20.205";
         };
         prowlarr = {
             port = 9696;
-            ip = "192.168.1.206";
+            ip = "192.168.20.206";
         };
         homeAssistant = {
             port = 8123;
-            ip = "192.168.1.207";
+            ip = "192.168.20.207";
         };
         codeServer = {
             port = 8443;
-            ip = "192.168.1.208";
+            ip = "192.168.20.208";
         };
         n8n = {
             port = 5678;
-            ip = "192.168.1.209";
+            ip = "192.168.20.209";
         };
         cloudflared = {
-            ip = "192.168.1.210";
+            ip = "192.168.20.210";
         };
         uptimeKuma = {
             port = 3001;
-            ip = "192.168.1.211";
+            ip = "192.168.20.211";
         };
         esphome = {
             port = 6052;
-            ip = "192.168.1.212";
+            ip = "192.168.20.212";
         };
     };
 }

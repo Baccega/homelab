@@ -20,7 +20,12 @@ in
         rebind-timer = 2000;
 
         interfaces-config = {
-          interfaces = [ constants.hosts.nemo.lanInterface ];
+          interfaces = [
+            constants.hosts.nemo.lanInterface
+            "vlan20"
+            "vlan30"
+            "vlan40"
+          ];
         };
 
         lease-database = {
@@ -30,38 +35,47 @@ in
         };
 
         subnet4 = [
+          # VLAN 1 - Admin / Management
           {
             id = 1;
-            subnet = constants.network.subnet;
+            subnet = constants.network.vlans.admin.subnet;
             pools = [
               {
-                pool = "${constants.network.dhcp.rangeStart} - ${constants.network.dhcp.rangeEnd}";
+                pool = "${constants.network.vlans.admin.dhcpRange.start} - ${constants.network.vlans.admin.dhcpRange.end}";
               }
             ];
             option-data = [
-              {
-                name = "routers";
-                data = constants.hosts.nemo.ip;
-              }
-              {
-                name = "domain-name-servers";
-                data = dnsServers;
-              }
-              {
-                name = "domain-name";
-                data = "lan";
-              }
+              { name = "routers"; data = constants.network.vlans.admin.gateway; }
+              { name = "domain-name-servers"; data = dnsServers; }
+              { name = "domain-name"; data = "lan"; }
             ];
-
             reservations = [
               {
-                hw-address = config.sops.placeholder.balto-lan-interface;
-                ip-address = constants.hosts.balto.ip;
+                hw-address = config.sops.placeholder.switch1-bridge1-interface;
+                ip-address = constants.network.switch1.ip;
               }
               {
-                hw-address = config.sops.placeholder.laika-wlp2s0-interface;
-                ip-address = constants.hosts.laika.ip;
+                hw-address = config.sops.placeholder.ap1-lan-interface;
+                ip-address = constants.network.ap1.ip;
               }
+            ];
+          }
+
+          # VLAN 20 - Servers
+          {
+            id = 20;
+            subnet = constants.network.vlans.servers.subnet;
+            pools = [
+              {
+                pool = "${constants.network.vlans.servers.dhcpRange.start} - ${constants.network.vlans.servers.dhcpRange.end}";
+              }
+            ];
+            option-data = [
+              { name = "routers"; data = constants.network.vlans.servers.gateway; }
+              { name = "domain-name-servers"; data = dnsServers; }
+              { name = "domain-name"; data = "lan"; }
+            ];
+            reservations = [
               {
                 hw-address = config.sops.placeholder.max-eno1-interface;
                 ip-address = constants.hosts.max.ip;
@@ -70,10 +84,46 @@ in
                 hw-address = config.sops.placeholder.hachiko-lan1-interface;
                 ip-address = constants.hosts.hachiko.ip;
               }
+              # {
+              #   hw-address = config.sops.placeholder.balto-lan-interface;
+              #   ip-address = constants.hosts.balto.ip;
+              # }
               {
-                hw-address = config.sops.placeholder.switch1-bridge1-interface;
-                ip-address = constants.network.switch1.ip;
+                hw-address = config.sops.placeholder.laika-wlp2s0-interface;
+                ip-address = constants.hosts.laika.ip;
               }
+            ];
+          }
+
+          # VLAN 30 - IoT
+          {
+            id = 30;
+            subnet = constants.network.vlans.iot.subnet;
+            pools = [
+              {
+                pool = "${constants.network.vlans.iot.dhcpRange.start} - ${constants.network.vlans.iot.dhcpRange.end}";
+              }
+            ];
+            option-data = [
+              { name = "routers"; data = constants.network.vlans.iot.gateway; }
+              { name = "domain-name-servers"; data = dnsServers; }
+              { name = "domain-name"; data = "lan"; }
+            ];
+          }
+
+          # VLAN 40 - Home
+          {
+            id = 40;
+            subnet = constants.network.vlans.home.subnet;
+            pools = [
+              {
+                pool = "${constants.network.vlans.home.dhcpRange.start} - ${constants.network.vlans.home.dhcpRange.end}";
+              }
+            ];
+            option-data = [
+              { name = "routers"; data = constants.network.vlans.home.gateway; }
+              { name = "domain-name-servers"; data = dnsServers; }
+              { name = "domain-name"; data = "lan"; }
             ];
           }
         ];
