@@ -9,7 +9,7 @@
         };
         maxNetworkStack = {
             name = "max-network-stack";
-            ipRange = "192.168.20.200/28";
+            ipRange = "192.168.20.192/26";
         };
         switch1 = {
             ip = "192.168.1.2";
@@ -28,7 +28,7 @@
                 id = 20;
                 subnet = "192.168.20.0/24";
                 gateway = "192.168.20.1";
-                dhcpRange = { start = "192.168.20.100"; end = "192.168.20.199"; };
+                dhcpRange = { start = "192.168.20.100"; end = "192.168.20.191"; };
             };
             iot = {
                 id = 30;
