@@ -17,14 +17,7 @@ in
 		./disk-config.nix
 		./hardware-configuration.nix
 		./modules/dhcp.nix
-		(import ../../modules/common/tailscale.nix {
-			advertiseRoutes = [
-				constants.network.vlans.admin.subnet
-				constants.network.vlans.servers.subnet
-				constants.network.vlans.iot.subnet
-				constants.network.vlans.home.subnet
-			];
-		})
+		../../modules/common/tailscale.nix
 		# ./modules/cloudflared.nix
 		# ./modules/firewall.nix 
 		../../modules/common/base.nix
@@ -95,6 +88,14 @@ in
 	boot.kernel.sysctl = {
 		"net.ipv4.ip_forward" = 1;
 		"net.ipv6.conf.all.forwarding" = 1;
+	};
+
+	# Extra Tailscale configuration for Nemo
+	services.tailscale = {
+		useRoutingFeatures = "server";
+		extraSetFlags = [
+			"--advertise-routes=${constants.network.vlans.admin.subnet},${constants.network.vlans.servers.subnet},${constants.network.vlans.iot.subnet},${constants.network.vlans.home.subnet}"
+		];
 	};
 
 	# Home manager
