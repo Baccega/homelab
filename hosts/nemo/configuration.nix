@@ -17,7 +17,14 @@ in
 		./disk-config.nix
 		./hardware-configuration.nix
 		./modules/dhcp.nix
-		../../modules/common/tailscale.nix
+		(import ../../modules/common/tailscale.nix {
+			advertiseRoutes = [
+				constants.network.vlans.admin.subnet
+				constants.network.vlans.servers.subnet
+				constants.network.vlans.iot.subnet
+				constants.network.vlans.home.subnet
+			];
+		})
 		# ./modules/cloudflared.nix
 		# ./modules/firewall.nix 
 		../../modules/common/base.nix
