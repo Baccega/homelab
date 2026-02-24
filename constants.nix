@@ -22,7 +22,7 @@
                 id = 1;
                 subnet = "192.168.1.0/24";
                 gateway = "192.168.1.1";
-                dhcpRange = { start = "192.168.1.100"; end = "192.168.1.199"; };
+                dhcpRange = { start = "192.168.1.100"; end = "192.168.1.191"; };
             };
             servers = {
                 id = 20;
@@ -34,13 +34,13 @@
                 id = 30;
                 subnet = "192.168.30.0/24";
                 gateway = "192.168.30.1";
-                dhcpRange = { start = "192.168.30.100"; end = "192.168.30.199"; };
+                dhcpRange = { start = "192.168.30.100"; end = "192.168.30.191"; };
             };
             home = {
                 id = 40;
                 subnet = "192.168.40.0/24";
                 gateway = "192.168.40.1";
-                dhcpRange = { start = "192.168.40.100"; end = "192.168.40.199"; };
+                dhcpRange = { start = "192.168.40.100"; end = "192.168.40.191"; };
             };
         };
     };
@@ -90,7 +90,7 @@
         };
     };
     ssh_keys = {
-        pongo = "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAHjZD18KxdxjrFiWQm54dP4vDRbZLtMI3C+Pf9LUdHIjjbeAF3AJ3CgQxaA/R1Nao6QmnxrtRp9ljAwrvMhGIK0XgC9rEUcIpNGZH7SB6IYfWreWjITQxyIKgBJuwhR7dTvdaEyINPjLunJtQUJtpCdHio8CAc28aBY6JxUh0dyaUVY0w== MacBook-Pro-Chax";
+        pongo = "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAHjZD18KxdxjrFiWQm54dP4vDRbZLtMI3C+Pf9LUdHIjjbeAF3AJ3CgQxaA/R1Nao6QmnxrtRp9ljAwrvMhGIK0XgC9rEUcIpNGZH7SB6IYfWreWjITQxyIKgBJuwhR7dTvdaEyINPjLunJtQUJtpCdHio8CAc28aBY6JxUh0dyaUVY0w== pongo";
     };
     users = {
         sandro = {
