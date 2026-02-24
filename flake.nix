@@ -52,7 +52,7 @@
             ./hosts/max/configuration.nix
             {
               _module.args.nixinate = {
-                host = constants.hosts.max.ip;
+                host = constants.hosts.max.tailscaleIp;
                 sshUser = constants.users.sandro.name;
                 buildOn = "remote";
                 substituteOnTarget = true;
@@ -77,7 +77,7 @@
             ./hosts/nemo/configuration.nix
             {
               _module.args.nixinate = {
-                host = constants.hosts.nemo.ip;
+                host = constants.hosts.nemo.tailscaleIp;
                 sshUser = constants.users.sandro.name;
                 buildOn = "remote";
                 substituteOnTarget = true;

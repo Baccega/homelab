@@ -77,14 +77,17 @@
         hachiko = {
             hostname = "hachiko";
             ip = "192.168.20.3";
+            tailscaleIp = "100.75.171.100";
         };
         max = {
             hostname = "max";
             ip = "192.168.20.4";
+            tailscaleIp = "100.80.73.118";
         };
         nemo = {
             hostname = "nemo";
             ip = "192.168.1.1";
+            tailscaleIp = "100.123.84.3";
             wanInterface = "enp1s0";
             lanInterface = "enp2s0";
         };
