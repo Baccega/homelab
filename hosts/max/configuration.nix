@@ -27,6 +27,7 @@ in
 		./modules/code-server.nix
 		./modules/n8n.nix
 		./modules/uptime-kuma.nix
+		./modules/seer.nix
 		./modules/cloudflared.nix
 		./modules/esphome.nix
 		./hardware/nvidia-1050ti.nix
