@@ -1,5 +1,12 @@
 # Firewall configuration for the router
 # Uses nftables for VLAN-aware filtering and inter-VLAN routing policy
+#
+# Policy:
+# - VLAN 1 (admin): can see everything
+# - VLAN 20 (server): isolated from other VLANs (servers can talk to each other);
+#   exception: Home Assistant can talk to IoT and home
+# - VLAN 30 (iot): isolated from each other and other VLANs; internet + to/from Home Assistant
+# - VLAN 40 (home): isolated from server/IoT except Home Assistant; home can talk to home
 {
   config,
   lib,
@@ -10,6 +17,7 @@ let
   constants = import ../../../constants.nix;
   wanInterface = constants.hosts.nemo.wanInterface;
   lanInterface = constants.hosts.nemo.lanInterface;
+  homeAssistantIp = constants.services.homeAssistant.ip;
 in
 {
   networking.firewall.enable = false;
@@ -36,7 +44,7 @@ in
           ip protocol icmp accept
           ip6 nexthdr icmpv6 accept
 
-          iifname "${wanInterface}" tcp dport 22 accept
+          # Allow Tailscale traffic
           udp dport 41641 accept
 
           log prefix "nftables-drop: " drop
@@ -48,19 +56,23 @@ in
           ct state established,related accept
           ct state invalid drop
 
-          # Admin (LAN) has full access to everything
+          # Admin (VLAN 1) has full access to everything
           iifname "${lanInterface}" accept
 
-          # Servers can reach the internet
+          # Server (VLAN 20): internet + same VLAN only; HA can reach IoT and home
           iifname "vlan20" oifname "${wanInterface}" accept
+          iifname "vlan20" oifname "vlan20" accept
+          iifname "vlan20" oifname "vlan30" ip saddr ${homeAssistantIp} accept
+          iifname "vlan20" oifname "vlan40" ip saddr ${homeAssistantIp} accept
 
-          # Home can reach internet, servers, and IoT
+          # IoT (VLAN 30): internet + to/from Home Assistant only (no same-VLAN, no home)
+          iifname "vlan30" oifname "${wanInterface}" accept
+          iifname "vlan30" oifname "vlan20" ip daddr ${homeAssistantIp} accept
+
+          # Home (VLAN 40): internet, same VLAN, and Home Assistant only
           iifname "vlan40" oifname "${wanInterface}" accept
-          iifname "vlan40" oifname "vlan20" accept
-          iifname "vlan40" oifname "vlan30" accept
-
-          # IoT can reach servers (Home Assistant) but not the internet
-          iifname "vlan30" oifname "vlan20" accept
+          iifname "vlan40" oifname "vlan40" accept
+          iifname "vlan40" oifname "vlan20" ip daddr ${homeAssistantIp} accept
 
           # Tailscale has full access
           iifname "tailscale0" accept
