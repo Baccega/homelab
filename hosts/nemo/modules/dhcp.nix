@@ -109,6 +109,24 @@ in
               { name = "domain-name-servers"; data = dnsServers; }
               { name = "domain-name"; data = "lan"; }
             ];
+            reservations = [
+              {
+                hw-address = config.sops.placeholder.smart-switch-1-interface;
+                ip-address = constants.iotDevices.smart-switch-1.ip;
+              }
+              {
+                hw-address = config.sops.placeholder.smart-switch-2-interface;
+                ip-address = constants.iotDevices.smart-switch-2.ip;
+              }
+              {
+                hw-address = config.sops.placeholder.smart-switch-3-interface;
+                ip-address = constants.iotDevices.smart-switch-3.ip;
+              }
+              {
+                hw-address = config.sops.placeholder.smart-switch-4-interface;
+                ip-address = constants.iotDevices.smart-switch-4.ip;
+              }
+            ];
           }
 
           # VLAN 40 - Home

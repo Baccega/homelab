@@ -43,6 +43,18 @@
             ap1-lan-interface = {
                 sopsFile = ../../secrets/nemo-secrets.json;
             };
+            smart-switch-1-interface = {
+                sopsFile = ../../secrets/nemo-secrets.json;
+            };
+            smart-switch-2-interface = {
+                sopsFile = ../../secrets/nemo-secrets.json;
+            };
+            smart-switch-3-interface = {
+                sopsFile = ../../secrets/nemo-secrets.json;
+            };
+            smart-switch-4-interface = {
+                sopsFile = ../../secrets/nemo-secrets.json;
+            };
             # github_token = {
             #     sopsFile = ../../secrets/max-secrets.json;
             #     sopsFile = ../../secrets/github-secrets.json;
