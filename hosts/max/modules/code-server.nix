@@ -16,11 +16,10 @@ in
     image = "lscr.io/linuxserver/code-server:latest";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
-      config.sops.secrets.code-server-password.path
+      config.sops.secrets.code-server-env.path
     ];
     environment = {
       DEFAULT_WORKSPACE = "${constants.users.sandro.home}";
-      PROXY_DOMAIN = "code.baccegasandro.dev";
     };
     volumes = [
       "${constants.users.sandro.home}/code-server:/config"

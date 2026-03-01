@@ -19,7 +19,7 @@
             root-password = {};
             sandro-password = {};
             "wireless.env" = {};
-            code-server-password = {
+            code-server-env = {
                 owner = "sandro";
             };
             cloudflared-token = {
