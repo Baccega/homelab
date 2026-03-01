@@ -18,17 +18,17 @@
             ip = "192.168.1.3";
         };
         splitViewDns = [
-            { subdomain = "plex"; targetService = "plex"; }
-            { subdomain = "sonarr"; targetService = "sonarr"; }
-            { subdomain = "radarr"; targetService = "radarr"; }
-            { subdomain = "prowlarr"; targetService = "prowlarr"; }
-            { subdomain = "homeassistant"; targetService = "homeAssistant"; }
-            { subdomain = "code"; targetService = "codeServer"; }
-            { subdomain = "n8n"; targetService = "n8n"; }
-            { subdomain = "uptime"; targetService = "uptimeKuma"; }
-            { subdomain = "esphome"; targetService = "esphome"; }
-            { subdomain = "torrent"; targetService = "qbittorrent"; }
-            { subdomain = "sabnzbd"; targetService = "sabnzbd"; }
+            # { subdomain = "plex"; targetService = "plex"; }
+            # { subdomain = "sonarr"; targetService = "sonarr"; }
+            # { subdomain = "radarr"; targetService = "radarr"; }
+            # { subdomain = "prowlarr"; targetService = "prowlarr"; }
+            # { subdomain = "homeassistant"; targetService = "homeAssistant"; }
+            # { subdomain = "code"; targetService = "codeServer"; }
+            # { subdomain = "n8n"; targetService = "n8n"; }
+            # { subdomain = "uptime"; targetService = "uptimeKuma"; }
+            # { subdomain = "esphome"; targetService = "esphome"; }
+            # { subdomain = "torrent"; targetService = "qbittorrent"; }
+            # { subdomain = "sabnzbd"; targetService = "sabnzbd"; }
             # { subdomain = "seer"; targetService = "seer"; }
         ];
         vlans = {
