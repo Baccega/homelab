@@ -17,6 +17,9 @@
         ap1 = {
             ip = "192.168.1.3";
         };
+        splitViewDns = [
+            { subdomain = "plex"; targetService = "plex"; }
+        ];
         vlans = {
             admin = {
                 id = 1;
