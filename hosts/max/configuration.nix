@@ -61,11 +61,6 @@ in
 		stateVersion = "25.05";
 	};
 
-	# Grant users group access to /home/sandro
-	systemd.tmpfiles.rules = [
-		"d ${constants.users.sandro.home} 0775 ${constants.users.sandro.name} ${toString constants.groups.users} -"
-	];
-
 	systemd.services.create-podman-network-max-network-stack = {
 		description = "Create podman max-network-stack ipvlan network";
 		after = [ "network.target" ];

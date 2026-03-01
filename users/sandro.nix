@@ -27,6 +27,7 @@ in
         hashedPasswordFile = config.sops.secrets.sandro-password.path;
         createHome = true;
         home = constants.users.sandro.home;
+        homeMode = "2775";
         shell = pkgs.bash;
 
         openssh.authorizedKeys.keys = [
