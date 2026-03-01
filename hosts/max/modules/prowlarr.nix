@@ -54,7 +54,6 @@ in
         source = "${constants.users.sandro.home}/prowlarr/Backups";
         nfsMount = constants.mountPoints.configurations.path;
         destination = "prowlarr";
-        exclude = [ "logs/" ];
         schedule = "daily";
       }
     ];

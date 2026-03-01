@@ -56,7 +56,7 @@ in
         source = "${constants.users.sandro.home}/qbittorrent";
         nfsMount = constants.mountPoints.configurations.path;
         destination = "qbittorrent";
-        exclude = [ "qBittorrent/logs/" ];
+        exclude = [ "/qBittorrent/logs/" ];
         schedule = "daily";
       }
     ];

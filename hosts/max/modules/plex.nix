@@ -79,11 +79,11 @@ in
         nfsMount = constants.mountPoints.configurations.path;
         destination = "plex";
         exclude = [
-          "Library/Application Support/Plex Media Server/Cache"
-          "Library/Application Support/Plex Media Server/Logs"
-          "Library/Application Support/Plex Media Server/Updates"
-          "Library/Application Support/Plex Media Server/Crash Reports"
-          "Library/Application Support/Plex Media Server/Diagnostics"
+          "/Library/Application Support/Plex Media Server/Cache/"
+          "/Library/Application Support/Plex Media Server/Logs/"
+          "/Library/Application Support/Plex Media Server/Updates/"
+          "/Library/Application Support/Plex Media Server/Crash Reports/"
+          "/Library/Application Support/Plex Media Server/Diagnostics/"
         ];
         schedule = "daily";
       }

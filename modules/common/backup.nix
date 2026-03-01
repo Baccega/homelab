@@ -53,7 +53,7 @@ in
           };
           rsyncOptions = lib.mkOption {
             type = lib.types.listOf lib.types.str;
-            default = [ "-av" "--delete" "--progress" ];
+            default = [ "-av" "--delete" "--progress" "--delete-excluded" ];
             description = "Rsync options";
           };
           preBackupScript = lib.mkOption {
@@ -91,7 +91,10 @@ in
           Type = "oneshot";
           User = toString jobConfig.user;
           Group = toString jobConfig.group;
-          ExecStart = pkgs.writeShellScript "backup-${jobConfig.name}.sh" ''
+          ExecStart = let
+              excludePatterns = [ ".bash_history" ] ++ jobConfig.exclude;
+              excludeFileContent = lib.concatStringsSep "\n" excludePatterns;
+            in pkgs.writeShellScript "backup-${jobConfig.name}.sh" ''
             set -euo pipefail
             
             # Log function
@@ -127,18 +130,21 @@ in
             RSYNC_CMD="${pkgs.rsync}/bin/rsync"
             RSYNC_ARGS="${lib.concatStringsSep " " jobConfig.rsyncOptions}"
             
-            # Add exclude patterns (including default exclusions)
-            EXCLUDE_ARGS="--exclude=.bash_history"
-            ${lib.concatStringsSep "\n" (map (pattern: ''
-              EXCLUDE_ARGS="$EXCLUDE_ARGS --exclude=${pattern}"
-            '') jobConfig.exclude)}
-            
+            # Create exclude file
+            EXCLUDE_FILE=$(mktemp)
+            cat > "$EXCLUDE_FILE" <<EOF
+            ${excludeFileContent}
+            EOF
+
             # Execute backup
-            log "Executing: $RSYNC_CMD $RSYNC_ARGS $EXCLUDE_ARGS '${jobConfig.source}/' '$FULL_DESTINATION/'"
+            log "Executing: $RSYNC_CMD $RSYNC_ARGS --exclude-from=$EXCLUDE_FILE '${jobConfig.source}/' '$FULL_DESTINATION/'"
             
-            if $RSYNC_CMD $RSYNC_ARGS $EXCLUDE_ARGS "${jobConfig.source}/" "$FULL_DESTINATION/"; then
+            if $RSYNC_CMD $RSYNC_ARGS --exclude-from=$EXCLUDE_FILE "${jobConfig.source}/" "$FULL_DESTINATION/"; then
               log "Backup completed successfully"
               
+              # Remove exclude file
+              rm -f "$EXCLUDE_FILE"
+
               # Run post-backup script if defined
               ${lib.optionalString (jobConfig.postBackupScript != null) ''
                 log "Running post-backup script"
@@ -148,6 +154,10 @@ in
               log "Backup job finished successfully"
             else
               log "ERROR: Backup failed with exit code $?"
+
+              # Remove exclude file
+              rm -f "$EXCLUDE_FILE"
+
               exit 1
             fi
           '';
