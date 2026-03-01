@@ -78,7 +78,7 @@ in
         source = "${constants.users.sandro.home}/plex";
         nfsMount = constants.mountPoints.configurations.path;
         destination = "plex";
-        exclude = [ 
+        exclude = [
           "Library/Application Support/Plex Media Server/Cache"
           "Library/Application Support/Plex Media Server/Logs"
           "Library/Application Support/Plex Media Server/Updates"

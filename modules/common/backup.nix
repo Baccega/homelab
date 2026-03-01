@@ -43,12 +43,12 @@ in
           };
           user = lib.mkOption {
             type = lib.types.int;
-            default = constants.users.alfred.uid;
+            default = 0;
             description = "User to run the backup as";
           };
           group = lib.mkOption {
             type = lib.types.int;
-            default = constants.groups.users;
+            default = 0; 
             description = "Group to run the backup as";
           };
           rsyncOptions = lib.mkOption {
