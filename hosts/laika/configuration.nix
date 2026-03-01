@@ -21,7 +21,6 @@ in
 		../../modules/common/kmscon.nix
 		../../modules/network/home-wifi.nix
 		../../modules/network/nfs.nix
-		../../modules/services/home-assistant.nix
 		../../users/root.nix
 		(import ../../users/sandro.nix { inherit config pkgs hostname_format; })
 		
