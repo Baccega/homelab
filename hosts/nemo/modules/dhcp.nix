@@ -9,7 +9,6 @@
 }:
 let
   constants = import ../../../constants.nix;
-  dnsServers = builtins.concatStringsSep ", " constants.network.dns;
 in
 {
   sops.templates."kea-dhcp4.conf" = {
@@ -46,7 +45,7 @@ in
             ];
             option-data = [
               { name = "routers"; data = constants.network.vlans.admin.gateway; }
-              { name = "domain-name-servers"; data = dnsServers; }
+              { name = "domain-name-servers"; data = constants.network.vlans.admin.gateway; }
               { name = "domain-name"; data = "lan"; }
             ];
             reservations = [
@@ -72,7 +71,7 @@ in
             ];
             option-data = [
               { name = "routers"; data = constants.network.vlans.servers.gateway; }
-              { name = "domain-name-servers"; data = dnsServers; }
+              { name = "domain-name-servers"; data = constants.network.vlans.servers.gateway; }
               { name = "domain-name"; data = "lan"; }
             ];
             reservations = [
@@ -106,7 +105,7 @@ in
             ];
             option-data = [
               { name = "routers"; data = constants.network.vlans.iot.gateway; }
-              { name = "domain-name-servers"; data = dnsServers; }
+              { name = "domain-name-servers"; data = constants.network.vlans.iot.gateway; }
               { name = "domain-name"; data = "lan"; }
             ];
             reservations = [
@@ -140,7 +139,7 @@ in
             ];
             option-data = [
               { name = "routers"; data = constants.network.vlans.home.gateway; }
-              { name = "domain-name-servers"; data = dnsServers; }
+              { name = "domain-name-servers"; data = constants.network.vlans.home.gateway; }
               { name = "domain-name"; data = "lan"; }
             ];
           }
