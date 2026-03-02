@@ -20,7 +20,8 @@ in
 		./modules/split-view-dns.nix
 		../../modules/common/tailscale.nix
 		# ./modules/cloudflared.nix
-		./modules/firewall.nix 
+		./modules/firewall.nix
+		./modules/avahi.nix
 		../../modules/common/base.nix
 		../../modules/common/sops.nix
 		../../modules/common/kmscon.nix
