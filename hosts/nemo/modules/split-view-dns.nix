@@ -17,9 +17,7 @@ let
     constants.network.vlans.iot.gateway
     constants.network.vlans.home.gateway
   ];
-  resolveIp = e:
-    if e ? targetService then constants.services.${e.targetService}.ip
-    else constants.hosts.${e.targetHost}.ip;
+  resolveIp = _: constants.hosts.nemo.ip;
   # Template: placeholder is substituted at activation with the decrypted public-domain secret
   splitViewConfContent = lib.concatStringsSep "\n" (
     map (e: "address=/${e.subdomain}.${config.sops.placeholder.public-domain}/${resolveIp e}") constants.network.splitViewDns
