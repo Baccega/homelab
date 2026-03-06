@@ -34,8 +34,8 @@ in
   services.dnsmasq = {
     enable = true;
     resolveLocalQueries = true;
-    servers = constants.network.dns;
     settings = {
+      server = constants.network.dns;
       domain-needed = true;
       bogus-priv = true;
       no-poll = true;

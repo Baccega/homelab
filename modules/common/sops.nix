@@ -25,6 +25,9 @@
             cloudflared-token = {
                 owner = "sandro";
             };
+            cloudflare-api-token = {
+                owner = "sandro";
+            };
             public-domain = {};
             balto-lan-interface = {
                 sopsFile = ../../secrets/nemo-secrets.json;
