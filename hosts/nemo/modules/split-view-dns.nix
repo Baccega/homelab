@@ -43,7 +43,6 @@ in
       listen-address = listenAddresses;
       conf-file = [
         "/etc/dnsmasq-conf.conf"
-      ] ++ lib.optionals (constants.network.splitViewDns != []) [
         config.sops.templates."dnsmasq-split-view.conf".path
       ];
     };
