@@ -17,6 +17,16 @@ creation_rules:
           - *laika
           - *max
           - *nemo
+  - path_regex: secrets/laika-secrets.(yaml|json|env|ini)$
+    key_groups:
+      - age:
+          - *sandro
+          - *laika
+  - path_regex: secrets/max-secrets.(yaml|json|env|ini)$
+    key_groups:
+      - age:
+          - *sandro
+          - *max
   - path_regex: secrets/nemo-secrets.(yaml|json|env|ini)$
     key_groups:
       - age:

@@ -13,22 +13,28 @@
             generateKey = true;
         };
         secrets = {
-            laika-docker-env = {};
-            max-docker-env = {};
-            nemo-docker-env = {};
             root-password = {};
             sandro-password = {};
             "wireless.env" = {};
+            public-domain = {};
+            laika-docker-env = {
+                sopsFile = ../../secrets/laika-secrets.json;
+            };
+            max-docker-env = {
+                sopsFile = ../../secrets/max-secrets.json;
+            };
             code-server-env = {
-                owner = "sandro";
+                sopsFile = ../../secrets/max-secrets.json;
+            };
+            nemo-docker-env = {
+                sopsFile = ../../secrets/nemo-secrets.json;
             };
             cloudflared-token = {
-                owner = "sandro";
+                sopsFile = ../../secrets/nemo-secrets.json;
             };
             cloudflare-api-token = {
-                owner = "sandro";
+                sopsFile = ../../secrets/nemo-secrets.json;
             };
-            public-domain = {};
             balto-lan-interface = {
                 sopsFile = ../../secrets/nemo-secrets.json;
             };
