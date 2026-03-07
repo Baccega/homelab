@@ -13,6 +13,10 @@ let
   resolvers = lib.concatStringsSep " " constants.network.dns;
 
   caddyfileContent = lib.concatStringsSep "\n" ([
+    "{"
+    "  auto_https disable_redirects"
+    "}"
+    ""
     "(cloudflare_tls) {"
     "  tls {"
     "    dns cloudflare ${config.sops.placeholder.cloudflare-api-token}"
