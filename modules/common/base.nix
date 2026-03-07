@@ -76,7 +76,7 @@ in
 
     # Set default gateway and DNS servers
     networking = {
-		nameservers = constants.network.vlans.servers.dns;
+		nameservers = constants.network.dns;
 		defaultGateway = constants.network.vlans.servers.gateway;
 	};
 
