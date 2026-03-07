@@ -20,7 +20,7 @@ in
     volumes = [
       "${constants.users.sandro.home}/prowlarr:/config"
     ];
-    networks = [ constants.network.maxNetworkStack.name ];
+    networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--ip=${constants.services.prowlarr.ip}"
       "--label=io.containers.autoupdate=registry"
@@ -29,7 +29,7 @@ in
 
   systemd.services.podman-prowlarr = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "nas-fetch-prowlarr-configs.service" "create-podman-network-${constants.network.maxNetworkStack.name}.service" "podman-forward-proxy.service" ];
+    after = [ "nas-fetch-prowlarr-configs.service" "create-podman-network-${constants.hosts.max.networkStack.name}.service" "podman-forward-proxy.service" ];
   };
 
   services.nas-fetch = {

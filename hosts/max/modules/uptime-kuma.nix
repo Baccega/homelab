@@ -20,7 +20,7 @@ in
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
     ];
-    networks = [ constants.network.maxNetworkStack.name ];
+    networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--ip=${constants.services.uptimeKuma.ip}"
       "--label=io.containers.autoupdate=registry"
@@ -31,7 +31,7 @@ in
     wantedBy = [ "multi-user.target" ];
     after = [
       "nas-fetch-uptime-kuma.service"
-      "create-podman-network-${constants.network.maxNetworkStack.name}.service"
+      "create-podman-network-${constants.hosts.max.networkStack.name}.service"
     ];
   };
 

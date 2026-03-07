@@ -45,7 +45,6 @@ in
 
 	networking = {
 		hostName = constants.hosts.max.hostname;
-		defaultGateway = lib.mkForce constants.network.vlans.servers.gateway;
 		interfaces.eno1.ipv4.addresses = [{
 			address = constants.hosts.max.ip;
 			prefixLength = 24;
@@ -70,7 +69,7 @@ in
 			RemainAfterExit = true;
 			ExecStart = pkgs.writeShellScript "create-podman-network" ''
 				set -e
-				NETWORK_NAME="${constants.network.maxNetworkStack.name}"
+				NETWORK_NAME="${constants.hosts.max.networkStack.name}"
 				if ${pkgs.podman}/bin/podman network exists "$NETWORK_NAME" 2>/dev/null; then
 					echo "Network $NETWORK_NAME already exists"
 					exit 0
@@ -83,7 +82,7 @@ in
 					--opt parent=eno1 \
 					--subnet ${constants.network.vlans.servers.subnet} \
 					--gateway ${constants.network.vlans.servers.gateway} \
-					--ip-range ${constants.network.maxNetworkStack.ipRange} \
+					--ip-range ${constants.hosts.max.networkStack.ipRange} \
 					--route ${constants.network.vlans.servers.subnet},${constants.network.vlans.servers.gateway} \
 					"$NETWORK_NAME"
 				

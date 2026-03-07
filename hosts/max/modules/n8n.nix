@@ -20,7 +20,7 @@ in
     volumes = [
       "${constants.users.sandro.home}/n8n:/home/node/.n8n"
     ];
-    networks = [ constants.network.maxNetworkStack.name ];
+    networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--ip=${constants.services.n8n.ip}"
       "--label=io.containers.autoupdate=registry"
@@ -31,7 +31,7 @@ in
     wantedBy = [ "multi-user.target" ];
     after = [
       "nas-fetch-n8n.service"
-      "create-podman-network-${constants.network.maxNetworkStack.name}.service"
+      "create-podman-network-${constants.hosts.max.networkStack.name}.service"
     ];
   };
 

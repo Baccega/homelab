@@ -27,7 +27,7 @@ in
 	];
 
 	networking = {
-		hostName = "laika"; 
+		hostName = constants.hosts.laika.hostname; 
 		interfaces.wlp2s0.ipv4.addresses = [{
 			address = constants.hosts.laika.ip;
 			prefixLength = 24;

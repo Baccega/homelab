@@ -24,15 +24,13 @@ let
     "  }"
     "}"
     ""
-  ] ++ lib.concatMap (e: let
-    service = constants.services.${e.targetService};
-  in [
-    "http://${e.subdomain}.${config.sops.placeholder.public-domain}, ${e.subdomain}.${config.sops.placeholder.public-domain} {"
+  ] ++ lib.concatMap (service: [
+    "http://${service.publicSubdomain}.${config.sops.placeholder.public-domain}, ${service.publicSubdomain}.${config.sops.placeholder.public-domain} {"
     "  import cloudflare_tls"
     "  reverse_proxy ${service.ip}:${toString service.port}"
     "}"
     ""
-  ]) constants.network.splitViewDns) + "\n";
+  ]) (lib.filter (s: s ? publicSubdomain) (lib.attrValues constants.services))) + "\n";
 in
 {
   sops.templates."Caddyfile" = {

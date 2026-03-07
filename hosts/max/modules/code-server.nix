@@ -25,7 +25,7 @@ in
       "${constants.users.sandro.home}/code-server:/config"
       "${constants.users.sandro.home}:${constants.users.sandro.home}"
     ];
-    networks = [ constants.network.maxNetworkStack.name ];
+    networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--ip=${constants.services.codeServer.ip}"
       "--label=io.containers.autoupdate=registry"
@@ -34,7 +34,7 @@ in
 
   systemd.services.podman-code-server = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "create-podman-network-${constants.network.maxNetworkStack.name}.service" ];
+    after = [ "create-podman-network-${constants.hosts.max.networkStack.name}.service" ];
   };
 }
 

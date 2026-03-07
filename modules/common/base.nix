@@ -76,8 +76,8 @@ in
 
     # Set default gateway and DNS servers
     networking = {
-		defaultGateway = constants.network.gateway;
-		nameservers = constants.network.dns;
+		nameservers = constants.network.vlans.servers.dns;
+		defaultGateway = constants.network.vlans.servers.gateway;
 	};
 
     # Podman

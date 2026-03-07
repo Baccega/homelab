@@ -22,7 +22,7 @@ in
       "${constants.mountPoints.movies.path}:/movies"
       "${constants.mountPoints.downloads.path}:/downloads"
     ];
-    networks = [ constants.network.maxNetworkStack.name ];
+    networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--ip=${constants.services.radarr.ip}"
       "--label=io.containers.autoupdate=registry"
@@ -31,7 +31,7 @@ in
 
   systemd.services.podman-radarr = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "${constants.mountPoints.downloads.name}.mount" "${constants.mountPoints.movies.name}.mount" "nas-fetch-radarr-configs.service" "create-podman-network-${constants.network.maxNetworkStack.name}.service" ];
+    after = [ "${constants.mountPoints.downloads.name}.mount" "${constants.mountPoints.movies.name}.mount" "nas-fetch-radarr-configs.service" "create-podman-network-${constants.hosts.max.networkStack.name}.service" ];
   };
 
   services.nas-fetch = {

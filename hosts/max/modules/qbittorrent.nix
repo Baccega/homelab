@@ -22,7 +22,7 @@ in
       "${constants.users.sandro.home}/qbittorrent:/config"
       "${constants.mountPoints.downloads.path}:/downloads"
     ];
-    networks = [ constants.network.maxNetworkStack.name ];
+    networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--ip=${constants.services.qbittorrent.ip}"
       "--label=io.containers.autoupdate=registry"
@@ -31,7 +31,7 @@ in
 
   systemd.services.podman-qbittorrent = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "${constants.mountPoints.downloads.name}.mount" "nas-fetch-qbittorrent-configs.service" "podman-forward-proxy.service" "create-podman-network-${constants.network.maxNetworkStack.name}.service" ];
+    after = [ "${constants.mountPoints.downloads.name}.mount" "nas-fetch-qbittorrent-configs.service" "podman-forward-proxy.service" "create-podman-network-${constants.hosts.max.networkStack.name}.service" ];
   };
 
   services.nas-fetch = {

@@ -37,7 +37,7 @@ in
       "${constants.mountPoints.movies.path}:/movies"
       "${constants.mountPoints.videocassette.path}:/videocassette"
     ];
-    networks = [ constants.network.maxNetworkStack.name ];
+    networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--device=nvidia.com/gpu=all"
       "--ip=${constants.services.plex.ip}"
@@ -52,7 +52,7 @@ in
       "${constants.mountPoints.movies.name}.mount"
       "${constants.mountPoints.videocassette.name}.mount"
       "nas-fetch-plex-configs.service"
-      "create-podman-network-${constants.network.maxNetworkStack.name}.service"
+      "create-podman-network-${constants.hosts.max.networkStack.name}.service"
     ];
   };
 

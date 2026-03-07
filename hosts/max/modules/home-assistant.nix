@@ -21,7 +21,7 @@ in
       "${constants.users.sandro.home}/home-assistant:/config"
       "/run/dbus:/run/dbus:ro"
     ];
-    networks = [ constants.network.maxNetworkStack.name ];
+    networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--ip=${constants.services.homeAssistant.ip}"
       "--cap-add=NET_ADMIN"
@@ -32,7 +32,7 @@ in
 
   systemd.services.podman-homeassistant = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "create-podman-network-${constants.network.maxNetworkStack.name}.service" "nas-fetch-home-assistant-configs.service" ];
+    after = [ "create-podman-network-${constants.hosts.max.networkStack.name}.service" "nas-fetch-home-assistant-configs.service" ];
   };
 
   services.nas-fetch = {

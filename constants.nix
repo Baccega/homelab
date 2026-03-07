@@ -1,36 +1,6 @@
 {
     network = {
-        gateway = "192.168.1.1";
-        subnet = "192.168.1.0/24";
         dns = [ "1.1.1.1" "8.8.8.8" ];
-        dhcp = {
-            rangeStart = "192.168.1.100";
-            rangeEnd = "192.168.1.199";
-        };
-        maxNetworkStack = {
-            name = "max-network-stack";
-            ipRange = "192.168.20.192/26";
-        };
-        switch1 = {
-            ip = "192.168.1.2";
-        };
-        ap1 = {
-            ip = "192.168.1.3";
-        };
-        splitViewDns = [
-            { subdomain = "plex"; targetService = "plex"; }
-            { subdomain = "sonarr"; targetService = "sonarr"; }
-            { subdomain = "radarr"; targetService = "radarr"; }
-            { subdomain = "prowlarr"; targetService = "prowlarr"; }
-            { subdomain = "homeassistant"; targetService = "homeAssistant"; }
-            { subdomain = "code"; targetService = "codeServer"; }
-            { subdomain = "n8n"; targetService = "n8n"; }
-            { subdomain = "uptime"; targetService = "uptimeKuma"; }
-            { subdomain = "esphome"; targetService = "esphome"; }
-            { subdomain = "torrent"; targetService = "qbittorrent"; }
-            { subdomain = "sabnzbd"; targetService = "sabnzbd"; }
-            # { subdomain = "seer"; targetService = "seer"; }
-        ];
         vlans = {
             admin = {
                 id = 1;
@@ -97,6 +67,10 @@
             hostname = "max";
             ip = "192.168.20.4";
             tailscaleIp = "100.80.73.118";
+            networkStack = {
+                name = "max-network-stack";
+                ipRange = "192.168.20.192/26";
+            };
         };
         nemo = {
             hostname = "nemo";
@@ -129,56 +103,76 @@
             port = 1080;
         };
         plex = {
-            port = 32400;
             ip = "192.168.20.201";
+            port = 32400;
+            publicSubdomain = "plex";
         };
         qbittorrent = {
+            ip = "192.168.20.202";
             port = 8080;
             torrentPort = 6881;
-            ip = "192.168.20.202";
+            publicSubdomain = "torrent";
         };
         sabnzbd = {
-            port = 8080;
             ip = "192.168.20.203";
+            port = 8080;
+            publicSubdomain = "sabnzbd";
         };
         sonarr = {
-            port = 8989;
             ip = "192.168.20.204";
+            port = 8989;
+            publicSubdomain = "sonarr";
         };
         radarr = {
-            port = 7878;
             ip = "192.168.20.205";
+            port = 7878;
+            publicSubdomain = "radarr";
         };
         prowlarr = {
-            port = 9696;
             ip = "192.168.20.206";
+            port = 9696;
+            publicSubdomain = "prowlarr";
         };
         homeAssistant = {
-            port = 8123;
             ip = "192.168.20.207";
+            port = 8123;
+            publicSubdomain = "homeassistant";
         };
         codeServer = {
-            port = 8443;
             ip = "192.168.20.208";
+            port = 8443;
+            publicSubdomain = "code";
         };
         n8n = {
-            port = 5678;
             ip = "192.168.20.209";
+            port = 5678;
+            publicSubdomain = "n8n";
         };
         # cloudflared = {
         #     ip = "192.168.20.210";
         # };
         uptimeKuma = {
-            port = 3001;
             ip = "192.168.20.211";
+            port = 3001;
+            publicSubdomain = "uptime";
         };
         esphome = {
-            port = 6052;
             ip = "192.168.20.212";
+            port = 6052;
+            publicSubdomain = "esphome";
         };
         seer = {
-            port = 5055;
             ip = "192.168.20.213";
+            port = 5055;
+            # publicSubdomain = "seer";
+        };
+    };
+    networkGear = {
+        switch1 = {
+            ip = "192.168.1.2";
+        };
+        ap1 = {
+            ip = "192.168.1.3";
         };
     };
     iotDevices = {

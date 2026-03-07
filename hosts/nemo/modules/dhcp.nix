@@ -51,11 +51,11 @@ in
             reservations = [
               {
                 hw-address = config.sops.placeholder.switch1-bridge1-interface;
-                ip-address = constants.network.switch1.ip;
+                ip-address = constants.networkGear.switch1.ip;
               }
               {
                 hw-address = config.sops.placeholder.ap1-lan-interface;
-                ip-address = constants.network.ap1.ip;
+                ip-address = constants.networkGear.ap1.ip;
               }
             ];
           }

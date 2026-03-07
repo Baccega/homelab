@@ -27,13 +27,13 @@ in
       "--ip=${constants.services.forwardProxy.ip}"
       "--label=io.containers.autoupdate=registry"
     ];
-    networks = [ constants.network.maxNetworkStack.name ];
+    networks = [ constants.hosts.max.networkStack.name ];
   };
 
   # Ensure container starts before other services
   systemd.services.podman-forward-proxy = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" "nas-fetch-vpn-configs.service" "create-podman-network-${constants.network.maxNetworkStack.name}.service" ];
+    after = [ "network.target" "nas-fetch-vpn-configs.service" "create-podman-network-${constants.hosts.max.networkStack.name}.service" ];
   };
 
   services.nas-fetch = {

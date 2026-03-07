@@ -19,8 +19,9 @@ let
   ];
   resolveIp = _: constants.hosts.nemo.ip;
   # Template: placeholder is substituted at activation with the decrypted public-domain secret
+  publicServices = lib.filter (s: s ? publicSubdomain) (lib.attrValues constants.services);
   splitViewConfContent = lib.concatStringsSep "\n" (
-    map (e: "address=/${e.subdomain}.${config.sops.placeholder.public-domain}/${resolveIp e}") constants.network.splitViewDns
+    map (s: "address=/${s.publicSubdomain}.${config.sops.placeholder.public-domain}/${resolveIp s}") publicServices
   ) + "\n";
 in
 {

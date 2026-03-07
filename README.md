@@ -36,7 +36,7 @@ All of the hostnames are 🐶 inspired.
 
 ### Reverse Proxy & Split-View DNS
 
-All services run on **Max** as Podman containers, each with its own IP on the servers VLAN (`192.168.20.x`). **Nemo** runs a Caddy reverse proxy and dnsmasq split-view DNS, both generated from the same `constants.network.splitViewDns` list, making it easy to add new services.
+All services run on **Max** as Podman containers, each with its own IP on the servers VLAN (`192.168.20.x`). **Nemo** runs a Caddy reverse proxy and dnsmasq split-view DNS, both derived from services in `constants.services`, making it easy to add new services.
 
 **LAN access**: dnsmasq resolves `*.mydomain.dev` to Nemo's IP → Caddy proxies to the correct service IP:port with a valid Let's Encrypt certificate (obtained via Cloudflare DNS-01 challenge).
 

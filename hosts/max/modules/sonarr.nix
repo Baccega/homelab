@@ -22,7 +22,7 @@ in
       "${constants.mountPoints.tv_shows.path}:/tv"
       "${constants.mountPoints.downloads.path}:/downloads"
     ];
-    networks = [ constants.network.maxNetworkStack.name ];
+    networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--ip=${constants.services.sonarr.ip}"
       "--label=io.containers.autoupdate=registry"
@@ -31,7 +31,7 @@ in
 
   systemd.services.podman-sonarr = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "${constants.mountPoints.downloads.name}.mount" "${constants.mountPoints.tv_shows.name}.mount" "nas-fetch-sonarr-configs.service" "create-podman-network-${constants.network.maxNetworkStack.name}.service" ];
+    after = [ "${constants.mountPoints.downloads.name}.mount" "${constants.mountPoints.tv_shows.name}.mount" "nas-fetch-sonarr-configs.service" "create-podman-network-${constants.hosts.max.networkStack.name}.service" ];
   };
 
   services.nas-fetch = {

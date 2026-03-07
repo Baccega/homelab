@@ -21,7 +21,7 @@ in
       "${constants.users.sandro.home}/sabnzbd:/config"
       "${constants.mountPoints.downloads.path}:/downloads"
     ];
-    networks = [ constants.network.maxNetworkStack.name ];
+    networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--ip=${constants.services.sabnzbd.ip}"
       "--label=io.containers.autoupdate=registry"
@@ -31,7 +31,7 @@ in
   # Ensure container waits for NFS mount
   systemd.services.podman-sabnzbd = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "${constants.mountPoints.downloads.name}.mount" "nas-fetch-sabnzbd-configs.service" "create-podman-network-${constants.network.maxNetworkStack.name}.service" "podman-forward-proxy.service"];
+    after = [ "${constants.mountPoints.downloads.name}.mount" "nas-fetch-sabnzbd-configs.service" "create-podman-network-${constants.hosts.max.networkStack.name}.service" "podman-forward-proxy.service"];
   };
 
   services.nas-fetch = {
