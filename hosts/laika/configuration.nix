@@ -17,7 +17,7 @@ in
 		./disk-config.nix
 		./hardware-configuration.nix
 		../../modules/common/base.nix
-		../../modules/common/sops.nix
+		./modules/laika-sops.nix
 		../../modules/common/kmscon.nix
 		../../modules/network/home-wifi.nix
 		../../modules/network/nfs.nix

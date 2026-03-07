@@ -24,7 +24,7 @@ in
 		./modules/firewall.nix
 		./modules/avahi.nix
 		../../modules/common/base.nix
-		../../modules/common/sops.nix
+		./modules/nemo-sops.nix
 		../../modules/common/kmscon.nix
 		../../users/root.nix
 		(import ../../users/sandro.nix { inherit config pkgs hostname_format; })

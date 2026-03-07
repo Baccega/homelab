@@ -32,7 +32,7 @@ in
 		./hardware/nvidia-1050ti.nix
 		# ./hardware/intel-a750.nix
 		../../modules/common/base.nix
-		../../modules/common/sops.nix
+		./modules/max-sops.nix
 		../../modules/common/tailscale.nix
 		../../modules/common/kmscon.nix
 		../../modules/network/nfs.nix
