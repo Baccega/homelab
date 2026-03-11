@@ -29,6 +29,7 @@ in
 		./modules/uptime-kuma.nix
 		./modules/seer.nix
 		./modules/esphome.nix
+		./modules/sunshine.nix
 		./hardware/nvidia-1050ti.nix
 		# ./hardware/intel-a750.nix
 		../../modules/common/base.nix
