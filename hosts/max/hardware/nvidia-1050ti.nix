@@ -24,6 +24,8 @@
     # The open source driver does not support Pascal GPUs.
     hardware.nvidia.open = false;
 
+    # Required for nvidia-drm modeset=Y (Wolf / Wayland / EGL on /dev/dri).
+    hardware.nvidia.modesetting.enable = true;
 
     hardware.nvidia-container-toolkit.enable = true;
 }
