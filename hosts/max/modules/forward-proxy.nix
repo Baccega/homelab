@@ -34,6 +34,10 @@ in
   systemd.services.podman-forward-proxy = {
     wantedBy = [ "multi-user.target" ];
     after = [ "network.target" "nas-fetch-vpn-configs.service" "create-podman-network-${constants.hosts.max.networkStack.name}.service" ];
+    serviceConfig = {
+      Restart = "always";
+      RestartSec = "30s";
+    };
   };
 
   services.nas-fetch = {
