@@ -30,6 +30,9 @@ in
     ];
     environment = {
       VERSION = "docker";
+      NVIDIA_VISIBLE_DEVICES = "all";
+      NVIDIA_DRIVER_CAPABILITIES = "compute,video,utility";
+      LD_LIBRARY_PATH = "/usr/local/nvidia/lib64:/usr/local/nvidia/lib";
     };
     volumes = [
       "${constants.users.sandro.home}/plex:/config"
