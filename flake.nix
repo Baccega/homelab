@@ -21,9 +21,22 @@
     }:
     let
       constants = import ./constants.nix;
+      darwinPkgs = import nixpkgs { system = "aarch64-darwin"; };
+      switch1 = import ./hosts/switch1 { pkgs = darwinPkgs; inherit constants; };
     in
     {
-      apps = nixinate.nixinate.aarch64-darwin self;
+      apps = nixpkgs.lib.recursiveUpdate (nixinate.nixinate.aarch64-darwin self) {
+        aarch64-darwin = {
+          switch1-export = {
+            type = "app";
+            program = "${switch1.export}/bin/switch1-export";
+          };
+          switch1-deploy = {
+            type = "app";
+            program = "${switch1.deploy}/bin/switch1-deploy";
+          };
+        };
+      };
       nixosConfigurations = {
         laika = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
