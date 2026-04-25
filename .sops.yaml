@@ -37,3 +37,8 @@ creation_rules:
           - *sandro
           - *sandro_yubi
           - *nemo
+  - path_regex: secrets/switch1-secrets.(yaml|json|env|ini)$
+    key_groups:
+      - age:
+          - *sandro
+          - *sandro_yubi
