@@ -5,6 +5,7 @@
 keys:
   - &users
     - &sandro age1ks08rlxuya52pnzdqs722ecnp78vntrxzdjgd42yway34us65gzskh8u0r
+    - &sandro_yubi age1yubikey1qthz3k7ytlfgul9cahg6dnd45mngyhmc9gtxsfcheve822v3wksrcd63qvm
   - &hosts
     - &laika age1nnnptw6k5wjge6f2u2ujm64pjprt9e7uuhpndpxkm2qdclwfnydq9863q4
     - &max age1ursksqk8z8x06rlr557mr0d5w0es23sc3nzaq54uj3z5xhy0mcrsc3xd45
@@ -14,6 +15,7 @@ creation_rules:
     key_groups:
       - age:
           - *sandro
+          - *sandro_yubi
           - *laika
           - *max
           - *nemo
@@ -21,14 +23,17 @@ creation_rules:
     key_groups:
       - age:
           - *sandro
+          - *sandro_yubi
           - *laika
   - path_regex: secrets/max-secrets.(yaml|json|env|ini)$
     key_groups:
       - age:
           - *sandro
+          - *sandro_yubi
           - *max
   - path_regex: secrets/nemo-secrets.(yaml|json|env|ini)$
     key_groups:
       - age:
           - *sandro
+          - *sandro_yubi
           - *nemo
