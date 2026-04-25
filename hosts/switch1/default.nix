@@ -2,13 +2,13 @@
 
 let
   ip = constants.networkGear.switch1.ip;
-  sshUser = "admin";
   configPath = "hosts/switch1/config.rsc";
+  commonSecretsPath = "secrets/switch1-secrets.json";
   remotePath = "flash/config.rsc";
 
   export = pkgs.writeShellApplication {
     name = "switch1-export";
-    runtimeInputs = with pkgs; [ openssh coreutils gnused ];
+    runtimeInputs = with pkgs; [ openssh coreutils gnused jq sops ];
     text = ''
       set -euo pipefail
 
@@ -16,13 +16,22 @@ let
         REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
       fi
 
+      switch1_admin="$(
+        sops --decrypt "$REPO_ROOT/${commonSecretsPath}" \
+          | jq -r '."switch1-admin"'
+      )"
+      if [ -z "$switch1_admin" ] || [ "$switch1_admin" = "null" ]; then
+        echo "ERROR: missing switch1-admin in ${commonSecretsPath}."
+        exit 1
+      fi
+
       out="$REPO_ROOT/${configPath}"
       mkdir -p "$(dirname "$out")"
 
-      echo "Exporting live config from ${sshUser}@${ip} -> $out"
-      ssh -o StrictHostKeyChecking=accept-new "${sshUser}@${ip}" \
+      echo "Exporting live config from $switch1_admin@${ip} -> $out"
+      ssh -o StrictHostKeyChecking=accept-new "$switch1_admin@${ip}" \
         '/export show-sensitive' \
-        | sed '1{/^# .* by RouterBOARD/d;}' \
+        | sed '/^[^#]/,$!d' \
         > "$out.tmp"
       mv "$out.tmp" "$out"
 
@@ -32,12 +41,21 @@ let
 
   deploy = pkgs.writeShellApplication {
     name = "switch1-deploy";
-    runtimeInputs = with pkgs; [ openssh coreutils diffutils gnused ];
+    runtimeInputs = with pkgs; [ openssh coreutils diffutils gnused jq sops ];
     text = ''
       set -euo pipefail
 
       if [ -z "''${REPO_ROOT:-}" ]; then
         REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+      fi
+
+      switch1_admin="$(
+        sops --decrypt "$REPO_ROOT/${commonSecretsPath}" \
+          | jq -r '."switch1-admin"'
+      )"
+      if [ -z "$switch1_admin" ] || [ "$switch1_admin" = "null" ]; then
+        echo "ERROR: missing switch1-admin in ${commonSecretsPath}."
+        exit 1
       fi
 
       local_cfg="$REPO_ROOT/${configPath}"
@@ -47,12 +65,12 @@ let
         exit 1
       fi
 
-      echo "Fetching live config from ${sshUser}@${ip} for diff..."
+      echo "Fetching live config from $switch1_admin@${ip} for diff..."
       live=$(mktemp)
       trap 'rm -f "$live"' EXIT
-      ssh -o StrictHostKeyChecking=accept-new "${sshUser}@${ip}" \
+      ssh -o StrictHostKeyChecking=accept-new "$switch1_admin@${ip}" \
         '/export show-sensitive' \
-        | sed '1{/^# .* by RouterBOARD/d;}' \
+        | sed '/^[^#]/,$!d' \
         > "$live"
 
       echo
@@ -72,12 +90,12 @@ let
         exit 1
       fi
 
-      echo "Uploading $local_cfg -> ${sshUser}@${ip}:${remotePath}"
+      echo "Uploading $local_cfg -> $switch1_admin@${ip}:${remotePath}"
       scp -O -o StrictHostKeyChecking=accept-new \
-        "$local_cfg" "${sshUser}@${ip}:${remotePath}"
+        "$local_cfg" "$switch1_admin@${ip}:${remotePath}"
 
       echo "Triggering reset + re-import..."
-      ssh -o StrictHostKeyChecking=accept-new "${sshUser}@${ip}" \
+      ssh -o StrictHostKeyChecking=accept-new "$switch1_admin@${ip}" \
         '/system/reset-configuration no-defaults=yes skip-backup=yes run-after-reset=${remotePath}' \
         || true
 

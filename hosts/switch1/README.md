@@ -8,7 +8,7 @@ device's state.
 
 ## Structure
 
-```
+```text
 switch1/
 ├── config.rsc   # RouterOS export, source of truth (committed)
 ├── default.nix  # Defines the `switch1-export` and `switch1-deploy` flake apps
@@ -18,22 +18,19 @@ switch1/
 ## One-time setup
 
 Install your SSH public key on the switch so the apps can authenticate
-non-interactively (run on the switch via WinBox/WebFig terminal, or once via
-password SSH):
+non-interactively via SSH:
 
-```
-/user ssh-keys import public-key-file=id_ed25519.pub user=admin
-```
+Upload your SSH public key to the device's `Files` directory in the WEB-UI and link it to an admin user:
 
-Replace `id_ed25519.pub` with whatever pubkey file you uploaded to the
-device's `Files`. After this, `ssh admin@192.168.1.2` should work without a
-password.
+```routeros
+/user ssh-keys import public-key-file=id_rsa.pub user=YOUR_USERNAME
+```
 
 ## Workflow
 
 1. **Pull the live config** into the repo (do this first, before any deploy):
 
-   ```
+   ```bash
    nix run .#switch1-export
    git diff -- hosts/switch1/config.rsc
    ```
@@ -43,7 +40,7 @@ password.
 
 3. **Deploy** the local file back to the switch:
 
-   ```
+   ```bash
    nix run .#switch1-deploy
    ```
 
@@ -80,9 +77,9 @@ Current cabling (documented here so you don’t have to infer it from the config
   WPA passphrases, RADIUS shared secrets, and the like. If you want those
   out of git, switch to plain `/export` and manage the sensitive bits via
   sops separately.
-- The first line of MikroTik's `/export` output is a `# RouterOS … by
-  RouterBOARD …` banner with a timestamp; the apps strip it so diffs are
-  stable.
+- MikroTik's `/export` output starts with a comment preamble containing
+  timestamp, software ID, model, and serial number; the apps strip all leading
+  comment lines so that information is not committed and diffs stay stable.
 - After a `reset-configuration`, the SSH host key on the switch may
   change. If `ssh` complains about a host key mismatch, remove the old
   entry with `ssh-keygen -R 192.168.1.2`.
