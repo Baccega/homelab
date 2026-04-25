@@ -96,7 +96,7 @@ let
 
       echo "Triggering reset + re-import..."
       ssh -o StrictHostKeyChecking=accept-new "$switch1_admin@${ip}" \
-        '/system/reset-configuration no-defaults=yes skip-backup=yes run-after-reset=${remotePath}' \
+        '/system/reset-configuration keep-users=yes no-defaults=yes skip-backup=yes run-after-reset=${remotePath}' \
         || true
 
       echo "Done. The switch is rebooting; give it ~60s before retrying ssh."
