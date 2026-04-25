@@ -11,7 +11,7 @@ device's state.
 ```text
 switch1/
 ├── config.rsc   # RouterOS export, source of truth (committed)
-├── default.nix  # Defines the `switch1-export` and `switch1-deploy` flake apps
+├── default.nix  # Defines the switch1 flake apps
 └── README.md
 ```
 
@@ -38,7 +38,7 @@ Upload your SSH public key to the device's `Files` directory in the WEB-UI and l
 2. **Edit `config.rsc`** by hand (or via WinBox/WebFig, then re-run
    `switch1-export` to capture the changes).
 
-3. **Deploy** the local file back to the switch:
+3. **Deploy** the local file and choose how to apply it:
 
    ```bash
    nix run .#switch1-deploy
@@ -46,14 +46,25 @@ Upload your SSH public key to the device's `Files` directory in the WEB-UI and l
 
    This will:
    - Pull the live config and show a unified diff vs the local file.
-   - Prompt for `yes` confirmation.
+   - Ask for a deploy mode: `incremental`, `full`, or `abort`.
+
+   `incremental` will:
    - `scp` `config.rsc` to `flash/config.rsc` on the device.
+   - Run `/import file-name=flash/config.rsc`.
+   - Avoid resetting the switch, so SSH host keys and users are preserved.
+
+   This is safer for day-to-day changes, but it is not a true clean rebuild:
+   config that exists on the switch but is no longer present in `config.rsc`
+   may remain.
+
+   `full` will:
+   - Prompt for the exact phrase `full erase switch1`.
+   - Upload `config.rsc`.
    - Run `/system/reset-configuration keep-users=yes no-defaults=yes
-     skip-backup=yes run-after-reset=flash/config.rsc`, which wipes the
-     device config while preserving users, reboots, and re-applies the script
-     from scratch. This is the idiomatic RouterOS way to do a fully
-     declarative apply without deleting login accounts.
-   - Causes a ~30-60s outage on every deploy.
+     skip-backup=yes run-after-reset=flash/config.rsc`.
+   - Preserve RouterOS users, but wipe other device config not present in
+     `config.rsc`.
+   - Reboot the switch and cause a ~30-60s outage.
 
 ## Port map (physical connections)
 
@@ -81,6 +92,6 @@ Current cabling (documented here so you don’t have to infer it from the config
 - MikroTik's `/export` output starts with a comment preamble containing
   timestamp, software ID, model, and serial number; the apps strip all leading
   comment lines so that information is not committed and diffs stay stable.
-- After a `reset-configuration`, the SSH host key on the switch may
-  change. If `ssh` complains about a host key mismatch, remove the old
-  entry with `ssh-keygen -R 192.168.1.2`.
+- The `incremental` deploy mode should not regenerate the SSH host key. The
+  `full` deploy mode performs a reset; if SSH complains about a host key
+  mismatch afterward, remove the old entry with `ssh-keygen -R 192.168.1.2`.

@@ -82,24 +82,58 @@ let
       echo "=== end diff ==="
       echo
 
-      echo "About to RESET ${ip} and re-import the local config."
-      echo "This will cause a brief outage (~30-60s) while the switch reboots."
-      read -rp "Type 'yes' to continue: " ans
-      if [ "$ans" != "yes" ]; then
-        echo "Aborted."
-        exit 1
-      fi
+      echo
+      echo "Choose deployment mode:"
+      echo "  incremental  Upload and import onto the running config. No reset/reboot."
+      echo "  full         Reset config, preserve users, reboot, and import from scratch."
+      echo "  abort        Do nothing."
+      read -rp "Deploy mode [incremental/full/abort]: " mode
 
-      echo "Uploading $local_cfg -> $switch1_admin@${ip}:${remotePath}"
-      scp -O -o StrictHostKeyChecking=accept-new \
-        "$local_cfg" "$switch1_admin@${ip}:${remotePath}"
+      case "$mode" in
+        incremental)
+          echo "Uploading $local_cfg -> $switch1_admin@${ip}:${remotePath}"
+          scp -O -o StrictHostKeyChecking=accept-new \
+            "$local_cfg" "$switch1_admin@${ip}:${remotePath}"
 
-      echo "Triggering reset + re-import..."
-      ssh -o StrictHostKeyChecking=accept-new "$switch1_admin@${ip}" \
-        '/system/reset-configuration keep-users=yes no-defaults=yes skip-backup=yes run-after-reset=${remotePath}' \
-        || true
+          echo "Importing config on the running switch..."
+          ssh -o StrictHostKeyChecking=accept-new "$switch1_admin@${ip}" \
+            '/import file-name=${remotePath}'
 
-      echo "Done. The switch is rebooting; give it ~60s before retrying ssh."
+          echo "Done. Export again and review the diff with: nix run .#switch1-export"
+          ;;
+
+        full)
+          echo "DANGER: about to RESET ${ip} and re-import the local config."
+          echo "This preserves RouterOS users, but wipes other device config not present in ${configPath}."
+          echo "The switch will reboot and be unavailable for ~30-60s."
+          read -rp "Type 'full erase switch1' to continue: " ans
+          if [ "$ans" != "full erase switch1" ]; then
+            echo "Aborted."
+            exit 1
+          fi
+
+          echo "Uploading $local_cfg -> $switch1_admin@${ip}:${remotePath}"
+          scp -O -o StrictHostKeyChecking=accept-new \
+            "$local_cfg" "$switch1_admin@${ip}:${remotePath}"
+
+          echo "Triggering reset + re-import..."
+          ssh -o StrictHostKeyChecking=accept-new "$switch1_admin@${ip}" \
+            '/system/reset-configuration keep-users=yes no-defaults=yes skip-backup=yes run-after-reset=${remotePath}' \
+            || true
+
+          echo "Done. The switch is rebooting; give it ~60s before retrying ssh."
+          ;;
+
+        abort|"")
+          echo "Aborted."
+          exit 1
+          ;;
+
+        *)
+          echo "ERROR: unknown deploy mode '$mode'."
+          exit 1
+          ;;
+      esac
     '';
   };
 in
