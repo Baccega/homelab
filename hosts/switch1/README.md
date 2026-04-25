@@ -48,10 +48,11 @@ Upload your SSH public key to the device's `Files` directory in the WEB-UI and l
    - Pull the live config and show a unified diff vs the local file.
    - Prompt for `yes` confirmation.
    - `scp` `config.rsc` to `flash/config.rsc` on the device.
-   - Run `/system/reset-configuration no-defaults=yes skip-backup=yes
-     run-after-reset=flash/config.rsc`, which wipes the device, reboots, and
-     re-applies the script from scratch. This is the idiomatic RouterOS way
-     to do a fully declarative apply.
+   - Run `/system/reset-configuration keep-users=yes no-defaults=yes
+     skip-backup=yes run-after-reset=flash/config.rsc`, which wipes the
+     device config while preserving users, reboots, and re-applies the script
+     from scratch. This is the idiomatic RouterOS way to do a fully
+     declarative apply without deleting login accounts.
    - Causes a ~30-60s outage on every deploy.
 
 ## Port map (physical connections)
