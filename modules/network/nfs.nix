@@ -47,6 +47,14 @@ in
             what = "${constants.hosts.hachiko.ip}:/volume2/photo/Videocassette e VHS";
             where = "/mnt/videocassette";
         }
+        {
+            type = "nfs";
+            mountConfig = {
+                Options = "noatime,nfsvers=4";
+            };
+            what = "${constants.hosts.hachiko.ip}:/volume2/data/books";
+            where = "/mnt/books";
+        }
     ];
 
     systemd.automounts = [
@@ -74,6 +82,11 @@ in
             wantedBy = [ "multi-user.target" ];
             after = [ "network.target" ];
             where = "/mnt/videocassette";
+        }
+        {
+            wantedBy = [ "multi-user.target" ];
+            after = [ "network.target" ];
+            where = "/mnt/books";
         }
     ];
 }

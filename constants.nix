@@ -49,6 +49,10 @@
             path = "/mnt/videocassette";
             name = "videocassette";
         };
+        books = {
+            path = "/mnt/books";
+            name = "books";
+        };
     };
     hosts = {
         zero = {
@@ -165,6 +169,16 @@
             ip = "192.168.20.213";
             port = 5055;
             # publicSubdomain = "seer";
+        };
+        lazylibrarian = {
+            ip = "192.168.20.214";
+            port = 5299;
+            publicSubdomain = "lazylibrarian";
+        };
+        calibreWeb = {
+            ip = "192.168.20.215";
+            port = 8083;
+            publicSubdomain = "books";
         };
     };
     networkGear = {
