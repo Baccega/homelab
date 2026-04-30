@@ -9,35 +9,32 @@ let
 in
 {
   networking.firewall.allowedTCPPorts = [
-    constants.services.lazylibrarian.port
+    constants.services.bookshelf.port
   ];
 
-  virtualisation.oci-containers.containers.lazylibrarian = {
-    image = "ghcr.io/linuxserver/lazylibrarian";
+  virtualisation.oci-containers.containers.bookshelf = {
+    image = "ghcr.io/pennydreadful/bookshelf:hardcover";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
     ];
-    environment = {
-      DOCKER_MODS = "linuxserver/mods:universal-calibre|linuxserver/mods:lazylibrarian-ffmpeg";
-    };
     volumes = [
-      "${constants.users.sandro.home}/lazylibrarian:/config"
+      "${constants.users.sandro.home}/bookshelf:/config"
       "${constants.mountPoints.downloads.path}:/downloads"
       "${constants.mountPoints.books.path}:/books"
     ];
     networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
-      "--ip=${constants.services.lazylibrarian.ip}"
+      "--ip=${constants.services.bookshelf.ip}"
       "--label=io.containers.autoupdate=registry"
     ];
   };
 
-  systemd.services.podman-lazylibrarian = {
+  systemd.services.podman-bookshelf = {
     wantedBy = [ "multi-user.target" ];
     after = [
       "${constants.mountPoints.downloads.name}.mount"
       "${constants.mountPoints.books.name}.mount"
-      "nas-fetch-lazylibrarian.service"
+      "nas-fetch-bookshelf-configs.service"
       "create-podman-network-${constants.hosts.max.networkStack.name}.service"
     ];
   };
@@ -46,10 +43,10 @@ in
     enable = true;
     syncPaths = [
       {
-        name = "lazylibrarian";
+        name = "bookshelf-configs";
         nfsMount = constants.mountPoints.configurations.path;
-        source = "lazylibrarian";
-        target = "${constants.users.sandro.home}/lazylibrarian";
+        source = "bookshelf";
+        target = "${constants.users.sandro.home}/bookshelf/Backups/";
         user = constants.users.alfred.uid;
         group = constants.groups.users;
       }
@@ -60,14 +57,10 @@ in
     enable = true;
     jobs = [
       {
-        name = "lazylibrarian";
-        source = "${constants.users.sandro.home}/lazylibrarian";
+        name = "bookshelf-configs";
+        source = "${constants.users.sandro.home}/bookshelf/Backups";
         nfsMount = constants.mountPoints.configurations.path;
-        destination = "lazylibrarian";
-        exclude = [
-          "/logs/"
-          "/cache/"
-        ];
+        destination = "bookshelf";
         schedule = "daily";
       }
     ];

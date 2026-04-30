@@ -53,6 +53,10 @@
             path = "/mnt/books";
             name = "books";
         };
+        manga = {
+            path = "/mnt/manga";
+            name = "manga";
+        };
     };
     hosts = {
         zero = {
@@ -170,15 +174,20 @@
             port = 5055;
             # publicSubdomain = "seer";
         };
-        lazylibrarian = {
+        bookshelf = {
             ip = "192.168.20.214";
-            port = 5299;
-            publicSubdomain = "lazylibrarian";
+            port = 8787;
+            publicSubdomain = "books";
+        };
+        suwayomi = {
+            ip = "192.168.20.215";
+            port = 4567;
+            publicSubdomain = "manga";
         };
         calibreWeb = {
-            ip = "192.168.20.215";
+            ip = "192.168.20.216";
             port = 8083;
-            publicSubdomain = "books";
+            publicSubdomain = "calibre";
         };
     };
     networkGear = {

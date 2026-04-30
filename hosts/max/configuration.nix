@@ -29,7 +29,8 @@ in
 		./modules/uptime-kuma.nix
 		./modules/seer.nix
 		./modules/esphome.nix
-		./modules/lazylibrarian.nix
+		./modules/bookshelf.nix
+		./modules/suwayomi.nix
 		./modules/calibre-web.nix
 		# ./modules/wolf.nix
 		./hardware/nvidia-1050ti.nix
