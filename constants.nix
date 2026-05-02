@@ -184,11 +184,6 @@
             port = 4567;
             publicSubdomain = "manga";
         };
-        calibreWeb = {
-            ip = "192.168.20.216";
-            port = 8083;
-            publicSubdomain = "calibre";
-        };
     };
     networkGear = {
         switch1 = {

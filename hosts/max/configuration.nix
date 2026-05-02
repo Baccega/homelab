@@ -31,7 +31,6 @@ in
 		./modules/esphome.nix
 		./modules/bookshelf.nix
 		./modules/suwayomi.nix
-		./modules/calibre-web.nix
 		# ./modules/wolf.nix
 		./hardware/nvidia-1050ti.nix
 		# ./hardware/intel-a750.nix

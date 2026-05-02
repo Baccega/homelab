@@ -32,6 +32,7 @@ in
     networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--ip=${constants.services.suwayomi.ip}"
+      "--user=${toString constants.users.alfred.uid}:${toString constants.groups.users}"
       "--label=io.containers.autoupdate=registry"
     ];
   };
@@ -64,7 +65,7 @@ in
     jobs = [
       {
         name = "suwayomi";
-        source = "${constants.users.sandro.home}/suwayomi";
+        source = "${constants.users.sandro.home}/suwayomi/backups";
         nfsMount = constants.mountPoints.configurations.path;
         destination = "suwayomi";
         exclude = [
