@@ -184,6 +184,11 @@
             port = 4567;
             publicSubdomain = "manga";
         };
+        komga = {
+            ip = "192.168.20.216";
+            port = 25600;
+            publicSubdomain = "komga";
+        };
     };
     networkGear = {
         switch1 = {
