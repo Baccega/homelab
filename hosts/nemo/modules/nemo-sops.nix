@@ -10,6 +10,9 @@
         nemo-docker-env = {
             sopsFile = ../../../secrets/nemo-secrets.json;
         };
+        nemo-beszel-env = {
+            sopsFile = ../../../secrets/nemo-secrets.json;
+        };
         cloudflared-token = {
             sopsFile = ../../../secrets/nemo-secrets.json;
         };

@@ -23,6 +23,7 @@ in
 		./modules/caddy.nix
 		./modules/firewall.nix
 		./modules/avahi.nix
+		./modules/beszel-agent.nix
 		../../modules/common/base.nix
 		./modules/nemo-sops.nix
 		../../modules/common/kmscon.nix

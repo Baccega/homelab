@@ -189,6 +189,12 @@
             port = 25600;
             publicSubdomain = "komga";
         };
+        beszel = {
+            ip = "192.168.20.217";
+            port = 8090;
+            agentPort = 45876;
+            publicSubdomain = "beszel";
+        };
     };
     networkGear = {
         switch1 = {
