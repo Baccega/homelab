@@ -45,3 +45,10 @@ ls -la /run/secrets/<SECRET_NAME>
 # Re-run config generation (loads new secrets)
 sudo systemctl restart <SERVICE_NAME>-config
 ```
+
+## Ollama
+
+```bash
+# List available models
+sudo podman exec -it <CONTAINER_ID> ollama pull <MODEL_NAME>
+```

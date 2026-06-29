@@ -16,5 +16,17 @@
         code-server-env = {
             sopsFile = ../../../secrets/max-secrets.json;
         };
+        paperless-env = {
+            sopsFile = ../../../secrets/max-secrets.json;
+        };
+        postgres-env = {
+            sopsFile = ../../../secrets/max-secrets.json;
+        };
+        redis-env = {
+            sopsFile = ../../../secrets/max-secrets.json;
+        };
+        ai-stack-env = {
+            sopsFile = ../../../secrets/max-secrets.json;
+        };
     };
 }

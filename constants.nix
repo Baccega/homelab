@@ -195,6 +195,40 @@
             agentPort = 45876;
             publicSubdomain = "beszel";
         };
+        paperless = {
+            ip = "192.168.20.218";
+            port = 8000;
+            publicSubdomain = "paperless";
+        };
+        paperlessGotenberg = {
+            ip = "192.168.20.219";
+            port = 3000;
+        };
+        paperlessTika = {
+            ip = "192.168.20.220";
+            port = 9998;
+        };
+        paperlessGpt = {
+            ip = "192.168.20.221";
+            port = 8080;
+        };
+        ollama = {
+            ip = "192.168.20.222";
+            port = 11434;
+        };
+        openWebui = {
+            ip = "192.168.20.223";
+            port = 8080;
+            publicSubdomain = "ai";
+        };
+        postgres = {
+            ip = "192.168.20.224";
+            port = 5432;
+        };
+        redis = {
+            ip = "192.168.20.225";
+            port = 6379;
+        };
     };
     networkGear = {
         switch1 = {
