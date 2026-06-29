@@ -32,6 +32,10 @@ in
 		./modules/suwayomi.nix
 		./modules/komga.nix
 		./modules/beszel.nix
+		./modules/paperless.nix
+		./modules/postgres.nix
+		./modules/redis.nix
+		./modules/ai-stack.nix
 		# ./modules/wolf.nix
 		./hardware/nvidia-1050ti.nix
 		# ./hardware/intel-a750.nix
