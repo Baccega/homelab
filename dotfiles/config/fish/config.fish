@@ -21,6 +21,9 @@ abbr -a -- ga 'git commit --amend'
 abbr -a -- gco 'git checkout'
 abbr -a -- gcp 'git cherry-pick'
 abbr -a -- rad 'docker exec -it radishmed-portal_devcontainer-devcontainer-1'
+abbr -a -- srestart 'sudo systemctl restart'
+abbr -a -- sstatus 'sudo systemctl status'
+abbr -a -- slogs 'sudo journalctl -u -n 100'
 
 # Make pnpm ci work as expected
 function pnpm
