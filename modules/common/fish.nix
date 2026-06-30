@@ -18,6 +18,10 @@
                 gs = "git status";
                 ga = "git commit --amend";
                 gc = "git checkout";
+                dlogs = "sudo docker logs";
+                srestart = "sudo systemctl restart";
+                sstatus = "sudo systemctl status";
+                slogs = "sudo journalctl -u -n 100";
             };
 
             functions = {
