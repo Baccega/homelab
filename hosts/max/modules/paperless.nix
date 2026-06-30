@@ -110,7 +110,7 @@ in
 
       # Text metadata model.
       LLM_PROVIDER = "ollama";
-      LLM_MODEL = "qwen3:4b";
+      LLM_MODEL = "gemma3:4b";
       OLLAMA_HOST = ollamaHost;
       OLLAMA_CONTEXT_LENGTH = "8192";
       TOKEN_LIMIT = "1000";
