@@ -32,11 +32,11 @@ in
     PAPERLESS_URL=${paperlessUrl}
   '';
   sops.templates."paperless-gpt.env".content = ''
-    PAPERLESS_PUBLIC_URL=${paperlessUrl}
+    PAPERLESS_PUBLIC_URL=${paperlessBaseUrl}
   '';
 
   virtualisation.oci-containers.containers.paperless = {
-    image = "ghcr.io/paperless-ngx/paperless-ngx:latest";
+    image = "ghcr.io/paperless-ngx/paperless-ngx:beta";
     environment = {
       USERMAP_UID = toString constants.users.alfred.uid;
       USERMAP_GID = toString constants.groups.users;
@@ -53,8 +53,17 @@ in
       PAPERLESS_TIKA_GOTENBERG_ENDPOINT = gotenbergEndpoint;
       PAPERLESS_TIKA_ENDPOINT = tikaEndpoint;
 
-      PAPERLESS_OCR_LANGUAGE = "ita";
-      PAPERLESS_DATE_PARSER_LANGUAGES = "it+de+en";
+      PAPERLESS_AI_ENABLED = "True";
+      PAPERLESS_AI_LLM_BACKEND = "ollama";
+      PAPERLESS_AI_LLM_MODEL = "gemma3:4b";
+      PAPERLESS_AI_LLM_API_KEY = "";
+      PAPERLESS_AI_LLM_ENDPOINT = ollamaHost;
+      PAPERLESS_AI_LLM_ALLOW_INTERNAL_ENDPOINTS = "true";
+      PAPERLESS_AI_LLM_EMBEDDING_BACKEND="ollama";
+      PAPERLESS_AI_LLM_EMBEDDING_MODEL = "nomic-embed-text";
+      PAPERLESS_AI_LLM_EMBEDDING_ENDPOINT = ollamaHost;
+
+      PAPERLESS_OCR_LANGUAGE = "ita+deu";
     };
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
@@ -131,8 +140,6 @@ in
     };
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
-      # Provides PAPERLESS_API_TOKEN (generate it in the Paperless UI, then
-      # update secrets/max-secrets.json).
       config.sops.secrets.paperless-env.path
       config.sops.templates."paperless-gpt.env".path
     ];
