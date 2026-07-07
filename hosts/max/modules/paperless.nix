@@ -32,7 +32,7 @@ in
     PAPERLESS_URL=${paperlessUrl}
   '';
   sops.templates."paperless-gpt.env".content = ''
-    PAPERLESS_PUBLIC_URL=${paperlessBaseUrl}
+    PAPERLESS_PUBLIC_URL=${paperlessUrl}
   '';
 
   virtualisation.oci-containers.containers.paperless = {
@@ -116,6 +116,7 @@ in
     image = "docker.io/icereed/paperless-gpt:latest";
     environment = {
       PAPERLESS_BASE_URL = paperlessBaseUrl;
+      PAPERLESS_INSECURE_SKIP_VERIFY = "true";
 
       # Text metadata model.
       LLM_PROVIDER = "ollama";
@@ -128,7 +129,7 @@ in
       # Vision model used for LLM-based OCR.
       OCR_PROVIDER = "llm";
       VISION_LLM_PROVIDER = "ollama";
-      VISION_LLM_MODEL = "openbmb/minicpm-v4.5";
+      VISION_LLM_MODEL = "granite3.2-vision";
 
       AUTO_OCR_TAG = "paperless-gpt-ocr-auto";
       AUTO_TAG = "paperless-gpt-auto";
