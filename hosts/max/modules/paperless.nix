@@ -23,7 +23,7 @@ in
 {
   networking.firewall.allowedTCPPorts = [
     constants.services.paperless.port
-    constants.services.paperlessGpt.port
+    # constants.services.paperlessGpt.port
   ];
 
   # The public URL embeds the (sops-managed) domain, so keep it out of the nix
@@ -31,9 +31,9 @@ in
   sops.templates."paperless.env".content = ''
     PAPERLESS_URL=${paperlessUrl}
   '';
-  sops.templates."paperless-gpt.env".content = ''
-    PAPERLESS_PUBLIC_URL=${paperlessUrl}
-  '';
+  # sops.templates."paperless-gpt.env".content = ''
+  #   PAPERLESS_PUBLIC_URL=${paperlessUrl}
+  # '';
 
   virtualisation.oci-containers.containers.paperless = {
     image = "ghcr.io/paperless-ngx/paperless-ngx:beta";
@@ -112,47 +112,47 @@ in
     ];
   };
 
-  virtualisation.oci-containers.containers.paperless-gpt = {
-    image = "docker.io/icereed/paperless-gpt:latest";
-    environment = {
-      PAPERLESS_BASE_URL = paperlessBaseUrl;
-      PAPERLESS_INSECURE_SKIP_VERIFY = "true";
+  # virtualisation.oci-containers.containers.paperless-gpt = {
+  #   image = "docker.io/icereed/paperless-gpt:latest";
+  #   environment = {
+  #     PAPERLESS_BASE_URL = paperlessBaseUrl;
+  #     PAPERLESS_INSECURE_SKIP_VERIFY = "true";
 
-      # Text metadata model.
-      LLM_PROVIDER = "ollama";
-      LLM_MODEL = "gemma3:4b";
-      OLLAMA_HOST = ollamaHost;
-      OLLAMA_CONTEXT_LENGTH = "8192";
-      TOKEN_LIMIT = "1000";
-      LLM_LANGUAGE = "Italian";
+  #     # Text metadata model.
+  #     LLM_PROVIDER = "ollama";
+  #     LLM_MODEL = "gemma3:4b";
+  #     OLLAMA_HOST = ollamaHost;
+  #     OLLAMA_CONTEXT_LENGTH = "8192";
+  #     TOKEN_LIMIT = "1000";
+  #     LLM_LANGUAGE = "Italian";
 
-      # Vision model used for LLM-based OCR.
-      OCR_PROVIDER = "llm";
-      VISION_LLM_PROVIDER = "ollama";
-      VISION_LLM_MODEL = "granite3.2-vision";
+  #     # Vision model used for LLM-based OCR.
+  #     OCR_PROVIDER = "llm";
+  #     VISION_LLM_PROVIDER = "ollama";
+  #     VISION_LLM_MODEL = "granite3.2-vision";
 
-      AUTO_OCR_TAG = "paperless-gpt-ocr-auto";
-      AUTO_TAG = "paperless-gpt-auto";
-      MANUAL_TAG = "paperless-gpt-manual";
-      PDF_OCR_TAGGING = "true";
-      PDF_OCR_COMPLETE_TAG = "paperless-gpt-ocr-complete";
-      PDF_UPLOAD = "false";
-      LOG_LEVEL = "info";
-    };
-    environmentFiles = [
-      config.sops.secrets.max-docker-env.path
-      config.sops.secrets.paperless-env.path
-      config.sops.templates."paperless-gpt.env".path
-    ];
-    volumes = [
-      "${constants.users.sandro.home}/paperless/paperless-gpt-prompts:/app/prompts"
-    ];
-    networks = [ constants.hosts.max.networkStack.name ];
-    extraOptions = [
-      "--ip=${constants.services.paperlessGpt.ip}"
-      "--label=io.containers.autoupdate=registry"
-    ];
-  };
+  #     AUTO_OCR_TAG = "paperless-gpt-ocr-auto";
+  #     AUTO_TAG = "paperless-gpt-auto";
+  #     MANUAL_TAG = "paperless-gpt-manual";
+  #     PDF_OCR_TAGGING = "true";
+  #     PDF_OCR_COMPLETE_TAG = "paperless-gpt-ocr-complete";
+  #     PDF_UPLOAD = "false";
+  #     LOG_LEVEL = "info";
+  #   };
+  #   environmentFiles = [
+  #     config.sops.secrets.max-docker-env.path
+  #     config.sops.secrets.paperless-env.path
+  #     config.sops.templates."paperless-gpt.env".path
+  #   ];
+  #   volumes = [
+  #     "${constants.users.sandro.home}/paperless/paperless-gpt-prompts:/app/prompts"
+  #   ];
+  #   networks = [ constants.hosts.max.networkStack.name ];
+  #   extraOptions = [
+  #     "--ip=${constants.services.paperlessGpt.ip}"
+  #     "--label=io.containers.autoupdate=registry"
+  #   ];
+  # };
 
   systemd.services.podman-paperless-gotenberg = {
     wantedBy = [ "multi-user.target" ];
@@ -182,16 +182,16 @@ in
     restartTriggers = [ config.sops.templates."paperless.env".path ];
   };
 
-  systemd.services.podman-paperless-gpt = {
-    wantedBy = [ "multi-user.target" ];
-    after = [
-      "sops-nix.service"
-      "podman-paperless.service"
-      "podman-ollama.service"
-      "create-podman-network-${constants.hosts.max.networkStack.name}.service"
-    ];
-    restartTriggers = [ config.sops.templates."paperless-gpt.env".path ];
-  };
+  # systemd.services.podman-paperless-gpt = {
+  #   wantedBy = [ "multi-user.target" ];
+  #   after = [
+  #     "sops-nix.service"
+  #     "podman-paperless.service"
+  #     "podman-ollama.service"
+  #     "create-podman-network-${constants.hosts.max.networkStack.name}.service"
+  #   ];
+  #   restartTriggers = [ config.sops.templates."paperless-gpt.env".path ];
+  # };
 
   services.nas-fetch = {
     enable = true;
