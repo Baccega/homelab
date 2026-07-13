@@ -41,6 +41,7 @@ in
       USERMAP_UID = toString constants.users.alfred.uid;
       USERMAP_GID = toString constants.groups.users;
       PAPERLESS_TIME_ZONE = "Europe/Vienna";
+      PAPERLESS_CONSUMER_DELETE_DUPLICATES = "true";
 
       # Database and queue run on Max (postgres.nix / redis.nix).
       PAPERLESS_DBHOST = constants.services.postgres.ip;
@@ -63,7 +64,7 @@ in
       PAPERLESS_AI_LLM_EMBEDDING_MODEL = "nomic-embed-text";
       PAPERLESS_AI_LLM_EMBEDDING_ENDPOINT = ollamaHost;
 
-      PAPERLESS_OCR_LANGUAGE = "ita+deu";
+      PAPERLESS_OCR_LANGUAGE = "ita+deu+eng";
     };
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
