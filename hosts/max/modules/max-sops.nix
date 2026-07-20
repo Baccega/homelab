@@ -28,5 +28,8 @@
         ai-stack-env = {
             sopsFile = ../../../secrets/max-secrets.json;
         };
+        forward-proxy-env = {
+            sopsFile = ../../../secrets/max-secrets.json;
+        };
     };
 }

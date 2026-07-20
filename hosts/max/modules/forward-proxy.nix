@@ -8,17 +8,22 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  networking.firewall.allowedTCPPorts = [ 
+  networking.firewall.allowedTCPPorts = [
+    constants.services.forwardProxy.port
+  ];
+  networking.firewall.allowedUDPPorts = [
     constants.services.forwardProxy.port
   ];
 
   virtualisation.oci-containers.containers.forward-proxy = {
-    image = "docker.io/curve25519xsalsa20poly1305/openvpn:latest";
-    volumes = [
-      "${constants.users.sandro.home}/vpn:/vpn:ro"
+    image = "docker.io/qmcgaw/gluetun:latest";
+    environmentFiles = [
+      config.sops.secrets.max-docker-env.path
+      config.sops.secrets.forward-proxy-env.path
     ];
     environment = {
-      OPENVPN_CONFIG = "/vpn/ch-zur.prod.surfshark.comsurfshark_openvpn_udp.ovpn";
+      SOCKS5_ENABLED = "on";
+      SOCKS5_LISTENING_ADDRESS = ":${toString constants.services.forwardProxy.port}";
     };
     extraOptions = [
       "--cap-add=NET_ADMIN"
@@ -33,36 +38,14 @@ in
   # Ensure container starts before other services
   systemd.services.podman-forward-proxy = {
     wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" "nas-fetch-vpn-configs.service" "create-podman-network-${constants.hosts.max.networkStack.name}.service" ];
+    after = [
+      "network.target"
+      "create-podman-network-${constants.hosts.max.networkStack.name}.service"
+    ];
     serviceConfig = {
       Restart = "always";
       RestartSec = "30s";
     };
-  };
-
-  services.nas-fetch = {
-    enable = true;
-    syncPaths = [
-      {
-        name = "vpn-configs";
-        nfsMount = constants.mountPoints.configurations.path;
-        source = "vpn";
-        target = "${constants.users.sandro.home}/vpn";
-      }
-    ];
-  };
-
-  backup = {
-    enable = true;
-    jobs = [
-      {
-        name = "vpn-configs";
-        source = "${constants.users.sandro.home}/vpn";
-        nfsMount = constants.mountPoints.configurations.path;
-        destination = "vpn";
-        schedule = "daily";
-      }
-    ];
   };
 }
 
