@@ -36,7 +36,7 @@ in
   # '';
 
   virtualisation.oci-containers.containers.paperless = {
-    image = "ghcr.io/paperless-ngx/paperless-ngx:beta";
+    image = "ghcr.io/paperless-ngx/paperless-ngx:latest";
     environment = {
       USERMAP_UID = toString constants.users.alfred.uid;
       USERMAP_GID = toString constants.groups.users;
