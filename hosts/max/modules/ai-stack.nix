@@ -30,6 +30,8 @@ in
       OLLAMA_KEEP_ALIVE = "15m";
       NVIDIA_VISIBLE_DEVICES = "all";
       NVIDIA_DRIVER_CAPABILITIES = "all";
+      CUDA_VISIBLE_DEVICES = "0";
+      OLLAMA_GPU = "0";
     };
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
