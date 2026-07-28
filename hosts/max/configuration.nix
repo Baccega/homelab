@@ -37,7 +37,8 @@ in
 		./modules/redis.nix
 		./modules/ai-stack.nix
 		# ./modules/wolf.nix
-		./hardware/nvidia-1050ti.nix
+		./hardware/nvidia-gtx-1050ti.nix
+		./hardware/nvidia-tesla-p4.nix
 		# ./hardware/intel-a750.nix
 		../../modules/common/base.nix
 		./modules/max-sops.nix

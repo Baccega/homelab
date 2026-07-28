@@ -10,7 +10,8 @@ max/
 ├── disk-config.nix           # Disk partitioning setup
 ├── hardware-configuration.nix # Hardware-specific settings
 ├── hardware/
-│   └── nvidia-1050ti.nix     # NVIDIA GPU configuration
+│   ├── nvidia-gtx-1050ti.nix # GTX 1050 Ti
+│   └── nvidia-tesla-p4.nix   # Tesla P4
 ├── home/
 │   ├── docker-compose.yml    # Reference Docker services (migrating to Podman)
 │   └── useful-commands.md    # Podman and systemd management commands
