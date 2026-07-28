@@ -1,5 +1,17 @@
 # Useful Commands
 
+## NixOS
+
+# Rebuild and switch (no reboot)
+```bash
+sudo nixos-rebuild switch --flake github:Baccega/homelab#max
+```
+
+# Rebuild and reboot
+```bash
+sudo nixos-rebuild boot --flake github:Baccega/homelab#max
+```
+
 ## Container Management
 
 ```bash
