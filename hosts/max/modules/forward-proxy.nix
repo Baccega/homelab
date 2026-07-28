@@ -43,7 +43,7 @@ in
       "create-podman-network-${constants.hosts.max.networkStack.name}.service"
     ];
     serviceConfig = {
-      Restart = "always";
+      Restart = lib.mkForce "always";
       RestartSec = "30s";
     };
   };
