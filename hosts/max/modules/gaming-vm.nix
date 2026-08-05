@@ -2,8 +2,9 @@
 #
 # Isolates Sunshine/Steam from the host: GTX 1050 Ti + its HDMI audio are bound
 # to vfio-pci and passed through; Tesla P4 stays on the host for Ollama/etc.
-# Networking is macvtap bridge on eno1 so bolt gets a real VLAN-20 IP (.50),
-# same idea as the Podman ipvlan stack.
+# Networking: bolt attaches to host bridge br0 (eno1 enslaved) so it gets a
+# real VLAN-20 IP (.50), alongside Max and the Podman ipvlan stack (parent=br0).
+# macvtap on eno1 conflicts with this host's NIC/stack ("device busy").
 #
 # Prerequisites (one-time):
 #   1. Enable Intel VT-d / IOMMU in the motherboard BIOS (Max currently shows
@@ -97,10 +98,10 @@ let
           <target dev="vda" bus="virtio"/>
           <address type="pci" domain="0x0000" bus="0x04" slot="0x00" function="0x0"/>
         </disk>
-        <!-- macvtap bridge: appears as another host on VLAN 20 (eno1). -->
-        <interface type="direct">
+        <!-- Linux bridge br0: appears as another host on VLAN 20. -->
+        <interface type="bridge">
           <mac address="${bolt.mac}"/>
-          <source dev="eno1" mode="bridge"/>
+          <source bridge="${constants.hosts.max.bridge}"/>
           <model type="virtio"/>
           <address type="pci" domain="0x0000" bus="0x01" slot="0x00" function="0x0"/>
         </interface>
@@ -192,9 +193,12 @@ in
   ];
 
   # OVMF firmware comes from the QEMU package (/run/libvirt/nix-ovmf/edk2-*).
-  virtualisation.libvirtd.qemu = {
-    package = pkgs.qemu_kvm;
-    runAsRoot = true;
+  virtualisation.libvirtd = {
+    allowedBridges = [ constants.hosts.max.bridge ];
+    qemu = {
+      package = pkgs.qemu_kvm;
+      runAsRoot = true;
+    };
   };
 
   virtualisation.libvirt = {

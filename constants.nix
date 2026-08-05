@@ -75,6 +75,8 @@
             hostname = "max";
             ip = "192.168.20.4";
             tailscaleIp = "100.80.73.118";
+            lanInterface = "eno1";
+            bridge = "br0";
             networkStack = {
                 name = "max-network-stack";
                 ipRange = "192.168.20.192/26";

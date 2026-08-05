@@ -56,7 +56,13 @@ in
 
 	networking = {
 		hostName = constants.hosts.max.hostname;
-		interfaces.eno1.ipv4.addresses = [{
+		useDHCP = false;
+		# Bridge so libvirt VMs (bolt) and the host share VLAN 20 L2.
+		# eno1 is a bridge port (no IP); Max's address lives on br0.
+		bridges.${constants.hosts.max.bridge}.interfaces = [
+			constants.hosts.max.lanInterface
+		];
+		interfaces.${constants.hosts.max.bridge}.ipv4.addresses = [{
 			address = constants.hosts.max.ip;
 			prefixLength = 24;
 		}];
@@ -72,32 +78,50 @@ in
 
 	systemd.services.create-podman-network-max-network-stack = {
 		description = "Create podman max-network-stack ipvlan network";
-		after = [ "network.target" ];
+		after = [
+			"network-online.target"
+			"sys-subsystem-net-devices-${constants.hosts.max.bridge}.device"
+		];
+		wants = [ "network-online.target" ];
 		wantedBy = [ "multi-user.target" ];
-		
+
 		serviceConfig = {
 			Type = "oneshot";
 			RemainAfterExit = true;
 			ExecStart = pkgs.writeShellScript "create-podman-network" ''
 				set -e
 				NETWORK_NAME="${constants.hosts.max.networkStack.name}"
-				if ${pkgs.podman}/bin/podman network exists "$NETWORK_NAME" 2>/dev/null; then
-					echo "Network $NETWORK_NAME already exists"
-					exit 0
+				PARENT="${constants.hosts.max.bridge}"
+				PODMAN="${pkgs.podman}/bin/podman"
+
+				create_network() {
+					echo "Creating network: $NETWORK_NAME (ipvlan parent=$PARENT)"
+					"$PODMAN" network create \
+						--driver ipvlan \
+						--opt parent="$PARENT" \
+						--subnet ${constants.network.vlans.servers.subnet} \
+						--gateway ${constants.network.vlans.servers.gateway} \
+						--ip-range ${constants.hosts.max.networkStack.ipRange} \
+						--route ${constants.network.vlans.servers.subnet},${constants.network.vlans.servers.gateway} \
+						"$NETWORK_NAME"
+					echo "Network $NETWORK_NAME created successfully"
+				}
+
+				if "$PODMAN" network exists "$NETWORK_NAME" 2>/dev/null; then
+					CURRENT_PARENT=$("$PODMAN" network inspect -f '{{index .Options "parent"}}' "$NETWORK_NAME" 2>/dev/null || true)
+					if [ "$CURRENT_PARENT" = "$PARENT" ]; then
+						echo "Network $NETWORK_NAME already exists (parent=$PARENT)"
+						exit 0
+					fi
+					echo "Migrating $NETWORK_NAME parent '$CURRENT_PARENT' -> '$PARENT'"
+					# Network cannot be removed while endpoints are attached.
+					for id in $("$PODMAN" ps -q --filter "network=$NETWORK_NAME"); do
+						"$PODMAN" stop "$id" || true
+					done
+					"$PODMAN" network rm "$NETWORK_NAME"
 				fi
-				
-				# Create the network
-				echo "Creating network: $NETWORK_NAME"
-				${pkgs.podman}/bin/podman network create \
-					--driver ipvlan \
-					--opt parent=eno1 \
-					--subnet ${constants.network.vlans.servers.subnet} \
-					--gateway ${constants.network.vlans.servers.gateway} \
-					--ip-range ${constants.hosts.max.networkStack.ipRange} \
-					--route ${constants.network.vlans.servers.subnet},${constants.network.vlans.servers.gateway} \
-					"$NETWORK_NAME"
-				
-				echo "Network $NETWORK_NAME created successfully"
+
+				create_network
 			'';
 		};
 	};
