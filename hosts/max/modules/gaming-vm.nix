@@ -57,6 +57,9 @@ let
   volumeXml = nixvirt.lib.volume.writeXML {
     name = volumeName;
     capacity = { count = bolt.diskGiB; unit = "GiB"; };
+    target = {
+      format = { type = "qcow2"; };
+    };
   };
 
   domainXml = pkgs.writeText "bolt-domain.xml" ''
