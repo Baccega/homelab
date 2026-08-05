@@ -6,7 +6,7 @@
 # - VLAN 20 (server): isolated from other VLANs (servers can talk to each other);
 #   exceptions: Home Assistant → IoT + home; ESPHome → IoT; IoT → HA + ESPHome
 # - VLAN 30 (iot): isolated from each other and other VLANs; internet + to/from Home Assistant
-# - VLAN 40 (home): isolated from server/IoT except Home Assistant; home can talk to home
+# - VLAN 40 (home): isolated from server/IoT except Home Assistant + Sunshine (bolt VM); home can talk to home
 {
   config,
   lib,
@@ -19,6 +19,8 @@ let
   lanInterface = constants.hosts.nemo.lanInterface;
   homeAssistantIp = constants.services.homeAssistant.ip;
   esphomeIp = constants.services.esphome.ip;
+  sunshineIp = constants.services.sunshine.ip;
+  sunshine = constants.services.sunshine;
 in
 {
   networking.firewall.enable = false;
@@ -72,10 +74,16 @@ in
           iifname "vlan30" oifname "vlan20" ip daddr ${homeAssistantIp} accept
           iifname "vlan30" oifname "vlan20" ip daddr ${esphomeIp} accept
 
-          # Home (VLAN 40): internet, same VLAN, and Home Assistant only
+          # Home (VLAN 40): internet, same VLAN
           iifname "vlan40" oifname "${wanInterface}" accept
           iifname "vlan40" oifname "vlan40" accept
+
+          # Home (VLAN 40) -> Home Assistant
           iifname "vlan40" oifname "vlan20" ip daddr ${homeAssistantIp} accept
+
+          # Home (VLAN 40) -> Sunshine
+          iifname "vlan40" oifname "vlan20" ip daddr ${sunshineIp} tcp dport { ${toString sunshine.httpsPort}, ${toString sunshine.httpPort}, ${toString sunshine.webUiPort}, ${toString sunshine.rtspPort} } accept
+          iifname "vlan40" oifname "vlan20" ip daddr ${sunshineIp} udp dport { ${toString sunshine.videoPort}, ${toString sunshine.controlPort}, ${toString sunshine.audioPort}, ${toString sunshine.micPort}, ${toString sunshine.rtspPort} } accept
 
           # Tailscale has full access
           iifname "tailscale0" accept

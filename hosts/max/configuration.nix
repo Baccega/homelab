@@ -37,7 +37,9 @@ in
 		./modules/redis.nix
 		./modules/ai-stack.nix
 		# ./modules/wolf.nix
-		./hardware/nvidia-gtx-1050ti.nix
+		./modules/gaming-vm.nix
+		# 1050 Ti is bound to vfio for bolt
+		# ./hardware/nvidia-gtx-1050ti.nix
 		./hardware/nvidia-tesla-p4.nix
 		# ./hardware/intel-a750.nix
 		../../modules/common/base.nix

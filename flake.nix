@@ -7,6 +7,8 @@
     sops-nix.url = "github:Mic92/sops-nix";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nixvirt.url = "https://flakehub.com/f/AshleyYakeley/NixVirt/*.tar.gz";
+    nixvirt.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -17,8 +19,9 @@
       disko,
       sops-nix,
       home-manager,
+      nixvirt,
       ...
-    }:
+    }@inputs:
     let
       constants = import ./constants.nix;
       darwinPkgs = import nixpkgs { system = "aarch64-darwin"; };
@@ -58,10 +61,12 @@
         };
         max = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
           modules = [
             disko.nixosModules.disko
             sops-nix.nixosModules.sops
             home-manager.nixosModules.home-manager
+            nixvirt.nixosModules.default
             ./hosts/max/configuration.nix
             {
               _module.args.nixinate = {
@@ -74,6 +79,25 @@
             }
           ];
         };
+        # Gaming VM
+        bolt = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            disko.nixosModules.disko
+            home-manager.nixosModules.home-manager
+            ./hosts/bolt/configuration.nix
+            {
+              _module.args.nixinate = {
+                host = constants.hosts.bolt.ip;
+                sshUser = constants.users.sandro.name;
+                buildOn = "remote";
+                substituteOnTarget = true;
+                hermetic = false;
+              };
+            }
+          ];
+        };
+        # Temporary host for installation
         zero = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [

@@ -80,6 +80,25 @@
                 ipRange = "192.168.20.192/26";
             };
         };
+        # Gaming VM on Max 
+        bolt = {
+            hostname = "bolt";
+            ip = "192.168.20.50";
+            mac = "52:54:00:b0:17:50";
+            memoryGiB = 8;
+            diskGiB = 256;
+            vcpus = 8;
+            gpu = {
+                video = {
+                    address = "0000:05:00.0";
+                    id = "10de:1c82"; # GP107 GeForce GTX 1050 Ti
+                };
+                audio = {
+                    address = "0000:05:00.1";
+                    id = "10de:0fb9"; # GP107HD Audio
+                };
+            };
+        };
         nemo = {
             hostname = "nemo";
             ip = "192.168.1.1";
@@ -228,6 +247,17 @@
         redis = {
             ip = "192.168.20.225";
             port = 6379;
+        };
+        sunshine = {
+            ip = "192.168.20.50";   # Bolt VM
+            httpsPort = 47984;
+            httpPort = 47989;
+            webUiPort = 47990;
+            rtspPort = 48010;
+            videoPort = 47998;
+            controlPort = 47999;
+            audioPort = 48000;
+            micPort = 48002;
         };
     };
     networkGear = {

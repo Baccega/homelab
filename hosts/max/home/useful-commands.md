@@ -12,6 +12,21 @@ sudo nixos-rebuild switch --flake github:Baccega/homelab#max
 sudo nixos-rebuild boot --flake github:Baccega/homelab#max
 ```
 
+## Gaming VM (bolt)
+
+```bash
+# Requires Intel VT-d enabled in BIOS (IOMMU groups > 0).
+# Check passthrough binding after reboot:
+lspci -nnk -d 10de:1c82
+find /sys/kernel/iommu_groups -type l | wc -l
+
+# Libvirt
+sudo virsh list --all
+sudo virsh start bolt
+sudo virsh console bolt
+sudo virsh shutdown bolt
+```
+
 ## Container Management
 
 ```bash
