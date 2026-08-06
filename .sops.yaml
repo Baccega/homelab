@@ -10,6 +10,7 @@ keys:
     - &laika age1nnnptw6k5wjge6f2u2ujm64pjprt9e7uuhpndpxkm2qdclwfnydq9863q4
     - &max age1ursksqk8z8x06rlr557mr0d5w0es23sc3nzaq54uj3z5xhy0mcrsc3xd45
     - &nemo age1xcc484x4kj25k8pqljt5jy7urn64sqsjcfwx2uqv5gz6n3fr0gush8cr5z
+    - &bolt age1u0erw3u0l7lw8u7gfnpzp44zgg85g7a657npdchlnej5rhjmkclqsqd6dv
 creation_rules:
   - path_regex: secrets/common-secrets.(yaml|json|env|ini)$
     key_groups:
@@ -19,6 +20,7 @@ creation_rules:
           - *laika
           - *max
           - *nemo
+          - *bolt
   - path_regex: secrets/laika-secrets.(yaml|json|env|ini)$
     key_groups:
       - age:

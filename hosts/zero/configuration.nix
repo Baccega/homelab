@@ -20,6 +20,7 @@ in
 
 	networking = {
 		hostName = "zero"; 
+		useDHCP = lib.mkDefault true;
 	};
 
 	users.users.root.openssh.authorizedKeys.keys = [

@@ -17,7 +17,7 @@
 }:
 let
   constants = import ../../constants.nix;
-  hostname_format = "[󰊠 $hostname]($style)";
+  hostname_format = "[ $hostname]($style)";
   bolt = constants.hosts.bolt;
   username = constants.users.sandro.name;
 in
@@ -27,6 +27,7 @@ in
     ./disk-config.nix
     ./hardware-configuration.nix
     ./modules/sunshine.nix
+    ./modules/steam.nix
     ../../modules/common/hardware/nvidia-pascal.nix
     ../../modules/common/base.nix
     ../../modules/common/tailscale.nix
@@ -45,7 +46,6 @@ in
   users.mutableUsers = true;
 
   users.users.root = {
-    initialPassword = "bolt";
     openssh.authorizedKeys.keys = [ constants.ssh_keys.pongo ];
   };
 
@@ -68,7 +68,6 @@ in
 
   networking = {
     hostName = bolt.hostname;
-    # Virtio NIC on pcie-root-port bus 1 → enp1s0; MAC pinned to constants.
     interfaces.enp1s0 = {
       macAddress = bolt.mac;
       ipv4.addresses = [
@@ -95,12 +94,6 @@ in
   };
 
   services.qemuGuest.enable = true;
-
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = false;
-    dedicatedServer.openFirewall = false;
-  };
 
   home-manager.users.${username}.home = {
     username = username;
