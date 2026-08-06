@@ -21,6 +21,7 @@ in
       sunshine_name = constants.hosts.bolt.hostname;
       virtual_sink = "sunshine-virtual";
       audio_sink = "sunshine-virtual";
+      csrf_allowed_origins = "https://${constants.hosts.bolt.ip}";
     };
   };
 }
