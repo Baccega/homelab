@@ -29,6 +29,7 @@ in
     ./modules/sunshine.nix
     ../../modules/common/hardware/nvidia-pascal.nix
     ../../modules/common/base.nix
+    ../../modules/common/tailscale.nix
     ../../modules/common/kmscon.nix
     (import ../../modules/common/fish.nix { inherit config pkgs username; })
     (import ../../modules/common/starship.nix {
