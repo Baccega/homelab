@@ -91,6 +91,10 @@ in
                 hw-address = config.sops.placeholder.laika-wlp2s0-interface;
                 ip-address = constants.hosts.laika.ip;
               }
+              {
+                hw-address = constants.hosts.bolt.mac;
+                ip-address = constants.hosts.bolt.ip;
+              }
             ];
           }
 

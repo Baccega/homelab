@@ -7,7 +7,6 @@
 #   1. Attach a NixOS installer ISO / use nixos-anywhere against the domain
 #   2. Install flake #bolt onto /dev/vda
 #   3. virsh start bolt && ssh sandro@192.168.20.50
-# Console password (temporary): bolt / bolt — replace with sops later.
 {
   modulesPath,
   lib,
@@ -28,47 +27,41 @@ in
     ./hardware-configuration.nix
     ./modules/sunshine.nix
     ./modules/steam.nix
+    ./modules/bolt-sops.nix
     ../../modules/common/hardware/nvidia-pascal.nix
     ../../modules/common/base.nix
     ../../modules/common/tailscale.nix
     ../../modules/common/kmscon.nix
-    (import ../../modules/common/fish.nix { inherit config pkgs username; })
-    (import ../../modules/common/starship.nix {
-      inherit config pkgs username hostname_format;
-    })
-    ../../modules/common/fonts.nix
+    ../../users/root.nix
+    (import ../../users/sandro.nix { inherit config pkgs hostname_format; })
   ];
 
   # Guest does not run the Podman service stack from base.nix.
   virtualisation.podman.enable = lib.mkForce false;
   virtualisation.containers.enable = lib.mkForce false;
 
-  users.mutableUsers = true;
+  # virsh console → libvirt isa-serial → ttyS0
+  boot.kernelParams = [ "console=ttyS0,115200n8" ];
+  boot.loader.grub.extraConfig = ''
+    serial --unit=0 --speed=115200 --word=8 --parity=no --stop=1
+    terminal_input serial console
+    terminal_output serial console
+  '';
+  systemd.services."serial-getty@ttyS0".enable = true;
 
-  users.users.root = {
-    openssh.authorizedKeys.keys = [ constants.ssh_keys.pongo ];
-  };
-
-  users.users.${username} = {
-    isNormalUser = true;
-    uid = constants.users.sandro.uid;
-    extraGroups = [
-      "wheel"
-      "video"
-      "audio"
-      "input"
-      "render"
-    ];
-    initialPassword = "bolt";
-    createHome = true;
-    home = constants.users.sandro.home;
-    shell = pkgs.bash;
-    openssh.authorizedKeys.keys = [ constants.ssh_keys.pongo ];
-  };
+  users.users.${username}.extraGroups = lib.mkForce [
+    "wheel"
+    "video"
+    "audio"
+    "input"
+    "render"
+  ];
 
   networking = {
     hostName = bolt.hostname;
-    interfaces.enp1s0 = {
+    useDHCP = false;
+    interfaces.enp4s0 = {
+      useDHCP = false;
       macAddress = bolt.mac;
       ipv4.addresses = [
         {
