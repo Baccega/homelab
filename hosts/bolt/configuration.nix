@@ -27,6 +27,8 @@ in
     ./hardware-configuration.nix
     ./modules/sunshine.nix
     ./modules/steam.nix
+    ./modules/retroarch.nix
+    ./modules/nfs-roms.nix
     ./modules/bolt-sops.nix
     ../../modules/common/hardware/nvidia-pascal.nix
     ../../modules/common/base.nix

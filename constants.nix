@@ -57,6 +57,10 @@
             path = "/mnt/manga";
             name = "manga";
         };
+        roms = {
+            path = "/mnt/roms";
+            name = "roms";
+        };
     };
     hosts = {
         zero = {
