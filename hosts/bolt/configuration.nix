@@ -60,7 +60,7 @@ in
   networking = {
     hostName = bolt.hostname;
     useDHCP = false;
-    interfaces.enp4s0 = {
+    interfaces.enp2s0 = {
       useDHCP = false;
       macAddress = bolt.mac;
       ipv4.addresses = [

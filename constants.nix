@@ -87,7 +87,7 @@
             hostname = "bolt";
             ip = "192.168.20.50";
             mac = "52:54:00:b0:17:50";
-            memoryGiB = 8;
+            memoryGiB = 16;
             diskGiB = 256;
             vcpus = 8;
             gpu = {
