@@ -28,10 +28,13 @@ in
     ./modules/sunshine.nix
     ./modules/steam.nix
     ./modules/retroarch.nix
-    ./modules/nfs-roms.nix
+    ./modules/nfs.nix
+    ./modules/config-backup.nix
     ./modules/bolt-sops.nix
     ../../modules/common/hardware/nvidia-pascal.nix
     ../../modules/common/base.nix
+    ../../modules/common/nas-fetch.nix
+    ../../modules/common/backup.nix
     ../../modules/common/tailscale.nix
     ../../modules/common/kmscon.nix
     ../../users/root.nix
