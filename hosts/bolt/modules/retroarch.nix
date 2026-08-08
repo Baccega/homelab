@@ -17,7 +17,7 @@ in
     (pkgs.retroarch-bare.wrapper {
       inherit cores;
       settings = {
-        # Point the file browser at the NFS ROM library from Hachiko.
+        # Local SSD mirror of the NAS ROM library (rom-sync.nix).
         rgui_browser_directory = constants.mountPoints.roms.path;
         content_directory = constants.mountPoints.roms.path;
       };

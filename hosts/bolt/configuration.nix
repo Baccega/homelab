@@ -29,6 +29,7 @@ in
     ./modules/steam.nix
     ./modules/retroarch.nix
     ./modules/nfs.nix
+    ./modules/rom-sync.nix
     ./modules/config-backup.nix
     ./modules/bolt-sops.nix
     ../../modules/common/hardware/nvidia-pascal.nix
