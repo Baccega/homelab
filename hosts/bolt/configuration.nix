@@ -28,6 +28,7 @@ in
     ./modules/sunshine.nix
     ./modules/steam.nix
     ./modules/retroarch.nix
+    ./modules/pcsx2.nix
     ./modules/nfs.nix
     ./modules/rom-sync.nix
     ./modules/config-backup.nix

@@ -1,4 +1,4 @@
-# Backup / restore Sunshine + RetroArch configs via Hachiko configurations share.
+# Backup / restore Sunshine + RetroArch + PCSX2 configs via Hachiko configurations share.
 {
   ...
 }:
@@ -27,6 +27,14 @@ in
         user = constants.users.sandro.uid;
         group = constants.groups.users;
       }
+      {
+        name = "pcsx2-configs";
+        nfsMount = nfsMount;
+        source = "bolt/pcsx2";
+        target = "${home}/.config/PCSX2";
+        user = constants.users.sandro.uid;
+        group = constants.groups.users;
+      }
     ];
   };
 
@@ -49,6 +57,19 @@ in
           "caches/"
           "temp/"
           "logs/"
+        ];
+        schedule = "daily";
+      }
+      {
+        name = "pcsx2-configs";
+        source = "${home}/.config/PCSX2";
+        nfsMount = nfsMount;
+        destination = "bolt/pcsx2";
+        exclude = [
+          "cache/"
+          "logs/"
+          "videos/"
+          "snaps/"
         ];
         schedule = "daily";
       }
