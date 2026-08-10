@@ -92,8 +92,6 @@ in
           name = "RetroArch";
           # Managed command (not detached): Sunshine tracks the process and
           # kills it when you quit the Moonlight app.
-          # NOTE: Close Content / Restart with the PCSX2 *libretro core* often
-          # freezes (upstream core bug). Prefer Quit + relaunch, or use PCSX2.
           cmd = "${launchRetroarch}";
           "auto-detach" = "false";
           "wait-all" = "true";

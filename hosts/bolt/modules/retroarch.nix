@@ -7,7 +7,6 @@ let
   constants = import ../../../constants.nix;
   cores = with pkgs.libretro; [
     beetle-psx-hw # PS1
-    pcsx2 # PS2
     fbneo # Neo Geo (and other arcade)
     ppsspp # PSP
   ];
