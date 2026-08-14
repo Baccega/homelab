@@ -70,6 +70,7 @@ function useLocalCondaEnvironment
 end
 
 function useLocalNodeEnvironment
+    nvm install
     nvm use
     echo ""
     echo "Changing NodeJS version to $(set_color --bold 0CED88) $(cat .nvmrc; set_color normal)"
@@ -118,8 +119,6 @@ export PATH
 # Starship setup
 starship init fish | source
 
-nvm use lts
-
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 # eval /opt/homebrew/anaconda3/bin/conda "shell.fish" "hook" $argv | source
@@ -128,10 +127,13 @@ nvm use lts
 # Change conda environment automatically if .conda_environment is present (on terminal startup)
 if test -f .conda_environment
    useLocalCondaEnvironment
-   end
+end
+# Use .nvmrc when present, otherwise fall back to Node LTS
 if test -f .nvmrc
    useLocalNodeEnvironment
-   end
+else
+   nvm use lts
+end
    
 # pnpm
 # set -gx PNPM_HOME "/Users/sandrobaccega/Library/pnpm"
@@ -139,3 +141,12 @@ if test -f .nvmrc
 #   set -gx PATH "$PNPM_HOME" $PATH
 # end
 # pnpm end
+
+# Cursor CLI
+fish_add_path $HOME/.local/bin
+
+# Set XDG_DATA_DIRS to include homebrew share
+set -x XDG_DATA_DIRS /opt/homebrew/share $XDG_DATA_DIRS
+
+# Tailscale CLI (from App Store)
+alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"

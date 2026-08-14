@@ -24,6 +24,14 @@
                 slogs = "sudo journalctl -u -n 100";
             };
 
+            interactiveShellInit = ''
+                if test -f .nvmrc
+                    useLocalNodeEnvironment
+                else
+                    nvm use lts
+                end
+            '';
+
             functions = {
                 # pnpm override
                 pnpm = ''
@@ -44,6 +52,14 @@
                 #         useLocalNodeEnvironment
                 #     end
                 # '';
+
+                useLocalNodeEnvironment = ''
+                    nvm install
+                    nvm use
+                    echo ""
+                    echo "Changing NodeJS version to $(set_color --bold 0CED88) $(cat .nvmrc; set_color normal)"
+                    set_color normal
+                '';
 
                 # sudo !!
                 sudo = ''
