@@ -1,22 +1,16 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended",
-    "docker:pinDigests"
-  ],
-  "enabledManagers": [
-    "custom.regex"
-  ],
+  "extends": ["config:recommended", "docker:pinDigests"],
+  "enabledManagers": ["custom.regex"],
   "minimumReleaseAge": "4 days",
   "minimumReleaseAgeBehaviour": "timestamp-required",
   "internalChecksFilter": "strict",
   "dependencyDashboard": false,
+  "commitMessagePrefix": "⬆️ ",
   "customManagers": [
     {
       "customType": "regex",
-      "managerFilePatterns": [
-        "/^hosts/(max|nemo)/modules/.*\\.nix$/"
-      ],
+      "managerFilePatterns": ["/^hosts/(max|nemo)/modules/.*\\.nix$/"],
       "matchStrings": [
         "\\n(?<indentation>[ \\t]+)image\\s*=\\s*\"(?<depName>[^\\s\"@]+):(?<currentValue>[^\\s\"@]+)(?:@(?<currentDigest>sha256:[a-f0-9]+))?\";"
       ],
@@ -27,19 +21,8 @@
   ],
   "packageRules": [
     {
-      "description": "Pin the currently selected image immediately",
-      "matchUpdateTypes": [
-        "pinDigest"
-      ],
-      "minimumReleaseAge": null
-    },
-    {
       "description": "Apply patch and digest updates without opening a pull request",
-      "matchUpdateTypes": [
-        "patch",
-        "digest",
-        "pinDigest"
-      ],
+      "matchUpdateTypes": ["patch", "digest", "pinDigest"],
       "automerge": true,
       "automergeType": "branch"
     }
