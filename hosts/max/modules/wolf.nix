@@ -233,7 +233,7 @@ in
   # set LD_LIBRARY_PATH; the store path must exist on this host (e.g. build here).
   # WOLF_RENDER_NODE: ls -l /sys/class/drm/renderD*/device/driver → pick Nvidia node.
   homelab.oci-containers.wolf = {
-    image = "ghcr.io/games-on-whales/wolf:stable";
+    image = "ghcr.io/games-on-whales/wolf:stable@sha256:0d901e766e6ed288712ff994dd3b877aea7c9f22ff6e5b0efbb16bc7bb4ae9a4";
     environment = {
       NVIDIA_DRIVER_CAPABILITIES = "all";
       NVIDIA_VISIBLE_DEVICES = "all";
