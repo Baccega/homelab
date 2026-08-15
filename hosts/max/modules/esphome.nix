@@ -9,7 +9,7 @@ let
 in
 {
   homelab.oci-containers.esphome = {
-    image = "ghcr.io/esphome/esphome:stable";
+    image = "ghcr.io/esphome/esphome:stable@sha256:e636269c6390c2124916510d45f55febb1d9ce41365f8445c9083ee41e43c92b";
     volumes = [
       "${constants.users.sandro.home}/esphome:/config"
       "/dev:/dev"

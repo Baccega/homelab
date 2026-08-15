@@ -23,7 +23,7 @@ in
   ];
 
   homelab.oci-containers.postgres = {
-    image = "docker.io/library/postgres:18";
+    image = "docker.io/library/postgres:18@sha256:7157393f508fd8eb46119937fab39813783fe3e7d4c6316c45c12ce2ea25e61d";
     environment = {
       POSTGRES_DB = "paperless";
       POSTGRES_USER = "paperless";
