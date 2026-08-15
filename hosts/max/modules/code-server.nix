@@ -15,11 +15,11 @@ in
       config.sops.secrets.code-server-env.path
     ];
     environment = {
-      DEFAULT_WORKSPACE = "${constants.users.sandro.home}";
+      DEFAULT_WORKSPACE = "${constants.users.sandro.home}/home-assistant";
     };
     volumes = [
       "${constants.users.sandro.home}/code-server:/config"
-      "${constants.users.sandro.home}:${constants.users.sandro.home}"
+      "${constants.users.sandro.home}/home-assistant:${constants.users.sandro.home}/home-assistant"
     ];
     networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
