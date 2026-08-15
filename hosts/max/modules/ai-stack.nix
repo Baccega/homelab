@@ -40,7 +40,7 @@ in
     image = "ghcr.io/open-webui/open-webui:latest@sha256:6a773e5c3a246b65cbe74ce942b294292c0e5f81c138f703d111bc162f7d7c3d";
     environment = {
       OLLAMA_BASE_URL = "http://${constants.services.ollama.ip}:${toString constants.services.ollama.port}";
-      WEBUI_URL = "https://${constants.services.openWebui.publicSubdomain}.${constants.network.publicDomain}";
+      WEBUI_URL = "https://${constants.services.openWebui.subdomain}.${constants.network.publicDomain}";
     };
     environmentFiles = [
       config.sops.secrets.max-docker-env.path

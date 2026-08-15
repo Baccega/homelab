@@ -135,52 +135,62 @@
         forwardProxy = {
             ip = "192.168.20.200";
             port = 1080;
+            exposure = "lan";
         };
         plex = {
             ip = "192.168.20.201";
             port = 32400;
-            publicSubdomain = "plex";
+            subdomain = "plex";
+            exposure = "internet";
         };
         qbittorrent = {
             ip = "192.168.20.202";
             port = 8080;
             torrentPort = 6881;
-            publicSubdomain = "torrent";
+            subdomain = "torrent";
+            exposure = "internet";
         };
         sabnzbd = {
             ip = "192.168.20.203";
             port = 8080;
-            publicSubdomain = "sabnzbd";
+            subdomain = "sabnzbd";
+            exposure = "internet";
         };
         sonarr = {
             ip = "192.168.20.204";
             port = 8989;
-            publicSubdomain = "sonarr";
+            subdomain = "sonarr";
+            exposure = "internet";
         };
         radarr = {
             ip = "192.168.20.205";
             port = 7878;
-            publicSubdomain = "radarr";
+            subdomain = "radarr";
+            exposure = "internet";
         };
         prowlarr = {
             ip = "192.168.20.206";
             port = 9696;
-            publicSubdomain = "prowlarr";
+            subdomain = "prowlarr";
+            exposure = "internet";
         };
         homeAssistant = {
             ip = "192.168.20.207";
             port = 8123;
-            publicSubdomain = "homeassistant";
+            subdomain = "homeassistant";
+            exposure = "internet";
         };
         codeServer = {
             ip = "192.168.20.208";
             port = 8443;
-            publicSubdomain = "code";
+            subdomain = "code";
+            exposure = "internet";
         };
         n8n = {
             ip = "192.168.20.209";
             port = 5678;
-            publicSubdomain = "n8n";
+            subdomain = "n8n";
+            exposure = "internet";
         };
         # cloudflared = {
         #     ip = "192.168.20.210";
@@ -188,75 +198,91 @@
         uptimeKuma = {
             ip = "192.168.20.211";
             port = 3001;
-            publicSubdomain = "uptime";
+            subdomain = "uptime";
+            exposure = "internet";
         };
         esphome = {
             ip = "192.168.20.212";
             port = 6052;
-            publicSubdomain = "esphome";
+            subdomain = "esphome";
+            exposure = "internet";
         };
         seer = {
             ip = "192.168.20.213";
             port = 5055;
-            # publicSubdomain = "seer";
+            # subdomain = "seer";
+            exposure = "lan";
         };
         bookshelf = {
             ip = "192.168.20.214";
             port = 8787;
-            publicSubdomain = "books";
+            subdomain = "books";
+            exposure = "internet";
         };
         suwayomi = {
             ip = "192.168.20.215";
             port = 4567;
-            publicSubdomain = "manga";
+            subdomain = "manga";
+            exposure = "internet";
         };
         komga = {
             ip = "192.168.20.216";
             port = 25600;
-            publicSubdomain = "komga";
+            subdomain = "komga";
+            exposure = "internet";
         };
         beszel = {
             ip = "192.168.20.217";
             port = 8090;
             agentPort = 45876;
-            publicSubdomain = "beszel";
+            subdomain = "beszel";
+            exposure = "internet";
         };
         paperless = {
             ip = "192.168.20.218";
             port = 8000;
-            publicSubdomain = "paperless";
+            subdomain = "paperless";
+            exposure = "internet";
         };
         paperlessGotenberg = {
             ip = "192.168.20.219";
             port = 3000;
+            exposure = "lan";
         };
         paperlessTika = {
             ip = "192.168.20.220";
             port = 9998;
+            exposure = "lan";
         };
         paperlessGpt = {
             ip = "192.168.20.221";
             port = 8080;
+            exposure = "lan";
         };
         ollama = {
             ip = "192.168.20.222";
             port = 11434;
+            exposure = "lan";
         };
         openWebui = {
             ip = "192.168.20.223";
             port = 8080;
-            publicSubdomain = "ai";
+            subdomain = "ai";
+            exposure = "internet";
         };
         postgres = {
             ip = "192.168.20.224";
             port = 5432;
+            exposure = "lan";
         };
         redis = {
             ip = "192.168.20.225";
             port = 6379;
+            exposure = "lan";
         };
         sunshine = {
             ip = "192.168.20.50";   # Bolt VM
+            exposure = "lan";
             httpsPort = 47984;
             httpPort = 47989;
             webUiPort = 47990;

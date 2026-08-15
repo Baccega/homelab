@@ -13,7 +13,7 @@
 let
   constants = import ../../../constants.nix;
 
-  paperlessUrl = "https://${constants.services.paperless.publicSubdomain}.${constants.network.publicDomain}";
+  paperlessUrl = "https://${constants.services.paperless.subdomain}.${constants.network.publicDomain}";
 
   gotenbergEndpoint = "http://${constants.services.paperlessGotenberg.ip}:${toString constants.services.paperlessGotenberg.port}";
   tikaEndpoint = "http://${constants.services.paperlessTika.ip}:${toString constants.services.paperlessTika.port}";

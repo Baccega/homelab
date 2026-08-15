@@ -17,7 +17,7 @@ in
   homelab.oci-containers.beszel = {
     image = "docker.io/henrygd/beszel:latest@sha256:a849ad80814b6a1a3be665304dcace5d4854b3bed7bde4dd1227e8ce1b82d477";
     environment.APP_URL =
-      "https://${constants.services.beszel.publicSubdomain}.${constants.network.publicDomain}";
+      "https://${constants.services.beszel.subdomain}.${constants.network.publicDomain}";
     volumes = [
       "${constants.users.sandro.home}/beszel:/beszel_data"
       "/run/beszel:/beszel_socket"

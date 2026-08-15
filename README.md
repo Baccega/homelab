@@ -46,6 +46,11 @@ All services run on **Max** as Podman containers, each with its own IP on the se
 
 **External access**: Cloudflare Tunnel (cloudflared on Nemo) catches `*.mydomain.dev` → forwards to `http://localhost:80` → Caddy routes by Host header to the correct service. Cloudflare Access provides authentication on external requests if needed.
 
+Each service declares `exposure = "lan"` or `"internet"` in `constants.nix`.
+`subdomain` assigns a hostname, while only `"internet"` enables the HTTP
+origin route used by Cloudflare Tunnel. LAN-only named services remain available
+through split-view DNS and Caddy's HTTPS listener.
+
 ```mermaid
 flowchart LR
     subgraph Internet

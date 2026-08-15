@@ -18,7 +18,7 @@ let
     constants.network.vlans.home.gateway
   ];
   resolveIp = _: constants.hosts.nemo.ip;
-  publicServices = lib.filter (s: s ? publicSubdomain) (lib.attrValues constants.services);
+  namedServices = lib.filter (service: service ? subdomain) (lib.attrValues constants.services);
 in
 {
   services.dnsmasq = {
@@ -33,8 +33,8 @@ in
       listen-address = listenAddresses;
       address = map (
         service:
-        "/${service.publicSubdomain}.${constants.network.publicDomain}/${resolveIp service}"
-      ) publicServices;
+        "/${service.subdomain}.${constants.network.publicDomain}/${resolveIp service}"
+      ) namedServices;
       conf-file = [ "/etc/dnsmasq-conf.conf" ];
     };
   };

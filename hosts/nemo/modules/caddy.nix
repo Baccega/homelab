@@ -11,6 +11,16 @@ let
   constants = import ../../../constants.nix;
 
   resolvers = lib.concatStringsSep " " constants.network.dns;
+  services = lib.attrValues constants.services;
+  namedServices = lib.filter (service: service ? subdomain) services;
+
+  serviceHostname =
+    service: "${service.subdomain}.${constants.network.publicDomain}";
+
+  siteAddresses =
+    service:
+    lib.optional (service.exposure == "internet") "http://${serviceHostname service}"
+    ++ [ (serviceHostname service) ];
 
   caddyfileContent = lib.concatStringsSep "\n" ([
     "{"
@@ -25,14 +35,27 @@ let
     "}"
     ""
   ] ++ lib.concatMap (service: [
-    "http://${service.publicSubdomain}.${constants.network.publicDomain}, ${service.publicSubdomain}.${constants.network.publicDomain} {"
+    "${lib.concatStringsSep ", " (siteAddresses service)} {"
     "  import cloudflare_tls"
     "  reverse_proxy ${service.ip}:${toString service.port}"
     "}"
     ""
-  ]) (lib.filter (s: s ? publicSubdomain) (lib.attrValues constants.services))) + "\n";
+  ]) namedServices) + "\n";
 in
 {
+  assertions = [
+    {
+      assertion = lib.all (
+        service:
+        service ? exposure && builtins.elem service.exposure [
+          "lan"
+          "internet"
+        ]
+      ) services;
+      message = "Every service must set exposure to either \"lan\" or \"internet\".";
+    }
+  ];
+
   sops.templates."Caddyfile" = {
     content = caddyfileContent;
     owner = "caddy";
