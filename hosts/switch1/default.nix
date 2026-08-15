@@ -30,7 +30,7 @@ let
 
       echo "Exporting live config from $switch1_admin@${ip} -> $out"
       ssh -o StrictHostKeyChecking=accept-new "$switch1_admin@${ip}" \
-        '/export show-sensitive' \
+        '/export' \
         | sed '/^[^#]/,$!d' \
         > "$out.tmp"
       mv "$out.tmp" "$out"
@@ -69,7 +69,7 @@ let
       live=$(mktemp)
       trap 'rm -f "$live"' EXIT
       ssh -o StrictHostKeyChecking=accept-new "$switch1_admin@${ip}" \
-        '/export show-sensitive' \
+        '/export' \
         | sed '/^[^#]/,$!d' \
         > "$live"
 
