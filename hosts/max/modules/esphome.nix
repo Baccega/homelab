@@ -8,10 +8,6 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  networking.firewall.allowedTCPPorts = [ 
-    constants.services.esphome.port
-  ];
-
   virtualisation.oci-containers.containers.esphome = {
     image = "ghcr.io/esphome/esphome:stable";
     volumes = [

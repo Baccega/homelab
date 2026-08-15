@@ -102,17 +102,6 @@ let
   '';
 in
 {
-  networking.firewall.allowedTCPPorts = [
-    47984  # HTTPS
-    47989  # HTTP (pairing)
-    48010  # RTSP
-  ];
-  networking.firewall.allowedUDPPorts = [
-    47999  # Control
-    48100  # Video
-    48200  # Audio
-  ];
-
   # Wolf virtual input devices (uinput/uhid and virtual gamepads)
   services.udev.extraRules = ''
     # Allow Wolf to access /dev/uinput (joypad support)

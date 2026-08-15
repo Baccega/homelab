@@ -25,7 +25,7 @@ let
     "}"
     ""
   ] ++ lib.concatMap (service: [
-    "http://${service.publicSubdomain}.${config.sops.placeholder.public-domain}, ${service.publicSubdomain}.${config.sops.placeholder.public-domain} {"
+    "http://${service.publicSubdomain}.${constants.network.publicDomain}, ${service.publicSubdomain}.${constants.network.publicDomain} {"
     "  import cloudflare_tls"
     "  reverse_proxy ${service.ip}:${toString service.port}"
     "}"

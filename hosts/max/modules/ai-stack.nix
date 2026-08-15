@@ -13,16 +13,6 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  networking.firewall.allowedTCPPorts = [
-    constants.services.ollama.port
-    constants.services.openWebui.port
-  ];
-
-  # WEBUI_URL depends on the (sops-managed) public domain, so build it as a
-  # template instead of baking the domain into the nix store.
-  sops.templates."open-webui.env".content =
-    "WEBUI_URL=https://${constants.services.openWebui.publicSubdomain}.${config.sops.placeholder.public-domain}\n";
-
   virtualisation.oci-containers.containers.ollama = {
     image = "docker.io/ollama/ollama:latest";
     environment = {
@@ -51,11 +41,11 @@ in
     image = "ghcr.io/open-webui/open-webui:latest";
     environment = {
       OLLAMA_BASE_URL = "http://${constants.services.ollama.ip}:${toString constants.services.ollama.port}";
+      WEBUI_URL = "https://${constants.services.openWebui.publicSubdomain}.${constants.network.publicDomain}";
     };
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
       config.sops.secrets.ai-stack-env.path
-      config.sops.templates."open-webui.env".path
     ];
     volumes = [
       "${constants.users.sandro.home}/open-webui:/app/backend/data"
@@ -82,7 +72,6 @@ in
       "podman-ollama.service"
       "create-podman-network-${constants.hosts.max.networkStack.name}.service"
     ];
-    restartTriggers = [ config.sops.templates."open-webui.env".path ];
   };
 
   # Ollama models are large and re-downloadable, so they are intentionally not

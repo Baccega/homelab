@@ -8,10 +8,6 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  networking.firewall.allowedTCPPorts = [ 
-    constants.services.radarr.port
-  ];
-
   virtualisation.oci-containers.containers.radarr = {
     image = "ghcr.io/linuxserver/radarr";
     environmentFiles = [

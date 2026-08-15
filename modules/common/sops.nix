@@ -16,7 +16,6 @@
             root-password = {};
             sandro-password = {};
             "wireless.env" = {};
-            public-domain = {};
         };
     };
 

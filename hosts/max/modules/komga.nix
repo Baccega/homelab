@@ -8,10 +8,6 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  networking.firewall.allowedTCPPorts = [
-    constants.services.komga.port
-  ];
-
   virtualisation.oci-containers.containers.komga = {
     image = "docker.io/gotson/komga:latest";
     environmentFiles = [

@@ -8,10 +8,6 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  networking.firewall.allowedTCPPorts = [ 
-    constants.services.prowlarr.port
-  ];
-
   virtualisation.oci-containers.containers.prowlarr = {
     image = "ghcr.io/linuxserver/prowlarr";
     environmentFiles = [

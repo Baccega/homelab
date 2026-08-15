@@ -18,18 +18,9 @@ let
     constants.network.vlans.home.gateway
   ];
   resolveIp = _: constants.hosts.nemo.ip;
-  # Template: placeholder is substituted at activation with the decrypted public-domain secret
   publicServices = lib.filter (s: s ? publicSubdomain) (lib.attrValues constants.services);
-  splitViewConfContent = lib.concatStringsSep "\n" (
-    map (s: "address=/${s.publicSubdomain}.${config.sops.placeholder.public-domain}/${resolveIp s}") publicServices
-  ) + "\n";
 in
 {
-  sops.templates."dnsmasq-split-view.conf" = {
-    content = splitViewConfContent;
-    mode = "0644";
-  };
-
   services.dnsmasq = {
     enable = true;
     resolveLocalQueries = true;
@@ -40,15 +31,11 @@ in
       no-poll = true;
       cache-size = 1000;
       listen-address = listenAddresses;
-      conf-file = [
-        "/etc/dnsmasq-conf.conf"
-        config.sops.templates."dnsmasq-split-view.conf".path
-      ];
+      address = map (
+        service:
+        "/${service.publicSubdomain}.${constants.network.publicDomain}/${resolveIp service}"
+      ) publicServices;
+      conf-file = [ "/etc/dnsmasq-conf.conf" ];
     };
-  };
-
-  systemd.services.dnsmasq = {
-    after = lib.mkAfter [ "sops-nix.service" ];
-    restartTriggers = lib.mkAfter [ config.sops.templates."dnsmasq-split-view.conf".path ];
   };
 }

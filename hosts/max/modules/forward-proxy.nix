@@ -8,13 +8,6 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  networking.firewall.allowedTCPPorts = [
-    constants.services.forwardProxy.port
-  ];
-  networking.firewall.allowedUDPPorts = [
-    constants.services.forwardProxy.port
-  ];
-
   virtualisation.oci-containers.containers.forward-proxy = {
     image = "docker.io/qmcgaw/gluetun:latest";
     environmentFiles = [

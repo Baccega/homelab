@@ -13,7 +13,7 @@
 let
   constants = import ../../../constants.nix;
 
-  paperlessUrl = "https://${constants.services.paperless.publicSubdomain}.${config.sops.placeholder.public-domain}";
+  paperlessUrl = "https://${constants.services.paperless.publicSubdomain}.${constants.network.publicDomain}";
 
   gotenbergEndpoint = "http://${constants.services.paperlessGotenberg.ip}:${toString constants.services.paperlessGotenberg.port}";
   tikaEndpoint = "http://${constants.services.paperlessTika.ip}:${toString constants.services.paperlessTika.port}";
@@ -21,25 +21,12 @@ let
   paperlessBaseUrl = "http://${constants.services.paperless.ip}:${toString constants.services.paperless.port}";
 in
 {
-  networking.firewall.allowedTCPPorts = [
-    constants.services.paperless.port
-    # constants.services.paperlessGpt.port
-  ];
-
-  # The public URL embeds the (sops-managed) domain, so keep it out of the nix
-  # store by rendering it through a sops template.
-  sops.templates."paperless.env".content = ''
-    PAPERLESS_URL=${paperlessUrl}
-  '';
-  # sops.templates."paperless-gpt.env".content = ''
-  #   PAPERLESS_PUBLIC_URL=${paperlessUrl}
-  # '';
-
   virtualisation.oci-containers.containers.paperless = {
     image = "ghcr.io/paperless-ngx/paperless-ngx:latest";
     environment = {
       USERMAP_UID = toString constants.users.alfred.uid;
       USERMAP_GID = toString constants.groups.users;
+      PAPERLESS_URL = paperlessUrl;
       PAPERLESS_TIME_ZONE = "Europe/Vienna";
       PAPERLESS_CONSUMER_DELETE_DUPLICATES = "true";
 
@@ -70,7 +57,6 @@ in
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
       config.sops.secrets.paperless-env.path
-      config.sops.templates."paperless.env".path
     ];
     volumes = [
       "${constants.users.sandro.home}/paperless/data:/usr/src/paperless/data"
@@ -144,7 +130,6 @@ in
   #   environmentFiles = [
   #     config.sops.secrets.max-docker-env.path
   #     config.sops.secrets.paperless-env.path
-  #     config.sops.templates."paperless-gpt.env".path
   #   ];
   #   volumes = [
   #     "${constants.users.sandro.home}/paperless/paperless-gpt-prompts:/app/prompts"
@@ -181,7 +166,6 @@ in
       "podman-paperless-tika.service"
       "create-podman-network-${constants.hosts.max.networkStack.name}.service"
     ];
-    restartTriggers = [ config.sops.templates."paperless.env".path ];
   };
 
   # systemd.services.podman-paperless-gpt = {
@@ -192,7 +176,6 @@ in
   #     "podman-ollama.service"
   #     "create-podman-network-${constants.hosts.max.networkStack.name}.service"
   #   ];
-  #   restartTriggers = [ config.sops.templates."paperless-gpt.env".path ];
   # };
 
   services.nas-fetch = {

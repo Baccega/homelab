@@ -14,18 +14,10 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  networking.firewall.allowedTCPPorts = [
-    constants.services.beszel.port
-  ];
-
-  sops.templates."beszel-hub.env".content =
-    "APP_URL=https://${constants.services.beszel.publicSubdomain}.${config.sops.placeholder.public-domain}\n";
-
   virtualisation.oci-containers.containers.beszel = {
     image = "docker.io/henrygd/beszel:latest";
-    environmentFiles = [
-      config.sops.templates."beszel-hub.env".path
-    ];
+    environment.APP_URL =
+      "https://${constants.services.beszel.publicSubdomain}.${constants.network.publicDomain}";
     volumes = [
       "${constants.users.sandro.home}/beszel:/beszel_data"
       "/run/beszel:/beszel_socket"
@@ -68,7 +60,6 @@ in
       "nas-fetch-beszel.service"
       "create-podman-network-${constants.hosts.max.networkStack.name}.service"
     ];
-    restartTriggers = [ config.sops.templates."beszel-hub.env".path ];
   };
 
   systemd.services.podman-beszel-agent = {

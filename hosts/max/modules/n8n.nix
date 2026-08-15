@@ -8,10 +8,6 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  networking.firewall.allowedTCPPorts = [ 
-    constants.services.n8n.port
-  ];
-
   virtualisation.oci-containers.containers.n8n = {
     image = "docker.io/n8nio/n8n:next";
     environmentFiles = [

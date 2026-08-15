@@ -8,10 +8,6 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  networking.firewall.allowedTCPPorts = [ 
-    constants.services.codeServer.port
-  ];
-
   virtualisation.oci-containers.containers.code-server = {
     image = "lscr.io/linuxserver/code-server:latest";
     environmentFiles = [

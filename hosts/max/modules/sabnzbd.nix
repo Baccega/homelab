@@ -8,10 +8,6 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  networking.firewall.allowedTCPPorts = [ 
-    constants.services.sabnzbd.port
-  ];
-
   virtualisation.oci-containers.containers.sabnzbd = {
     image = "lscr.io/linuxserver/sabnzbd:latest";  
     environmentFiles = [

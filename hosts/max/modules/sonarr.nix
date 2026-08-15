@@ -8,10 +8,6 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  networking.firewall.allowedTCPPorts = [ 
-    constants.services.sonarr.port
-  ];
-
   virtualisation.oci-containers.containers.sonarr = {
     image = "ghcr.io/linuxserver/sonarr";
     environmentFiles = [

@@ -8,10 +8,6 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  networking.firewall.allowedTCPPorts = [
-    constants.services.suwayomi.port
-  ];
-
   virtualisation.oci-containers.containers.suwayomi = {
     image = "ghcr.io/suwayomi/suwayomi-server:stable";
     environmentFiles = [

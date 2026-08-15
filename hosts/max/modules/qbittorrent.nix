@@ -8,11 +8,6 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  networking.firewall.allowedTCPPorts = [ 
-    constants.services.qbittorrent.port
-    constants.services.qbittorrent.torrentPort
-  ];
-
   virtualisation.oci-containers.containers.qbittorrent = {
     image = "ghcr.io/linuxserver/qbittorrent";
     environmentFiles = [

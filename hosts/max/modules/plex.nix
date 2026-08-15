@@ -8,21 +8,6 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  networking.firewall.allowedTCPPorts = [
-    32400
-    8324
-    32469
-  ];
-
-  networking.firewall.allowedUDPPorts = [
-    1900
-    5353
-    32410
-    32412
-    32413
-    32414
-  ];
-
   virtualisation.oci-containers.containers.plex = {
     image = "ghcr.io/linuxserver/plex";
     environmentFiles = [

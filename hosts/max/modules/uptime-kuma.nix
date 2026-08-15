@@ -8,10 +8,6 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  networking.firewall.allowedTCPPorts = [ 
-    constants.services.uptimeKuma.port
-  ];
-
   virtualisation.oci-containers.containers.uptime-kuma = {
     image = "ghcr.io/louislam/uptime-kuma:2";
     volumes = [

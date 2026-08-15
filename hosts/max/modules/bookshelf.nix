@@ -8,10 +8,6 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  networking.firewall.allowedTCPPorts = [
-    constants.services.bookshelf.port
-  ];
-
   virtualisation.oci-containers.containers.bookshelf = {
     image = "ghcr.io/pennydreadful/bookshelf:hardcover";
     environmentFiles = [
