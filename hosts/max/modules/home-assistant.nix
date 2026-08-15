@@ -8,7 +8,7 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  virtualisation.oci-containers.containers.homeassistant = {
+  homelab.oci-containers.homeassistant = {
     image = "ghcr.io/home-assistant/home-assistant:stable";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
@@ -22,8 +22,6 @@ in
       "--ip=${constants.services.homeAssistant.ip}"
       "--cap-add=NET_ADMIN"
       "--cap-add=NET_RAW"
-      "--security-opt=no-new-privileges"
-      "--label=io.containers.autoupdate=registry"
     ];
   };
 

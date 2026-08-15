@@ -8,7 +8,7 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  virtualisation.oci-containers.containers.uptime-kuma = {
+  homelab.oci-containers.uptime-kuma = {
     image = "ghcr.io/louislam/uptime-kuma:2";
     volumes = [
       "${constants.users.sandro.home}/uptime-kuma:/app/data"
@@ -19,7 +19,6 @@ in
     networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--ip=${constants.services.uptimeKuma.ip}"
-      "--label=io.containers.autoupdate=registry"
     ];
   };
 

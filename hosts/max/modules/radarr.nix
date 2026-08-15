@@ -8,8 +8,8 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  virtualisation.oci-containers.containers.radarr = {
-    image = "ghcr.io/linuxserver/radarr";
+  homelab.oci-containers.radarr = {
+    image = "ghcr.io/linuxserver/radarr:latest";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
     ];
@@ -21,7 +21,6 @@ in
     networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--ip=${constants.services.radarr.ip}"
-      "--label=io.containers.autoupdate=registry"
     ];
   };
 

@@ -13,7 +13,7 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  virtualisation.oci-containers.containers.ollama = {
+  homelab.oci-containers.ollama = {
     image = "docker.io/ollama/ollama:latest";
     environment = {
       OLLAMA_HOST = "0.0.0.0:${toString constants.services.ollama.port}";
@@ -33,11 +33,10 @@ in
     extraOptions = [
       "--ip=${constants.services.ollama.ip}"
       "--device=nvidia.com/gpu=all"
-      "--label=io.containers.autoupdate=registry"
     ];
   };
 
-  virtualisation.oci-containers.containers.open-webui = {
+  homelab.oci-containers.open-webui = {
     image = "ghcr.io/open-webui/open-webui:latest";
     environment = {
       OLLAMA_BASE_URL = "http://${constants.services.ollama.ip}:${toString constants.services.ollama.port}";
@@ -53,7 +52,6 @@ in
     networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--ip=${constants.services.openWebui.ip}"
-      "--label=io.containers.autoupdate=registry"
     ];
   };
 

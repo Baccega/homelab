@@ -8,7 +8,7 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  virtualisation.oci-containers.containers.bookshelf = {
+  homelab.oci-containers.bookshelf = {
     image = "ghcr.io/pennydreadful/bookshelf:hardcover";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
@@ -21,7 +21,6 @@ in
     networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--ip=${constants.services.bookshelf.ip}"
-      "--label=io.containers.autoupdate=registry"
     ];
   };
 

@@ -8,7 +8,7 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  virtualisation.oci-containers.containers.suwayomi = {
+  homelab.oci-containers.suwayomi = {
     image = "ghcr.io/suwayomi/suwayomi-server:stable";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
@@ -29,7 +29,6 @@ in
     extraOptions = [
       "--ip=${constants.services.suwayomi.ip}"
       "--user=${toString constants.users.alfred.uid}:${toString constants.groups.users}"
-      "--label=io.containers.autoupdate=registry"
     ];
   };
 

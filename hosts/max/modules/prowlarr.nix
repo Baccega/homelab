@@ -8,8 +8,8 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  virtualisation.oci-containers.containers.prowlarr = {
-    image = "ghcr.io/linuxserver/prowlarr";
+  homelab.oci-containers.prowlarr = {
+    image = "ghcr.io/linuxserver/prowlarr:latest";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
     ];
@@ -19,7 +19,6 @@ in
     networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--ip=${constants.services.prowlarr.ip}"
-      "--label=io.containers.autoupdate=registry"
     ];
   };
 

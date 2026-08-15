@@ -14,7 +14,7 @@ let
   dataDir = "${constants.users.sandro.home}/redis/data";
 in
 {
-  virtualisation.oci-containers.containers.redis = {
+  homelab.oci-containers.redis = {
     image = "docker.io/library/redis:8";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
@@ -32,7 +32,6 @@ in
     extraOptions = [
       "--ip=${constants.services.redis.ip}"
       "--user=${toString constants.users.alfred.uid}:${toString constants.groups.users}"
-      "--label=io.containers.autoupdate=registry"
     ];
   };
 

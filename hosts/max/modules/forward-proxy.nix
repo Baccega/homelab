@@ -8,7 +8,7 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  virtualisation.oci-containers.containers.forward-proxy = {
+  homelab.oci-containers.forward-proxy = {
     image = "docker.io/qmcgaw/gluetun:latest";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
@@ -21,10 +21,8 @@ in
     extraOptions = [
       "--cap-add=NET_ADMIN"
       "--cap-add=NET_RAW"
-      "--security-opt=no-new-privileges"
       "--device=/dev/net/tun"
       "--ip=${constants.services.forwardProxy.ip}"
-      "--label=io.containers.autoupdate=registry"
     ];
     networks = [ constants.hosts.max.networkStack.name ];
   };

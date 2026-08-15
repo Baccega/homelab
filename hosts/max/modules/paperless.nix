@@ -21,7 +21,7 @@ let
   paperlessBaseUrl = "http://${constants.services.paperless.ip}:${toString constants.services.paperless.port}";
 in
 {
-  virtualisation.oci-containers.containers.paperless = {
+  homelab.oci-containers.paperless = {
     image = "ghcr.io/paperless-ngx/paperless-ngx:latest";
     environment = {
       USERMAP_UID = toString constants.users.alfred.uid;
@@ -67,11 +67,10 @@ in
     networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--ip=${constants.services.paperless.ip}"
-      "--label=io.containers.autoupdate=registry"
     ];
   };
 
-  virtualisation.oci-containers.containers.paperless-gotenberg = {
+  homelab.oci-containers.paperless-gotenberg = {
     image = "docker.io/gotenberg/gotenberg:8.25";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
@@ -84,11 +83,10 @@ in
     networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--ip=${constants.services.paperlessGotenberg.ip}"
-      "--label=io.containers.autoupdate=registry"
     ];
   };
 
-  virtualisation.oci-containers.containers.paperless-tika = {
+  homelab.oci-containers.paperless-tika = {
     image = "docker.io/apache/tika:latest";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
@@ -96,11 +94,10 @@ in
     networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--ip=${constants.services.paperlessTika.ip}"
-      "--label=io.containers.autoupdate=registry"
     ];
   };
 
-  # virtualisation.oci-containers.containers.paperless-gpt = {
+  # homelab.oci-containers.paperless-gpt = {
   #   image = "docker.io/icereed/paperless-gpt:latest";
   #   environment = {
   #     PAPERLESS_BASE_URL = paperlessBaseUrl;
@@ -137,7 +134,6 @@ in
   #   networks = [ constants.hosts.max.networkStack.name ];
   #   extraOptions = [
   #     "--ip=${constants.services.paperlessGpt.ip}"
-  #     "--label=io.containers.autoupdate=registry"
   #   ];
   # };
 

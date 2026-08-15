@@ -9,7 +9,7 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  virtualisation.oci-containers.containers.cloudflared = {
+  homelab.oci-containers.cloudflared = {
     image = "docker.io/cloudflare/cloudflared:latest";
     environmentFiles = [
       config.sops.secrets.nemo-docker-env.path
@@ -22,7 +22,6 @@ in
     ];
     extraOptions = [
       "--network=host"
-      "--label=io.containers.autoupdate=registry"
     ];
   };
 }

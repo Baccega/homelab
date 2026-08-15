@@ -12,7 +12,7 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  virtualisation.oci-containers.containers.beszel-agent = {
+  homelab.oci-containers.beszel-agent = {
     image = "docker.io/henrygd/beszel-agent:latest";
     environment = {
       LISTEN = toString constants.services.beszel.agentPort;
@@ -26,7 +26,6 @@ in
     ];
     extraOptions = [
       "--network=host"
-      "--label=io.containers.autoupdate=registry"
     ];
   };
 

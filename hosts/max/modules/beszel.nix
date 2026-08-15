@@ -14,7 +14,7 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  virtualisation.oci-containers.containers.beszel = {
+  homelab.oci-containers.beszel = {
     image = "docker.io/henrygd/beszel:latest";
     environment.APP_URL =
       "https://${constants.services.beszel.publicSubdomain}.${constants.network.publicDomain}";
@@ -25,11 +25,10 @@ in
     networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--ip=${constants.services.beszel.ip}"
-      "--label=io.containers.autoupdate=registry"
     ];
   };
 
-  virtualisation.oci-containers.containers.beszel-agent = {
+  homelab.oci-containers.beszel-agent = {
     image = "docker.io/henrygd/beszel-agent-nvidia:latest";
     environment = {
       # Hub connects in over the shared unix socket; when adding this system in
@@ -49,7 +48,6 @@ in
     extraOptions = [
       "--network=host"
       "--device=nvidia.com/gpu=all"
-      "--label=io.containers.autoupdate=registry"
     ];
   };
 

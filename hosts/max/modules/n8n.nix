@@ -8,7 +8,7 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  virtualisation.oci-containers.containers.n8n = {
+  homelab.oci-containers.n8n = {
     image = "docker.io/n8nio/n8n:next";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
@@ -19,7 +19,6 @@ in
     networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--ip=${constants.services.n8n.ip}"
-      "--label=io.containers.autoupdate=registry"
     ];
   };
 

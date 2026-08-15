@@ -8,8 +8,8 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  virtualisation.oci-containers.containers.qbittorrent = {
-    image = "ghcr.io/linuxserver/qbittorrent";
+  homelab.oci-containers.qbittorrent = {
+    image = "ghcr.io/linuxserver/qbittorrent:latest";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
     ];
@@ -20,7 +20,6 @@ in
     networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--ip=${constants.services.qbittorrent.ip}"
-      "--label=io.containers.autoupdate=registry"
     ];
   };
 

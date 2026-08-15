@@ -8,7 +8,7 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  virtualisation.oci-containers.containers.sabnzbd = {
+  homelab.oci-containers.sabnzbd = {
     image = "lscr.io/linuxserver/sabnzbd:latest";  
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
@@ -20,7 +20,6 @@ in
     networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--ip=${constants.services.sabnzbd.ip}"
-      "--label=io.containers.autoupdate=registry"
     ];
   };
 

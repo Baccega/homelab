@@ -8,8 +8,8 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  virtualisation.oci-containers.containers.sonarr = {
-    image = "ghcr.io/linuxserver/sonarr";
+  homelab.oci-containers.sonarr = {
+    image = "ghcr.io/linuxserver/sonarr:latest";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
     ];
@@ -21,7 +21,6 @@ in
     networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--ip=${constants.services.sonarr.ip}"
-      "--label=io.containers.autoupdate=registry"
     ];
   };
 

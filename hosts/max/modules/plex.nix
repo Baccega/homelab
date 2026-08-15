@@ -8,8 +8,8 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  virtualisation.oci-containers.containers.plex = {
-    image = "ghcr.io/linuxserver/plex";
+  homelab.oci-containers.plex = {
+    image = "ghcr.io/linuxserver/plex:latest";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
     ];
@@ -29,7 +29,6 @@ in
     extraOptions = [
       "--device=nvidia.com/gpu=all"
       "--ip=${constants.services.plex.ip}"
-      "--label=io.containers.autoupdate=registry"
     ];
   };
 

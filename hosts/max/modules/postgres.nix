@@ -22,7 +22,7 @@ in
     "d ${dumpsDir} 0750 root root -"
   ];
 
-  virtualisation.oci-containers.containers.postgres = {
+  homelab.oci-containers.postgres = {
     image = "docker.io/library/postgres:18";
     environment = {
       POSTGRES_DB = "paperless";
@@ -40,7 +40,6 @@ in
     networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--ip=${constants.services.postgres.ip}"
-      "--label=io.containers.autoupdate=registry"
     ];
   };
 

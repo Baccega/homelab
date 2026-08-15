@@ -8,7 +8,7 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  virtualisation.oci-containers.containers.komga = {
+  homelab.oci-containers.komga = {
     image = "docker.io/gotson/komga:latest";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
@@ -25,7 +25,6 @@ in
     extraOptions = [
       "--ip=${constants.services.komga.ip}"
       "--user=${toString constants.users.alfred.uid}:${toString constants.groups.users}"
-      "--label=io.containers.autoupdate=registry"
     ];
   };
 

@@ -3,6 +3,10 @@ let
   constants = import ../../constants.nix;
 in
 {
+    imports = [
+        ./oci-containers.nix
+    ];
+
     boot.loader.grub = {
         # no need to se2t devices, disko will add all devices that have a EF02 partition to the list already
         # devices = [ ];

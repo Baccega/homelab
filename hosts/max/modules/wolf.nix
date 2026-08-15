@@ -232,7 +232,7 @@ in
   # mounting pkgs.cudaPackages.cuda_nvrtc (or cudatoolkit) into the container and
   # set LD_LIBRARY_PATH; the store path must exist on this host (e.g. build here).
   # WOLF_RENDER_NODE: ls -l /sys/class/drm/renderD*/device/driver → pick Nvidia node.
-  virtualisation.oci-containers.containers.wolf = {
+  homelab.oci-containers.wolf = {
     image = "ghcr.io/games-on-whales/wolf:stable";
     environment = {
       NVIDIA_DRIVER_CAPABILITIES = "all";
@@ -273,7 +273,6 @@ in
       "--network=host"
       "--ipc=host"
       "--device-cgroup-rule=c 13:* rmw"
-      "--label=io.containers.autoupdate=registry"
     ];
   };
 

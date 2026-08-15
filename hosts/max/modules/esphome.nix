@@ -8,7 +8,7 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  virtualisation.oci-containers.containers.esphome = {
+  homelab.oci-containers.esphome = {
     image = "ghcr.io/esphome/esphome:stable";
     volumes = [
       "${constants.users.sandro.home}/esphome:/config"
@@ -25,7 +25,6 @@ in
     networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--ip=${constants.services.esphome.ip}"
-      "--label=io.containers.autoupdate=registry"
       "--privileged"
     ];
   };

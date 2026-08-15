@@ -8,7 +8,7 @@ let
   constants = import ../../../constants.nix;
 in
 {
-  virtualisation.oci-containers.containers.code-server = {
+  homelab.oci-containers.code-server = {
     image = "lscr.io/linuxserver/code-server:latest";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
@@ -24,7 +24,6 @@ in
     networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--ip=${constants.services.codeServer.ip}"
-      "--label=io.containers.autoupdate=registry"
     ];
   };
 
