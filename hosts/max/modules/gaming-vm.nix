@@ -219,8 +219,8 @@ in
       domains = [
         {
           definition = domainXml;
-          # Keep off until NixOS is installed on the volume.
-          active = false;
+          # Start (and restart on host boot via nixvirt.service) once installed.
+          active = true;
         }
       ];
     };

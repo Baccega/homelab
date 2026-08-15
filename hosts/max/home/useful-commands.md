@@ -27,6 +27,17 @@ sudo virsh console bolt
 sudo virsh shutdown bolt
 ```
 
+## Bolt guest – save emulator configs to Hachiko
+
+Daily backups already run; to push immediately after tweaking PCSX2/RetroArch/Sunshine:
+
+```bash
+sudo systemctl start backup-pcsx2-configs
+sudo systemctl start backup-retroarch-configs
+sudo systemctl start backup-sunshine-configs
+```
+
+
 ## Container Management
 
 ```bash

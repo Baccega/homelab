@@ -3,6 +3,9 @@
 # ROMs:  /mnt/roms/ps2          (mirrored by rom-sync.nix)
 # BIOS:  /mnt/roms/BIOSes/pcsx2/bios
 # Saves / memcards / settings: ~/.config/PCSX2 (backed up to Hachiko via config-backup.nix)
+#
+# PCSX2.ini is seeded once (tmpfiles C), then left alone so GUI/controller
+# changes survive reboot. Push to NAS with: systemctl start backup-pcsx2-configs
 {
   pkgs,
   ...
@@ -60,6 +63,7 @@ in
 {
   environment.systemPackages = [ pkgs.pcsx2 ];
 
+  # Seed dirs + default INI only when missing — do not clobber runtime config.
   systemd.tmpfiles.rules = [
     "d ${home}/.config/PCSX2           0755 ${username} users -"
     "d ${home}/.config/PCSX2/inis      0755 ${username} users -"
@@ -68,12 +72,6 @@ in
     "d ${home}/.config/PCSX2/snaps     0755 ${username} users -"
     "d ${home}/.config/PCSX2/logs      0755 ${username} users -"
     "d ${home}/.config/PCSX2/cache     0755 ${username} users -"
+    "C ${home}/.config/PCSX2/inis/PCSX2.ini 0644 ${username} users - ${pcsx2Ini}"
   ];
-
-  home-manager.users.${username} = {
-    home.file.".config/PCSX2/inis/PCSX2.ini" = {
-      source = pcsx2Ini;
-      force = true;
-    };
-  };
 }
