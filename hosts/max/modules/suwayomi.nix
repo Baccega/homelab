@@ -9,7 +9,7 @@ let
 in
 {
   homelab.oci-containers.suwayomi = {
-    image = "ghcr.io/suwayomi/suwayomi-server:stable";
+    image = "ghcr.io/suwayomi/suwayomi-server:stable@sha256:e59f212ccf91b26de8676a063a2db90256c148c6261535c7c477d47a43d9751b";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
     ];

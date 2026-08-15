@@ -9,7 +9,7 @@ let
 in
 {
   homelab.oci-containers.bookshelf = {
-    image = "ghcr.io/pennydreadful/bookshelf:hardcover";
+    image = "ghcr.io/pennydreadful/bookshelf:hardcover@sha256:388eecc94362580eae31ee0a454be6af516f8a311f8432a521c202fb475f4359";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
     ];
