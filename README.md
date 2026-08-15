@@ -32,6 +32,10 @@ All of the hostnames are 🐶 inspired.
 
   Named after [Nemo A534](https://en.wikipedia.org/wiki/Nemo_A534), the heroic U.S. Air Force sentry dog who protected his handler during a 1966 Viet Cong attack at Tan Son Nhut Air Base—despite being severely wounded. A fitting name for the router that guards and protects the network.
 
+- **Bolt**: ⚡ My gaming VM running on Max.
+
+  Named after [Bolt](https://en.wikipedia.org/wiki/Bolt_(Disney_character)) the dog with super powers from the Disney movie of the same name.
+
 ## Architecture
 
 ### Reverse Proxy & Split-View DNS
