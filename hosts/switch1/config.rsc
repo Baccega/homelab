@@ -10,21 +10,21 @@ set 0 name=serial0
 /interface bridge port
 add bridge=bridge1 interface=ether1
 add bridge=bridge1 interface=ether2
-add bridge=bridge1 interface=ether3
+add bridge=bridge1 interface=ether3 pvid=40
 add bridge=bridge1 interface=ether4 pvid=20
-add bridge=bridge1 interface=ether5
+add bridge=bridge1 interface=ether5 pvid=40
 add bridge=bridge1 interface=ether6 pvid=40
 add bridge=bridge1 interface=ether7 pvid=20
-add bridge=bridge1 interface=ether8
-add bridge=bridge1 interface=sfp9
-add bridge=bridge1 interface=sfp10
-add bridge=bridge1 interface=sfp11
-add bridge=bridge1 interface=sfp12
+add bridge=bridge1 interface=ether8 pvid=40
+add bridge=bridge1 interface=sfp9 pvid=40
+add bridge=bridge1 interface=sfp10 pvid=40
+add bridge=bridge1 interface=sfp11 pvid=40
+add bridge=bridge1 interface=sfp12 pvid=40
 /interface bridge vlan
 add bridge=bridge1 tagged=ether1 untagged=ether7,ether4 vlan-ids=20
 add bridge=bridge1 tagged=ether1,ether2 vlan-ids=30
 add bridge=bridge1 tagged=bridge1 untagged=ether1,ether2 vlan-ids=1
-add bridge=bridge1 tagged=ether1,ether2 untagged=ether6 vlan-ids=40
+add bridge=bridge1 tagged=ether1,ether2 untagged=ether3,ether5,ether6,ether8,sfp9,sfp10,sfp11,sfp12 vlan-ids=40
 /interface list member
 add interface=ether1 list=WAN
 add interface=ether2 list=LAN

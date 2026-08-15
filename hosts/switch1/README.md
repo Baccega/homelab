@@ -72,23 +72,21 @@ Current cabling (documented here so you don’t have to infer it from the config
 
 - **ether1**: Nemo
 - **ether2**: AP1
-- **ether3**: (unused)
+- **ether3**: (unused, Home VLAN)
 - **ether4**: Hachiko
-- **ether5**: (unused)
+- **ether5**: (unused, Home VLAN)
 - **ether6**: Apple TV
 - **ether7**: Max
-- **ether8**: (unused)
-- **sfp9**: (unused)
-- **sfp10**: (unused)
-- **sfp11**: (unused)
-- **sfp12**: (unused)
+- **ether8**: (unused, Home VLAN)
+- **sfp9**: (unused, Home VLAN)
+- **sfp10**: (unused, Home VLAN)
+- **sfp11**: (unused, Home VLAN)
+- **sfp12**: (unused, Home VLAN)
 
 ## Notes
 
-- `config.rsc` is exported with `/export show-sensitive`, so it includes
-  WPA passphrases, RADIUS shared secrets, and the like. If you want those
-  out of git, switch to plain `/export` and manage the sensitive bits via
-  sops separately.
+- `config.rsc` is exported with plain `/export`, so sensitive values are
+  redacted. Manage those separately with sops.
 - MikroTik's `/export` output starts with a comment preamble containing
   timestamp, software ID, model, and serial number; the apps strip all leading
   comment lines so that information is not committed and diffs stay stable.
