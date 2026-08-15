@@ -121,8 +121,11 @@ in
     # Automatic system upgrade
     system.autoUpgrade = {
         enable = true;
+        flake = "github:Baccega/homelab";
         dates = "weekly";
-        allowReboot = true; 
+        persistent = true;
+        randomizedDelaySec = "45min";
+        allowReboot = true;
     };
 
     # This value determines the NixOS release from which the default
