@@ -21,6 +21,7 @@ in
     extraOptions = [
       "--cap-add=NET_ADMIN"
       "--cap-add=NET_RAW"
+      "--security-opt=no-new-privileges"
       "--device=/dev/net/tun"
       "--ip=${constants.services.forwardProxy.ip}"
       "--label=io.containers.autoupdate=registry"
