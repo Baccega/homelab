@@ -33,13 +33,22 @@ let
     "@eaDir"
   ];
 
-  # Shared by backup jobs and the watchdog. No-op unless healthcheckUrl is set.
+  # Shared by backup jobs and the watchdog. No-op unless healthcheckUrlFile is set.
   pingHealthFn = ''
     ping_health() {
       local status="$1"
       local msg="$2"
-      ${lib.optionalString (cfg.healthcheckUrl != null) ''
-        ${pkgs.curl}/bin/curl -fsS -o /dev/null --max-time 10 -G "${cfg.healthcheckUrl}" \
+      ${lib.optionalString (cfg.healthcheckUrlFile != null) ''
+        url_file="${cfg.healthcheckUrlFile}"
+        if [ ! -f "$url_file" ]; then
+          echo "WARNING: healthcheck URL file $url_file is missing"
+          return 0
+        fi
+        url=$(${pkgs.coreutils}/bin/tr -d '[:space:]' < "$url_file")
+        if [ -z "$url" ] || ! [[ "$url" =~ ^https?:// ]]; then
+          return 0
+        fi
+        ${pkgs.curl}/bin/curl -fsS -o /dev/null --max-time 10 -G "$url" \
           --data-urlencode "status=$status" \
           --data-urlencode "msg=$msg" \
           || echo "WARNING: healthcheck ping failed"
@@ -60,17 +69,19 @@ in
   options.backup = {
     enable = lib.mkEnableOption "Enable backup service";
 
-    healthcheckUrl = lib.mkOption {
+    healthcheckUrlFile = lib.mkOption {
       type = lib.types.nullOr lib.types.str;
       default = null;
-      example = "https://uptime.example.com/api/push/TOKEN";
+      example = "/run/secrets/backup-healthcheck-url";
       description = ''
-        Optional Uptime Kuma Push URL (or any HTTP heartbeat that accepts
-        `status` and `msg` query params). One Push monitor covers every job
-        on this host: the `msg` names which backup failed (for example
-        `failed: n8n, postgres (stale)`). A watchdog pings `status=up` while
-        every job has succeeded within 48 hours; a failed job immediately
-        pings `status=down`. Beszel does not monitor systemd timers.
+        Path to a file containing an Uptime Kuma Push URL (or any HTTP
+        heartbeat that accepts `status` and `msg` query params). Use a sops
+        secret so the token does not end up in the Nix store. One Push
+        monitor covers every job on this host: the `msg` names which backup
+        failed (for example `failed: n8n, postgres (stale)`). A watchdog
+        pings `status=up` while every job has succeeded within 48 hours; a
+        failed job immediately pings `status=down`. Beszel does not monitor
+        systemd timers.
       '';
     };
 
@@ -188,8 +199,10 @@ in
           name = "backup-${jobConfig.name}";
           value = {
             description = "Backup job: ${jobConfig.name}";
-            after = [ "network.target" "mnt-${lib.strings.removePrefix "/mnt/" jobConfig.nfsMount}.mount" ];
-            wants = [ "network.target" "mnt-${lib.strings.removePrefix "/mnt/" jobConfig.nfsMount}.mount" ];
+            after = [ "network.target" "mnt-${lib.strings.removePrefix "/mnt/" jobConfig.nfsMount}.mount" ]
+              ++ lib.optional (cfg.healthcheckUrlFile != null) "sops-nix.service";
+            wants = [ "network.target" "mnt-${lib.strings.removePrefix "/mnt/" jobConfig.nfsMount}.mount" ]
+              ++ lib.optional (cfg.healthcheckUrlFile != null) "sops-nix.service";
 
             serviceConfig = {
               Type = "oneshot";
@@ -302,7 +315,8 @@ in
       (lib.mkIf (cfg.jobs != []) {
         backup-watchdog = {
           description = "Report backup job health";
-          after = [ "network.target" ];
+          after = [ "network.target" ]
+            ++ lib.optional (cfg.healthcheckUrlFile != null) "sops-nix.service";
           serviceConfig = {
             Type = "oneshot";
             ExecStart = pkgs.writeShellScript "backup-watchdog.sh" ''

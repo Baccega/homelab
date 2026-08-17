@@ -33,6 +33,12 @@ creation_rules:
           - *sandro
           - *sandro_yubi
           - *max
+  - path_regex: secrets/bolt-secrets.(yaml|json|env|ini)$
+    key_groups:
+      - age:
+          - *sandro
+          - *sandro_yubi
+          - *bolt
   - path_regex: secrets/nemo-secrets.(yaml|json|env|ini)$
     key_groups:
       - age:

@@ -1,4 +1,5 @@
 {
+    config,
     ...
 }:
 {
@@ -31,5 +32,10 @@
         forward-proxy-env = {
             sopsFile = ../../../secrets/max-secrets.json;
         };
+        backup-healthcheck-url = {
+            sopsFile = ../../../secrets/max-secrets.json;
+        };
     };
+
+    backup.healthcheckUrlFile = config.sops.secrets.backup-healthcheck-url.path;
 }
