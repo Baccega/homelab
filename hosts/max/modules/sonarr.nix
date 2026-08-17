@@ -51,6 +51,7 @@ in
         source = "${constants.users.sandro.home}/sonarr/Backups";
         nfsMount = constants.mountPoints.configurations.path;
         destination = "sonarr";
+        appBackups = true;
         schedule = "daily";
       }
     ];

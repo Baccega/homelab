@@ -52,6 +52,7 @@ in
         source = "${constants.users.sandro.home}/home-assistant/backups";
         nfsMount = constants.mountPoints.configurations.path;
         destination = "home-assistant";
+        appBackups = true;
         schedule = "daily";
       }
     ];

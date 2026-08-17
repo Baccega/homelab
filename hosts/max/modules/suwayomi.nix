@@ -63,6 +63,7 @@ in
         source = "${constants.users.sandro.home}/suwayomi/backups";
         nfsMount = constants.mountPoints.configurations.path;
         destination = "suwayomi";
+        appBackups = true;
         exclude = [
           "/downloads/"
           "/logs/"

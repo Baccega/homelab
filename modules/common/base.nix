@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   constants = import ../../constants.nix;
 in
@@ -115,22 +115,37 @@ in
     # Enable flakes permanently
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-    # Garbage collection
+    # After backups (00:00-03:00): free store space first, then upgrade.
+    # nix.gc is the NixOS timer that runs nix-collect-garbage; it is usually
+    # a few minutes, so upgrade at 03:20 leaves a comfortable gap.
     nix.gc = {
         automatic = true;
-        dates = "weekly";
+        dates = "Sun *-*-* 03:00:00";
+        randomizedDelaySec = "10min";
+        persistent = true;
         options = "--delete-older-than 14d";
     };
 
-    # Automatic system upgrade
     system.autoUpgrade = {
         enable = true;
         flake = "github:Baccega/homelab";
-        dates = "weekly";
+        dates = "Sun *-*-* 03:20:00";
         persistent = true;
-        randomizedDelaySec = "45min";
+        randomizedDelaySec = "15min";
         allowReboot = true;
     };
+
+    systemd.services.nixos-upgrade.serviceConfig.ExecStartPre = lib.mkBefore [
+      (pkgs.writeShellScript "nixos-upgrade-wait-for-backups" ''
+        set -euo pipefail
+        while ${pkgs.systemd}/bin/systemctl list-units --type=service --state=running --no-legend 'backup-*.service' \
+            | ${pkgs.gnugrep}/bin/grep -v backup-watchdog \
+            | ${pkgs.gnugrep}/bin/grep -q .; do
+          echo "Waiting for backup jobs to finish before upgrade..."
+          sleep 30
+        done
+      '')
+    ];
 
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions

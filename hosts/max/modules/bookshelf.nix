@@ -56,6 +56,7 @@ in
         source = "${constants.users.sandro.home}/bookshelf/Backups";
         nfsMount = constants.mountPoints.configurations.path;
         destination = "bookshelf";
+        appBackups = true;
         schedule = "daily";
       }
     ];

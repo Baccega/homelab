@@ -1,6 +1,6 @@
 # PostgreSQL on Max
 # Runs on the shared ipvlan network so services can reach it by IP. The live
-# data directory is intentionally not rsynced as-is; instead a daily pg_dump is
+# data directory is intentionally not backed up as-is; instead a daily pg_dump is
 # written to a dumps directory which is what gets backed up to the NAS over NFS
 # (a logical dump is consistent and safe to restore, unlike copying live files).
 {
@@ -61,6 +61,7 @@ in
         source = dumpsDir;
         nfsMount = constants.mountPoints.configurations.path;
         destination = "postgres";
+        appBackups = true;
         schedule = "daily";
         preBackupScript = ''
           ${pkgs.podman}/bin/podman exec postgres sh -c \

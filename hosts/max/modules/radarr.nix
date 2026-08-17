@@ -51,6 +51,7 @@ in
         source = "${constants.users.sandro.home}/radarr/Backups";
         nfsMount = constants.mountPoints.configurations.path;
         destination = "radarr";
+        appBackups = true;
         schedule = "daily";
       }
     ];

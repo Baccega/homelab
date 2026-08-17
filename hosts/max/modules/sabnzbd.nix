@@ -51,6 +51,7 @@ in
         source = "${constants.users.sandro.home}/sabnzbd/backups";
         nfsMount = constants.mountPoints.configurations.path;
         destination = "sabnzbd";
+        appBackups = true;
         schedule = "daily";
       }
     ];
