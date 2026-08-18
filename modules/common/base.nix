@@ -78,9 +78,10 @@ in
         man-pages
     ];
 
-    # Set default gateway and DNS servers
+    # Nemo split-view DNS. Public resolvers would send *.baccegasandro.dev
+    # through Cloudflare Access instead of LAN Caddy.
     networking = {
-		nameservers = constants.network.dns;
+		nameservers = [ constants.network.vlans.servers.gateway ];
 		defaultGateway = constants.network.vlans.servers.gateway;
 	};
 

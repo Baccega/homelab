@@ -31,6 +31,10 @@ in
       no-poll = true;
       cache-size = 1000;
       listen-address = listenAddresses;
+      # Authoritative for these names so AAAA is not forwarded to Cloudflare.
+      local = map (
+        service: "/${service.subdomain}.${constants.network.publicDomain}/"
+      ) namedServices;
       address = map (
         service:
         "/${service.subdomain}.${constants.network.publicDomain}/${resolveIp service}"
