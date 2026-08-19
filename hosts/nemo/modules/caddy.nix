@@ -22,6 +22,38 @@ let
     lib.optional (service.exposure == "internet") "http://${serviceHostname service}"
     ++ [ (serviceHostname service) ];
 
+  # OpenSpeedTest lies wildly over HTTP/2 and a buffering reverse proxy
+  # (upload in the tens of Gbps). Force HTTP/1.1 and disable buffering
+  # on this vhost only; other services stay on Caddy defaults.
+  speedtestProxy = service: [
+    "  reverse_proxy ${service.ip}:${toString service.port} {"
+    "    flush_interval -1"
+    "    transport http {"
+    "      versions 1.1"
+    "      compression off"
+    "    }"
+    "  }"
+    "  tls {"
+    "    alpn http/1.1"
+    "  }"
+  ];
+
+  siteBlock = service:
+    [
+      "${lib.concatStringsSep ", " (siteAddresses service)} {"
+      "  import cloudflare_tls"
+    ]
+    ++ (
+      if service.subdomain == constants.services.speedtest.subdomain then
+        speedtestProxy service
+      else
+        [ "  reverse_proxy ${service.ip}:${toString service.port}" ]
+    )
+    ++ [
+      "}"
+      ""
+    ];
+
   caddyfileContent = lib.concatStringsSep "\n" ([
     "{"
     "  auto_https disable_redirects"
@@ -34,13 +66,7 @@ let
     "  }"
     "}"
     ""
-  ] ++ lib.concatMap (service: [
-    "${lib.concatStringsSep ", " (siteAddresses service)} {"
-    "  import cloudflare_tls"
-    "  reverse_proxy ${service.ip}:${toString service.port}"
-    "}"
-    ""
-  ]) namedServices) + "\n";
+  ] ++ lib.concatMap siteBlock namedServices) + "\n";
 in
 {
   assertions = [
