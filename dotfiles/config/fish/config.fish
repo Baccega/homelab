@@ -129,10 +129,12 @@ if test -f .conda_environment
    useLocalCondaEnvironment
 end
 # Use .nvmrc when present, otherwise fall back to Node LTS
-if test -f .nvmrc
-   useLocalNodeEnvironment
-else
-   nvm use lts
+if type -q nvm
+    if test -f .nvmrc
+       useLocalNodeEnvironment
+    else
+       nvm use lts
+    end
 end
    
 # pnpm

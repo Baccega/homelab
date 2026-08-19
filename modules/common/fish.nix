@@ -25,10 +25,12 @@
             };
 
             interactiveShellInit = ''
-                if test -f .nvmrc
-                    useLocalNodeEnvironment
-                else
-                    nvm use lts
+                if type -q nvm
+                    if test -f .nvmrc
+                        useLocalNodeEnvironment
+                    else
+                        nvm use lts
+                    end
                 end
             '';
 
