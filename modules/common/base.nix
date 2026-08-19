@@ -49,6 +49,7 @@ in
         # Networking and downloading
         curl
         wget
+        bind    # dig, host, nslookup
         iputils
         inetutils
         nmap
