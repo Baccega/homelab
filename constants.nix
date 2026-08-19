@@ -240,7 +240,7 @@
         };
         speedtest = {
             ip = "192.168.20.226";
-            port = 5000;
+            port = 3000;
             subdomain = "speedtest";
             exposure = "lan";
         };

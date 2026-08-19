@@ -8,14 +8,18 @@ let
   constants = import ../../../constants.nix;
 in
 {
-    # iPerf3-WebUI container
   homelab.oci-containers.speedtest = {
-    image = "ghcr.io/maddydev-glitch/iperf3-webui@sha256:b0b395d545a2451639b6be8fb4d0e50e5c5029f559a363aca4dacae8993c98b7";
+    image = "docker.io/openspeedtest/latest@sha256:1745e913f596fe98882b286a67751efdae74774e9caa742a4934bb056e8748d2";
 
     networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--ip=${constants.services.speedtest.ip}"
     ];
+
+    # We proxy externally via Nemo/Caddy, so avoid OpenSpeedTest trying to manage its own TLS.
+    environment = {
+      ENABLE_LETSENCRYPT = "false";
+    };
   };
 
   systemd.services.podman-speedtest = {
