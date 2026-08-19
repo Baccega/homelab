@@ -26,12 +26,13 @@ in
     resolveLocalQueries = true;
     settings = {
       server = constants.network.dns;
+      # Do not use /etc/resolv.conf as upstream
+      no-resolv = true;
       domain-needed = true;
       bogus-priv = true;
       no-poll = true;
       cache-size = 1000;
       listen-address = listenAddresses;
-      # Authoritative for these names so AAAA is not forwarded to Cloudflare.
       local = map (
         service: "/${service.subdomain}.${constants.network.publicDomain}/"
       ) namedServices;
