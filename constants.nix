@@ -238,6 +238,12 @@
             subdomain = "beszel";
             exposure = "internet";
         };
+        speedtest = {
+            ip = "192.168.20.226";
+            port = 5000;
+            subdomain = "speedtest";
+            exposure = "lan";
+        };
         paperless = {
             ip = "192.168.20.218";
             port = 8000;

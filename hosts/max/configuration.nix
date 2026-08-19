@@ -27,6 +27,7 @@ in
 		./modules/code-server.nix
 		./modules/n8n.nix
 		./modules/uptime-kuma.nix
+		./modules/speed-test.nix
 		./modules/esphome.nix
 		./modules/bookshelf.nix
 		./modules/suwayomi.nix
