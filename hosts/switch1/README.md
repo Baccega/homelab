@@ -66,17 +66,24 @@ Upload your SSH public key to the device's `Files` directory in the WEB-UI and l
      `config.rsc`.
    - Reboot the switch and cause a ~30-60s outage.
 
+## VLAN map
+
+- **1**: Management
+- **20**: Server
+- **30**: IoT (East-West isolation)
+- **40**: Home
+
 ## Port map (physical connections)
 
 Current cabling (documented here so you don’t have to infer it from the config):
 
-- **ether1**: Nemo
-- **ether2**: AP1
+- **ether1**: Nemo (Trunk)
+- **ether2**: AP1 (Trunk)
 - **ether3**: (unused, Home VLAN)
-- **ether4**: Hachiko
-- **ether5**: (unused, Home VLAN)
-- **ether6**: Apple TV
-- **ether7**: Max
+- **ether4**: Hachiko (Server VLAN)
+- **ether5**: Desk (Home VLAN)
+- **ether6**: Apple TV (Home VLAN)
+- **ether7**: Max (Server VLAN)
 - **ether8**: (unused, Home VLAN)
 - **sfp9**: (unused, Home VLAN)
 - **sfp10**: (unused, Home VLAN)
