@@ -82,10 +82,9 @@ flowchart LR
 
 ## Schedule
 
-23:00: Night time starts in Homeassistant
-00:00 - 03:00: Backup of Container files
-03:00 - 04:00: Nix Garbage Collection + Nix Upgrade + Renovate Github Action
-04:00 - 06:00: Backup of Hachiko data
-
-06:00 - 07:00: Backup of Balto data
-07:00: Daytime starts in Homeassistant
+- 23:00: Night time starts in Homeassistant
+- 00:00 - 03:00: Backup of Container files
+- 03:00 - 04:00: Nix Garbage Collection + Nix Upgrade + Renovate Github Action
+- 04:00 - 06:00: Backup of Hachiko data
+- 06:00 - 07:00: Backup of Balto data
+- 07:00: Daytime starts in Homeassistant
