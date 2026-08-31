@@ -43,4 +43,7 @@ in
       conf-file = [ "/etc/dnsmasq-conf.conf" ];
     };
   };
+
+  # Bounce DNS on every Nemo rebuild so LAN clients pick up fresh state.
+  systemd.services.dnsmasq.restartTriggers = [ config.system.build.toplevel ];
 }
