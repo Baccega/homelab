@@ -21,10 +21,15 @@
   ],
   "packageRules": [
     {
-      "description": "Apply patch and digest updates without opening a pull request",
-      "matchUpdateTypes": ["patch", "digest", "pinDigest"],
-      "automerge": true,
-      "automergeType": "branch"
+      "description": "Digest updates often lack registry timestamps (GHCR, latest/stable); age when available, do not block forever",
+      "matchUpdateTypes": ["digest", "pinDigest"],
+      "minimumReleaseAgeBehaviour": "timestamp-optional"
+    },
+    {
+      "description": "Open one PR with every pending container image update",
+      "matchManagers": ["custom.regex"],
+      "groupName": "all container images"
     }
   ]
 }
+
