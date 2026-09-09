@@ -44,6 +44,14 @@ in
     };
   };
 
-  # Bounce DNS on every Nemo rebuild so LAN clients pick up fresh state.
-  systemd.services.dnsmasq.restartTriggers = [ config.system.build.toplevel ];
+  # Restart when the published hostname set changes (new service/subdomain).
+  # Do not use config.system.build.toplevel: that unit is part of toplevel, so
+  # evaluation loops.
+  systemd.services.dnsmasq.restartTriggers = [
+    (builtins.toJSON (
+      map (
+        service: "${service.subdomain}.${constants.network.publicDomain}"
+      ) namedServices
+    ))
+  ];
 }
