@@ -238,12 +238,6 @@
             subdomain = "beszel";
             exposure = "internet";
         };
-        speedtest = {
-            ip = "192.168.20.226";
-            port = 3000;
-            subdomain = "speedtest";
-            exposure = "lan";
-        };
         paperless = {
             ip = "192.168.20.218";
             port = 8000;
@@ -285,6 +279,18 @@
             ip = "192.168.20.225";
             port = 6379;
             exposure = "lan";
+        };
+        speedtest = {
+            ip = "192.168.20.226";
+            port = 3000;
+            subdomain = "speedtest";
+            exposure = "lan";
+        };
+        couchdb = {
+            ip = "192.168.20.227";
+            port = 5984;
+            subdomain = "obsidian";
+            exposure = "internet";
         };
         sunshine = {
             ip = "192.168.20.50";   # Bolt VM

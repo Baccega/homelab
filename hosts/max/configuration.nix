@@ -36,6 +36,7 @@ in
 		./modules/paperless.nix
 		./modules/postgres.nix
 		./modules/redis.nix
+		./modules/couchdb.nix
 		./modules/ai-stack.nix
 		# ./modules/wolf.nix
 		./modules/gaming-vm.nix

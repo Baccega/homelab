@@ -26,6 +26,9 @@
         redis-env = {
             sopsFile = ../../../secrets/max-secrets.json;
         };
+        couchdb-env = {
+            sopsFile = ../../../secrets/max-secrets.json;
+        };
         ai-stack-env = {
             sopsFile = ../../../secrets/max-secrets.json;
         };
