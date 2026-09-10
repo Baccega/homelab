@@ -37,6 +37,7 @@ in
 		./modules/postgres.nix
 		./modules/redis.nix
 		./modules/couchdb.nix
+		./modules/opengym.nix
 		./modules/ai-stack.nix
 		# ./modules/wolf.nix
 		./modules/gaming-vm.nix

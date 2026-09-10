@@ -292,6 +292,17 @@
             subdomain = "obsidian";
             exposure = "internet";
         };
+        opengym = {
+            ip = "192.168.20.228";
+            port = 80;
+            subdomain = "opengym";
+            exposure = "internet";
+        };
+        opengymApi = {
+            ip = "192.168.20.229";
+            port = 3000;
+            exposure = "lan";
+        };
         sunshine = {
             ip = "192.168.20.50";   # Bolt VM
             exposure = "lan";
