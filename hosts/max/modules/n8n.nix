@@ -9,7 +9,7 @@ let
 in
 {
   homelab.oci-containers.n8n = {
-    image = "docker.io/n8nio/n8n:next@sha256:397c40e020dd034bade1a6bce99ae0896b2794f224c0315238d9b03c0be8cbc1";
+    image = "docker.io/n8nio/n8n:next@sha256:5fa13ec66b5703f3ae0189eb979940baec35add43fa828e2313b1fe5190e7d25";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
     ];
