@@ -9,7 +9,7 @@ let
 in
 {
   homelab.oci-containers.forward-proxy = {
-    image = "docker.io/qmcgaw/gluetun:latest@sha256:62810455bc9dacdcf887ddeb33b0e054d39a048ebe9264dff2f2692ce180a35c";
+    image = "docker.io/qmcgaw/gluetun:latest@sha256:a2d96492aaac1e57d91e324fcf32382fc3c4b4f1fb59997fcf7c93effc582209";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
       config.sops.secrets.forward-proxy-env.path

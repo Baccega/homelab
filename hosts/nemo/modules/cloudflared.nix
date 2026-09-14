@@ -10,7 +10,7 @@ let
 in
 {
   homelab.oci-containers.cloudflared = {
-    image = "docker.io/cloudflare/cloudflared:latest@sha256:ff69a2225ad7c6f85ed84fbd5f3087df46202426b2388ec60214098e0adf05e9";
+    image = "docker.io/cloudflare/cloudflared:latest@sha256:b269e8abd07a5bf6f3f4be65d5050b2174eca89c56a0241a8ff32a16aec454e4";
     environmentFiles = [
       config.sops.secrets.nemo-docker-env.path
       config.sops.secrets.cloudflared-token.path
