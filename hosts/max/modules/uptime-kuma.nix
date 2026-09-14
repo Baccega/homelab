@@ -9,7 +9,7 @@ let
 in
 {
   homelab.oci-containers.uptime-kuma = {
-    image = "ghcr.io/louislam/uptime-kuma:2@sha256:3e24e96c89efff0e3a4b0698cbdd36c15ad3022371db57166e5588853002ee5c";
+    image = "ghcr.io/louislam/uptime-kuma:2@sha256:917318f9d7be5257f43ba412c766a473be336eb451d70744f3b482d0c3997c0e";
     volumes = [
       "${constants.users.sandro.home}/uptime-kuma:/app/data"
     ];
