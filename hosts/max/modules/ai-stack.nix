@@ -14,7 +14,7 @@ let
 in
 {
   homelab.oci-containers.ollama = {
-    image = "docker.io/ollama/ollama:latest@sha256:684d8674b4315fa18f4f0e973a118ec2652ed96f67563277839985175858e0ba";
+    image = "docker.io/ollama/ollama:latest@sha256:da6e0dc5651df159e45686fd663c4dbe1624a52c44d7280eeac1551d8f865532";
     environment = {
       OLLAMA_HOST = "0.0.0.0:${toString constants.services.ollama.port}";
       OLLAMA_KEEP_ALIVE = "15m";
