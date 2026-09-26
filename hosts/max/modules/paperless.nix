@@ -22,7 +22,7 @@ let
 in
 {
   homelab.oci-containers.paperless = {
-    image = "ghcr.io/paperless-ngx/paperless-ngx:latest@sha256:22dc423ff48ac1629977dbf0c9625ba9f60d3bd1291a2ff173c65351984a14c2";
+    image = "ghcr.io/paperless-ngx/paperless-ngx:latest@sha256:5fa76604a81df6945086e0837b14b56543d137e8ce4f311cc5d9ebe907e74e79";
     environment = {
       USERMAP_UID = toString constants.users.alfred.uid;
       USERMAP_GID = toString constants.groups.users;

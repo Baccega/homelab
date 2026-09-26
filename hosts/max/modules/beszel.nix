@@ -15,7 +15,7 @@ let
 in
 {
   homelab.oci-containers.beszel = {
-    image = "docker.io/henrygd/beszel:latest@sha256:fefb27166f5e1611ebf67f8697ea928a23f44efdb00af922e2ac3b5faa2efd5c";
+    image = "docker.io/henrygd/beszel:latest@sha256:897e807a065adf8e89e30ae0cd79d1f5e38fe84ccaffbc418bde9d3cdca4eacc";
     environment.APP_URL =
       "https://${constants.services.beszel.subdomain}.${constants.network.publicDomain}";
     volumes = [
@@ -29,7 +29,7 @@ in
   };
 
   homelab.oci-containers.beszel-agent = {
-    image = "docker.io/henrygd/beszel-agent-nvidia:latest@sha256:18cf4fa191d7bec82c0c4608172330602367d811c3131d7a9bab81578515d2e2";
+    image = "docker.io/henrygd/beszel-agent-nvidia:latest@sha256:99fa40c7ae2738b0bb3aedb8ffe2659548b669be4f307ca92372e7cc5ddc63a7";
     environment = {
       # Hub connects in over the shared unix socket; when adding this system in
       # the hub UI, set Host/IP to /beszel_socket/beszel.sock.
