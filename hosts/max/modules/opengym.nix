@@ -76,7 +76,7 @@ let
 in
 {
   homelab.oci-containers.opengym-api = {
-    image = "registry.gitlab.com/duartesantos8/opengym/api:latest@sha256:b16ef522c1c8c2e1a3b0f24babbe896ca9b4611bc3fb091bd9876358c80efe91";
+    image = "registry.gitlab.com/duartesantos8/opengym/api:latest@sha256:88b192dd743ed3746ddeeb973952bdf380c810d6b69337b8205d96d053d7962f";
     environment = {
       PORT = toString constants.services.opengymApi.port;
       DATA_DIR = "/data";
@@ -98,7 +98,7 @@ in
   };
 
   homelab.oci-containers.opengym = {
-    image = "registry.gitlab.com/duartesantos8/opengym/web:latest@sha256:f43470b2ba50d5bb577a0702a273522693de744d6fabad7b67eb908825bce292";
+    image = "registry.gitlab.com/duartesantos8/opengym/web:latest@sha256:eb97d4f78a9d495a41d0181440ae3394feab41e7200b7a4a36099cee36e80036";
     environment = {
       NGINX_PORT = toString constants.services.opengym.port;
       # Cloudflare Tunnel overwrites this header; leave it through so the

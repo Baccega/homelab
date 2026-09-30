@@ -9,7 +9,7 @@ let
 in
 {
   homelab.oci-containers.homeassistant = {
-    image = "ghcr.io/home-assistant/home-assistant:stable@sha256:d8922685169707fd91e8b9729902d975f06157d005e422874d201e0261dda196";
+    image = "ghcr.io/home-assistant/home-assistant:stable@sha256:3e6710a7ab2a61311d9d899b719f6c3657791c63e8f4942cec4ebc42401d6b76";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
     ];

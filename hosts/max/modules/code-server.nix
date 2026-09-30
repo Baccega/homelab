@@ -9,7 +9,7 @@ let
 in
 {
   homelab.oci-containers.code-server = {
-    image = "lscr.io/linuxserver/code-server:latest@sha256:35c66180741213ad9d8a4a31271fa7e84f290b681ece3fb84359c1ca7013da89";
+    image = "lscr.io/linuxserver/code-server:latest@sha256:54bcdbe29ee46428409b9334cc5328c591ba42ae81bfe146f6658084f2cf1809";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
       config.sops.secrets.code-server-env.path
