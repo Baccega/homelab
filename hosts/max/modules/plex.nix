@@ -9,7 +9,7 @@ let
 in
 {
   homelab.oci-containers.plex = {
-    image = "ghcr.io/linuxserver/plex:latest@sha256:3f71bd6eb6a4478ac19b11c5d0ba9746a5eacad1976f9b99ed4a2c21767e57bb";
+    image = "ghcr.io/linuxserver/plex:latest@sha256:06e07af2851e6a822e89062b148435495dd794d6d5aaf36247dee05fb3dcc4b8";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
     ];
