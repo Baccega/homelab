@@ -9,7 +9,7 @@ let
 in
 {
   homelab.oci-containers.komga = {
-    image = "docker.io/gotson/komga:latest@sha256:19764751d501495b021530c9426f25d8f9f8748dc38ab3ba48eb62d7df2cd92e";
+    image = "docker.io/gotson/komga:latest@sha256:c9ad2e0a0efdbb60a79b990836bd2b3d48b1f47677d2e5008579daa10a85e8e8";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
     ];
