@@ -213,9 +213,9 @@
             # subdomain = "seer";
             exposure = "lan";
         };
-        bookshelf = {
+        chaptarr = {
             ip = "192.168.20.214";
-            port = 8787;
+            port = 8789;
             subdomain = "books";
             exposure = "internet";
         };

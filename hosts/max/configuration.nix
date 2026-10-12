@@ -30,6 +30,7 @@ in
 		./modules/speed-test.nix
 		./modules/esphome.nix
 		./modules/bookshelf.nix
+		./modules/chaptarr.nix
 		./modules/suwayomi.nix
 		./modules/komga.nix
 		./modules/beszel.nix
