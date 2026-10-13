@@ -294,7 +294,7 @@
         };
         opengym = {
             ip = "192.168.20.228";
-            port = 80;
+            port = 8080;
             subdomain = "opengym";
             exposure = "internet";
         };

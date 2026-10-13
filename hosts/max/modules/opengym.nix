@@ -5,6 +5,10 @@
 # Do not put Cloudflare Access in front of this hostname: passkeys and the
 # PWA need the real origin. Register a profile first, then lock sign-up with
 # ADMIN_UIDS / INVITE_ONLY if you want it private.
+#
+# Images come from GHCR (what upstream docker-compose.yml pulls). GitLab's
+# registry is a mirror and often lags or drops digests that GHCR still has.
+# From v1.4.0 the exercise media ship inside the web image.
 {
   config,
   pkgs,
@@ -14,9 +18,6 @@ let
   constants = import ../../../constants.nix;
 
   dataDir = "${constants.users.sandro.home}/opengym/data";
-  mediaDir = "${constants.users.sandro.home}/opengym/media";
-  mediaImgDir = "${mediaDir}/img";
-  mediaGifDir = "${mediaDir}/gif";
 
   hostname = "${constants.services.opengym.subdomain}.${constants.network.publicDomain}";
   origin = "https://${hostname}";
@@ -30,6 +31,7 @@ let
       listen ''${NGINX_PORT};
       root /usr/share/nginx/html;
       index index.html;
+      absolute_redirect off;
 
       add_header X-Frame-Options "DENY" always;
       add_header X-Content-Type-Options "nosniff" always;
@@ -37,6 +39,7 @@ let
       add_header Content-Security-Policy "frame-ancestors 'none'" always;
 
       location ^~ /api/ {
+        client_max_body_size 5m;
         proxy_pass ${apiUpstream};
         proxy_http_version 1.1;
         proxy_set_header Host $host;
@@ -58,7 +61,7 @@ let
         add_header Content-Security-Policy "frame-ancestors 'none'" always;
       }
 
-      location ~* \.(png|jpg|jpeg|gif|ico|svg|woff|woff2|webp|avif)$ {
+      location ~* \.(png|jpg|jpeg|gif|ico|svg|woff|woff2|webp|avif|mp4)$ {
         expires 30d;
         add_header Cache-Control "public, max-age=2592000, immutable";
         add_header X-Frame-Options "DENY" always;
@@ -76,7 +79,7 @@ let
 in
 {
   homelab.oci-containers.opengym-api = {
-    image = "registry.gitlab.com/duartesantos8/opengym/api:latest@sha256:e75bd102e6a82752d399914342ebba02eb7d2b8b027a6f5672346a75e4c26508";
+    image = "ghcr.io/duartesantos8/opengym-api:1.4.1@sha256:4bc07fe7d1f05a57c0fa25da3563d54dfe27223506637d67fc64088a2a2f140b";
     environment = {
       PORT = toString constants.services.opengymApi.port;
       DATA_DIR = "/data";
@@ -98,7 +101,7 @@ in
   };
 
   homelab.oci-containers.opengym = {
-    image = "registry.gitlab.com/duartesantos8/opengym/web:latest@sha256:6ed904690522e4ac778f7ef5179eb9af4b61cff5ce9dedf0ba240ea8608aae60";
+    image = "ghcr.io/duartesantos8/opengym-web:1.4.1@sha256:e32cae9d2f4aad0c5e1b7888c9bfc712b2306ddfe3c65bc4cfefd4b0002e86d3";
     environment = {
       NGINX_PORT = toString constants.services.opengym.port;
       # Cloudflare Tunnel overwrites this header; leave it through so the
@@ -110,44 +113,11 @@ in
     ];
     volumes = [
       "${nginxTemplate}:/etc/nginx/templates/default.conf.template:ro"
-      "${mediaImgDir}:/usr/share/nginx/html/img:ro"
-      "${mediaGifDir}:/usr/share/nginx/html/gif:ro"
     ];
     networks = [ constants.hosts.max.networkStack.name ];
     extraOptions = [
       "--ip=${constants.services.opengym.ip}"
     ];
-  };
-
-  # Exercise images/GIFs (~140 MB) from hasaneyldrm/exercises-dataset. openGym
-  # does not ship them; first boot clones upstream once. Re-downloadable, so
-  # they are not part of the NAS backup.
-  systemd.services.opengym-media = {
-    description = "Download openGym exercise media";
-    wantedBy = [ "multi-user.target" ];
-    wants = [ "network-online.target" ];
-    after = [ "network-online.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      TimeoutStartSec = "15min";
-      ExecStart = pkgs.writeShellScript "opengym-media" ''
-        set -euo pipefail
-        mkdir -p "${mediaImgDir}" "${mediaGifDir}"
-        if [ -n "$(ls -A "${mediaImgDir}" 2>/dev/null)" ]; then
-          echo "openGym exercise media already present, skipping"
-          exit 0
-        fi
-        tmp=$(mktemp -d)
-        trap 'rm -rf "$tmp"' EXIT
-        echo "Downloading exercise media (~140 MB) from github.com/hasaneyldrm/exercises-dataset"
-        ${pkgs.git}/bin/git clone --depth 1 https://github.com/hasaneyldrm/exercises-dataset "$tmp/ds"
-        cp "$tmp/ds/images/"*.jpg "${mediaImgDir}/"
-        cp "$tmp/ds/videos/"*.gif "${mediaGifDir}/"
-        chown -R ${toString constants.users.alfred.uid}:${toString constants.groups.users} "${mediaDir}"
-        echo "openGym exercise media ready"
-      '';
-    };
   };
 
   systemd.services.podman-opengym-api = {
@@ -161,10 +131,8 @@ in
 
   systemd.services.podman-opengym = {
     wantedBy = [ "multi-user.target" ];
-    wants = [ "opengym-media.service" ];
     after = [
       "sops-nix.service"
-      "opengym-media.service"
       "podman-opengym-api.service"
       "create-podman-network-${constants.hosts.max.networkStack.name}.service"
     ];
