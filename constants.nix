@@ -136,12 +136,23 @@
             ip = "192.168.20.200";
             port = 1080;
             exposure = "lan";
+            monitoring = {
+                enable = true;
+                name = "Forward Proxy";
+                tag = "Main Network - Core";
+                type = "port";
+            };
         };
         plex = {
             ip = "192.168.20.201";
             port = 32400;
             subdomain = "plex";
             exposure = "internet";
+            monitoring = {
+                enable = true;
+                tag = "Main Network - Service";
+                path = "/identity";
+            };
         };
         qbittorrent = {
             ip = "192.168.20.202";
@@ -149,48 +160,80 @@
             torrentPort = 6881;
             subdomain = "torrent";
             exposure = "internet";
+            monitoring = {
+                enable = true;
+                tag = "Main Network - Service";
+            };
         };
         sabnzbd = {
             ip = "192.168.20.203";
             port = 8080;
             subdomain = "sabnzbd";
             exposure = "internet";
+            monitoring = {
+                enable = true;
+                tag = "Main Network - Service";
+            };
         };
         sonarr = {
             ip = "192.168.20.204";
             port = 8989;
             subdomain = "sonarr";
             exposure = "internet";
+            monitoring = {
+                enable = true;
+                tag = "Main Network - Service";
+            };
         };
         radarr = {
             ip = "192.168.20.205";
             port = 7878;
             subdomain = "radarr";
             exposure = "internet";
+            monitoring = {
+                enable = true;
+                tag = "Main Network - Service";
+            };
         };
         prowlarr = {
             ip = "192.168.20.206";
             port = 9696;
             subdomain = "prowlarr";
             exposure = "internet";
+            monitoring = {
+                enable = true;
+                tag = "Main Network - Service";
+            };
         };
         homeAssistant = {
             ip = "192.168.20.207";
             port = 8123;
             subdomain = "homeassistant";
             exposure = "internet";
+            monitoring = {
+                enable = true;
+                tag = "Main Network - Service";
+            };
         };
         codeServer = {
             ip = "192.168.20.208";
             port = 8443;
             subdomain = "code";
             exposure = "internet";
+            monitoring = {
+                enable = true;
+                tag = "Main Network - Service";
+            };
         };
         n8n = {
             ip = "192.168.20.209";
             port = 5678;
             subdomain = "n8n";
             exposure = "internet";
+            monitoring = {
+                enable = true;
+                tag = "Main Network - Service";
+            };
         };
         # cloudflared = {
         #     ip = "192.168.20.210";
@@ -206,6 +249,10 @@
             port = 6052;
             subdomain = "esphome";
             exposure = "internet";
+            monitoring = {
+                enable = true;
+                tag = "Main Network - Service";
+            };
         };
         seer = {
             ip = "192.168.20.213";
@@ -218,18 +265,30 @@
             port = 8789;
             subdomain = "books";
             exposure = "internet";
+            monitoring = {
+                enable = true;
+                tag = "Main Network - Service";
+            };
         };
         suwayomi = {
             ip = "192.168.20.215";
             port = 4567;
             subdomain = "manga";
             exposure = "internet";
+            monitoring = {
+                enable = true;
+                tag = "Main Network - Service";
+            };
         };
         komga = {
             ip = "192.168.20.216";
             port = 25600;
             subdomain = "komga";
             exposure = "internet";
+            monitoring = {
+                enable = true;
+                tag = "Main Network - Service";
+            };
         };
         beszel = {
             ip = "192.168.20.217";
@@ -237,12 +296,20 @@
             agentPort = 45876;
             subdomain = "beszel";
             exposure = "internet";
+            monitoring = {
+                enable = true;
+                tag = "Main Network - Core";
+            };
         };
         paperless = {
             ip = "192.168.20.218";
             port = 8000;
             subdomain = "paperless";
             exposure = "internet";
+            monitoring = {
+                enable = true;
+                tag = "Main Network - Service";
+            };
         };
         paperlessGotenberg = {
             ip = "192.168.20.219";
@@ -269,6 +336,10 @@
             port = 8080;
             subdomain = "ai";
             exposure = "internet";
+            monitoring = {
+                enable = true;
+                tag = "Main Network - Service";
+            };
         };
         postgres = {
             ip = "192.168.20.224";
@@ -285,22 +356,38 @@
             port = 3000;
             subdomain = "speedtest";
             exposure = "lan";
+            monitoring = {
+                enable = true;
+                tag = "Main Network - Service";
+            };
         };
         couchdb = {
             ip = "192.168.20.227";
             port = 5984;
             subdomain = "obsidian";
             exposure = "internet";
+            monitoring = {
+                enable = true;
+                tag = "Main Network - Service";
+            };
         };
         opengym = {
             ip = "192.168.20.228";
             port = 8080;
             subdomain = "opengym";
             exposure = "internet";
+            monitoring = {
+                enable = true;
+                tag = "Main Network - Service";
+            };
         };
         opengymApi = {
             ip = "192.168.20.229";
             port = 3000;
+            exposure = "lan";
+        };
+        autokuma = {
+            ip = "192.168.20.230";
             exposure = "lan";
         };
         sunshine = {
