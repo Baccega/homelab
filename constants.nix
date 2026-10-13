@@ -390,6 +390,17 @@
             ip = "192.168.20.230";
             exposure = "lan";
         };
+        flaresolverr = {
+            ip = "192.168.20.231";
+            port = 8191;
+            exposure = "lan";
+            monitoring = {
+                enable = true;
+                name = "FlareSolverr";
+                tag = "Main Network - Service";
+                type = "port";
+            };
+        };
         sunshine = {
             ip = "192.168.20.50";   # Bolt VM
             exposure = "lan";

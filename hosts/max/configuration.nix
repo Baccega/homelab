@@ -22,6 +22,7 @@ in
 		./modules/sonarr.nix
 		./modules/radarr.nix
 		./modules/prowlarr.nix
+		./modules/flaresolverr.nix
 		./modules/plex.nix
 		./modules/home-assistant.nix
 		./modules/code-server.nix
