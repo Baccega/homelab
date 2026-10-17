@@ -9,7 +9,7 @@ let
 in
 {
   homelab.oci-containers.chaptarr = {
-    image = "docker.io/chaptarr/chaptarr:latest@sha256:e809a9bba88dbf5958c8ac48a958fba1cd0cf7112e073d269422c62fc818f4e7";
+    image = "docker.io/chaptarr/chaptarr:latest@sha256:dcd8205d367d07e6469edadc0817ddd65635458678cf52c6d2ae498bf200ccd0";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
     ];
