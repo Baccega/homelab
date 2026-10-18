@@ -111,7 +111,7 @@ let
 in
 {
   homelab.oci-containers.couchdb = {
-    image = "docker.io/library/couchdb:3@sha256:5fc596110eac7f412173a7d9de14f70aa5d3e816790fb6e70642755d4a4cf464";
+    image = "docker.io/library/couchdb:3@sha256:3611ce43bd32fe2368997fd41ec6e7270ec8d84aa5fc13c9828e5b15fd6bafe8";
     environment = {
       COUCHDB_USER = "obsidian";
       COUCHDB_DATABASE = "obsidiannotes";
