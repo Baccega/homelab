@@ -9,7 +9,7 @@ let
 in
 {
   homelab.oci-containers.radarr = {
-    image = "ghcr.io/linuxserver/radarr:latest@sha256:ea6822c956d26db648b237919f41340318f32e5b7dcc4ba702cf256a0f5f3c12";
+    image = "ghcr.io/linuxserver/radarr:latest@sha256:fc0ae3c50f8128b97e84381903ec8d6845c3a569641cb7117c124376cccb57c1";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
     ];
