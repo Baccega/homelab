@@ -9,7 +9,7 @@ let
 in
 {
   homelab.oci-containers.prowlarr = {
-    image = "ghcr.io/linuxserver/prowlarr:latest@sha256:f9151e5bc1025c6d0a630d503210cdcb6bb55a7cc098562609d96a408d838902";
+    image = "ghcr.io/linuxserver/prowlarr:latest@sha256:b3b00047ed20f6ce2b16780145cb6a0acb51c9e28ea6aa6f5dcd33c7034f1797";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
     ];
