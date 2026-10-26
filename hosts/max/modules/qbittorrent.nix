@@ -9,7 +9,7 @@ let
 in
 {
   homelab.oci-containers.qbittorrent = {
-    image = "ghcr.io/linuxserver/qbittorrent:latest@sha256:e887804fa9de4c60f5f0fb1f3a7e4febe40a8f69fe736f70c4e8589b1f868dab";
+    image = "ghcr.io/linuxserver/qbittorrent:latest@sha256:75ecbb1c89ab7b0a21c4bde40b4820e4f1649d2d56d83b91913422155e8d2a5f";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
     ];
