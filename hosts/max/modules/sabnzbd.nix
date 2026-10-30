@@ -9,7 +9,7 @@ let
 in
 {
   homelab.oci-containers.sabnzbd = {
-    image = "lscr.io/linuxserver/sabnzbd:latest@sha256:3ac1c9ea03bafa2588dd8acdcb809857bae305e71d2d90e11d689c78076a9c01";  
+    image = "lscr.io/linuxserver/sabnzbd:latest@sha256:a7cfba459929f73b83c98b476a845076dc72524af80b24fcb4200684e6b1b675";  
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
     ];
