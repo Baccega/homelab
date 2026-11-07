@@ -14,7 +14,7 @@ let
 in
 {
   homelab.oci-containers.ollama = {
-    image = "docker.io/ollama/ollama:latest@sha256:b2f0122c476bc9fe7ce679d8bb4bd555351e25e2554eefb156f61cb0a89cf429";
+    image = "docker.io/ollama/ollama:latest@sha256:0e59999e0e8f9fd4e704bd788a89b7e4cad399367fb1365f8c102ac662288761";
     environment = {
       OLLAMA_HOST = "0.0.0.0:${toString constants.services.ollama.port}";
       OLLAMA_KEEP_ALIVE = "15m";
@@ -39,7 +39,7 @@ in
   };
 
   homelab.oci-containers.open-webui = {
-    image = "ghcr.io/open-webui/open-webui:latest@sha256:0b399a8ba34558e181d316750455f2a95376a38cd60a61b9c942e138898944bd";
+    image = "ghcr.io/open-webui/open-webui:latest@sha256:975e3965dcf5832804d2f77e167920794757027c5a2046917d42023d75fac431";
     environment = {
       OLLAMA_BASE_URL = "http://${constants.services.ollama.ip}:${toString constants.services.ollama.port}";
       WEBUI_URL = "https://${constants.services.openWebui.subdomain}.${constants.network.publicDomain}";

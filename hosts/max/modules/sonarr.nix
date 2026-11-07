@@ -9,7 +9,7 @@ let
 in
 {
   homelab.oci-containers.sonarr = {
-    image = "ghcr.io/linuxserver/sonarr:latest@sha256:48e36b608b461273b9dae857725cd0561a127f2c694b687318f6d0c5ce63e5c9";
+    image = "ghcr.io/linuxserver/sonarr:latest@sha256:3b8c947d7fa173f70e40047d2c8d02835fb8416aeb5ae36def57d9ad15e2f906";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
     ];
