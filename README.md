@@ -1,4 +1,4 @@
-# 💻❄️ My's Homelab
+# 💻❄️ Sandro's Homelab
 
 This repo contains all my Nix configurations for all of the hosts that currently use nix in my homelab. I wanted a single repo that contained all the code for my homelab, but that I could deploy directly from my main laptop.
 
