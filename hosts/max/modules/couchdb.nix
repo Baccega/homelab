@@ -1,9 +1,11 @@
 # CouchDB on Max, used as the Self-hosted LiveSync backend for Obsidian.
 # There is no separate "LiveSync server": the plugin talks to CouchDB over HTTPS
-# through Nemo's Caddy + Cloudflare Tunnel. Do not put Cloudflare Access in
-# front of this hostname (the plugin uses CouchDB basic auth). In the plugin,
-# enable "Use Request API" so Cloudflare's 100s proxy timeout does not 524
-# longpoll requests.
+# through Nemo's Caddy + Cloudflare Tunnel. Keep Cloudflare Access on this
+# hostname with a Service Auth policy and a service token; LiveSync sends
+# CF-Access-Client-Id / CF-Access-Client-Secret as custom headers. Access must
+# bypass OPTIONS to origin (preflight cannot carry those headers). In the
+# plugin, enable "Use Request API" so Cloudflare's 100s proxy timeout does not
+# 524 longpoll requests.
 {
   config,
   pkgs,
@@ -36,6 +38,8 @@ let
     [cors]
     credentials = true
     origins = app://obsidian.md,capacitor://localhost,http://localhost
+    headers = accept, authorization, content-type, origin, referer, cf-access-client-id, cf-access-client-secret
+    methods = GET,PUT,POST,HEAD,DELETE,OPTIONS
 
     [log]
     level = warning
@@ -94,8 +98,8 @@ let
     put_config couchdb max_document_size '"50000000"'
     put_config cors credentials '"true"'
     put_config cors origins '"app://obsidian.md,capacitor://localhost,http://localhost"'
-    put_config cors headers '"accept, authorization, content-type, origin, referer"'
-    put_config cors methods '"GET,PUT,POST,HEAD,DELETE"'
+    put_config cors headers '"accept, authorization, content-type, origin, referer, cf-access-client-id, cf-access-client-secret"'
+    put_config cors methods '"GET,PUT,POST,HEAD,DELETE,OPTIONS"'
     put_config cors max_age '"3600"'
 
     status=$(curl -s -o /dev/null -w "%{http_code}" --user "''${username}:''${password}" "''${hostname}/''${db}")
