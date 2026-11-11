@@ -369,6 +369,7 @@
             monitoring = {
                 enable = true;
                 tag = "Main Network - Service";
+                path = "/_up";
             };
         };
         opengym = {

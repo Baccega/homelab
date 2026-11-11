@@ -57,10 +57,9 @@ let
     node="_local"
     db="''${COUCHDB_DATABASE:-obsidiannotes}"
 
-    # Authenticated wait: once require_valid_user is set, /_up answers 401 to
-    # anonymous requests, so an unauthenticated probe would never succeed on
-    # any start after the first one. The admin exists from the first boot
-    # (the entrypoint writes it into local.d/docker.ini from the env vars).
+    # Prefer authenticated wait so first boot (before except_for_up is set) and
+    # later boots both succeed. The admin exists from the first boot (the
+    # entrypoint writes it into local.d/docker.ini from the env vars).
     echo "==> Waiting for CouchDB at ''${hostname} ..."
     until curl -sf --user "''${username}:''${password}" "''${hostname}/_up" 2>/dev/null | grep -q '"status":"ok"'; do
       sleep 2
@@ -91,6 +90,8 @@ let
 
     put_config chttpd require_valid_user '"true"'
     put_config chttpd_auth require_valid_user '"true"'
+    # Keep /_up anonymous for Uptime Kuma while everything else stays locked down.
+    put_config chttpd require_valid_user_except_for_up '"true"'
     put_config httpd WWW-Authenticate '"Basic realm=\"couchdb\""'
     put_config httpd enable_cors '"true"'
     put_config chttpd enable_cors '"true"'
