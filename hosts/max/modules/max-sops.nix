@@ -20,6 +20,9 @@
         paperless-env = {
             sopsFile = ../../../secrets/max-secrets.json;
         };
+        forgejo-env = {
+            sopsFile = ../../../secrets/max-secrets.json;
+        };
         postgres-env = {
             sopsFile = ../../../secrets/max-secrets.json;
         };
