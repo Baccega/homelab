@@ -40,6 +40,7 @@ in
 		./modules/redis.nix
 		./modules/couchdb.nix
 		./modules/opengym.nix
+		./modules/forgejo.nix
 		./modules/ai-stack.nix
 		# ./modules/wolf.nix
 		./modules/gaming-vm.nix

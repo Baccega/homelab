@@ -415,6 +415,17 @@
             audioPort = 48000;
             micPort = 48002;
         };
+        forgejo = {
+            ip = "192.168.20.232";
+            port = 3000;
+            sshPort = 22;
+            subdomain = "git";
+            exposure = "lan";
+            monitoring = {
+                enable = true;
+                tag = "Main Network - Service";
+            };
+        };
     };
     networkGear = {
         switch1 = {
