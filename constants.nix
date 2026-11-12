@@ -91,6 +91,7 @@
         bolt = {
             hostname = "bolt";
             ip = "192.168.20.50";
+            tailscaleIp = "100.83.85.14";
             mac = "52:54:00:b0:17:50";
             memoryGiB = 16;
             diskGiB = 256;

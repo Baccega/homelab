@@ -33,6 +33,7 @@ in
     ./modules/rom-sync.nix
     ./modules/config-backup.nix
     ./modules/bolt-sops.nix
+    ./modules/t3-code.nix
     ../../modules/common/hardware/nvidia-pascal.nix
     ../../modules/common/base.nix
     ../../modules/common/nas-fetch.nix

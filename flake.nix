@@ -89,7 +89,7 @@
             ./hosts/bolt/configuration.nix
             {
               _module.args.nixinate = {
-                host = constants.hosts.bolt.ip;
+                host = constants.hosts.bolt.tailscaleIp;
                 sshUser = constants.users.sandro.name;
                 buildOn = "remote";
                 substituteOnTarget = true;
