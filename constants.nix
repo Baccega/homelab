@@ -418,7 +418,7 @@
         forgejo = {
             ip = "192.168.20.232";
             port = 3000;
-            sshPort = 22;
+            sshPort = 2222;
             subdomain = "git";
             exposure = "lan";
             monitoring = {
