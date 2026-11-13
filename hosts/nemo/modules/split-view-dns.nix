@@ -17,8 +17,14 @@ let
     constants.network.vlans.iot.gateway
     constants.network.vlans.home.gateway
   ];
-  resolveIp = _: constants.hosts.nemo.ip;
   namedServices = lib.filter (service: service ? subdomain) (lib.attrValues constants.services);
+  serviceHostnames =
+    service:
+    map (name: "${name}.${constants.network.publicDomain}") (
+      [ service.subdomain ] ++ (service.aliases or [ ])
+    );
+  publishedHostnames = lib.concatMap serviceHostnames namedServices;
+  resolveIp = constants.hosts.nemo.ip;
 in
 {
   services.dnsmasq = {
@@ -33,13 +39,8 @@ in
       no-poll = true;
       cache-size = 1000;
       listen-address = listenAddresses;
-      local = map (
-        service: "/${service.subdomain}.${constants.network.publicDomain}/"
-      ) namedServices;
-      address = map (
-        service:
-        "/${service.subdomain}.${constants.network.publicDomain}/${resolveIp service}"
-      ) namedServices;
+      local = map (hostname: "/${hostname}/") publishedHostnames;
+      address = map (hostname: "/${hostname}/${resolveIp}") publishedHostnames;
       conf-file = [ "/etc/dnsmasq-conf.conf" ];
     };
   };
@@ -48,10 +49,6 @@ in
   # Do not use config.system.build.toplevel: that unit is part of toplevel, so
   # evaluation loops.
   systemd.services.dnsmasq.restartTriggers = [
-    (builtins.toJSON (
-      map (
-        service: "${service.subdomain}.${constants.network.publicDomain}"
-      ) namedServices
-    ))
+    (builtins.toJSON publishedHostnames)
   ];
 }

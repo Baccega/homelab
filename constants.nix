@@ -210,6 +210,7 @@
             ip = "192.168.20.207";
             port = 8123;
             subdomain = "homeassistant";
+            aliases = [ "homeassistant-app" ];
             exposure = "internet";
             monitoring = {
                 enable = true;
