@@ -71,7 +71,7 @@ in
   };
 
   homelab.oci-containers.paperless-gotenberg = {
-    image = "docker.io/gotenberg/gotenberg:8.39@sha256:13672f317b443c793e972b1bd2155ec62a3e7b6891b411e8196442cc053ee5f5";
+    image = "docker.io/gotenberg/gotenberg:9.4@sha256:7d790c081a944f4d30cacb59a2cdccbe71569532af691b93c36551f6a877b4fc";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
     ];
