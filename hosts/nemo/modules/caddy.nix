@@ -14,13 +14,19 @@ let
   services = lib.attrValues constants.services;
   namedServices = lib.filter (service: service ? subdomain) services;
 
-  serviceHostname =
-    service: "${service.subdomain}.${constants.network.publicDomain}";
+  serviceHostnames =
+    service:
+    map (name: "${name}.${constants.network.publicDomain}") (
+      [ service.subdomain ] ++ (service.aliases or [ ])
+    );
 
   siteAddresses =
     service:
-    lib.optional (service.exposure == "internet") "http://${serviceHostname service}"
-    ++ [ (serviceHostname service) ];
+    lib.concatMap (
+      hostname:
+      (lib.optional (service.exposure == "internet") "http://${hostname}")
+      ++ [ hostname ]
+    ) (serviceHostnames service);
 
   # OpenSpeedTest lies wildly over HTTP/2 and a buffering reverse proxy
   # (upload in the tens of Gbps). Force HTTP/1.1 and disable buffering

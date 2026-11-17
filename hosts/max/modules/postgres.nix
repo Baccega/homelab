@@ -64,9 +64,13 @@ in
         appBackups = true;
         schedule = "daily";
         preBackupScript = ''
+          # paperless is the bootstrap superuser, so it can dump every DB.
           ${pkgs.podman}/bin/podman exec postgres sh -c \
             'PGPASSWORD="$POSTGRES_PASSWORD" pg_dump -h 127.0.0.1 -U paperless -d paperless -F c' \
             > "${dumpsDir}/paperless.dump"
+          ${pkgs.podman}/bin/podman exec postgres sh -c \
+            'PGPASSWORD="$POSTGRES_PASSWORD" pg_dump -h 127.0.0.1 -U paperless -d forgejo -F c' \
+            > "${dumpsDir}/forgejo.dump"
         '';
       }
     ];

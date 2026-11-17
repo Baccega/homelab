@@ -24,9 +24,17 @@ in
       FORGEJO__server__SSH_DOMAIN = constants.services.forgejo.ip;
       FORGEJO__server__SSH_PORT = toString constants.services.forgejo.sshPort;
       FORGEJO__server__SSH_LISTEN_PORT = toString constants.services.forgejo.sshPort;
+
+      # Postgres runs on Max (postgres.nix); password comes from forgejo-env.
+      FORGEJO__database__DB_TYPE = "postgres";
+      FORGEJO__database__HOST = "${constants.services.postgres.ip}:${toString constants.services.postgres.port}";
+      FORGEJO__database__NAME = "forgejo";
+      FORGEJO__database__USER = "forgejo";
+      FORGEJO__database__SSL_MODE = "disable";
     };
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
+      config.sops.secrets.forgejo-env.path
     ];
     volumes = [
       "${dataDir}:/data"
@@ -40,7 +48,9 @@ in
   systemd.services.podman-forgejo = {
     wantedBy = [ "multi-user.target" ];
     after = [
+      "sops-nix.service"
       "nas-fetch-forgejo.service"
+      "podman-postgres.service"
       "create-podman-network-${constants.hosts.max.networkStack.name}.service"
     ];
   };
