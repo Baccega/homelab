@@ -7,6 +7,12 @@ let
   containers = max.virtualisation.oci-containers.containers;
   service = constants.services.immich;
   hostname = "${service.subdomain}.${constants.network.publicDomain}";
+  immichContainers = [
+    containers.immich-server
+    containers.immich-postgres
+    containers.immich-valkey
+    containers.immich-machine-learning
+  ];
   backup = builtins.head (builtins.filter (job: job.name == "immich") max.backup.jobs);
 in
 assert builtins.hasAttr "immich-server" containers;
@@ -14,12 +20,9 @@ assert builtins.elem "${constants.hosts.max.networkStack.name}:ip=${service.ip}"
 assert containers.immich-postgres.networks == [ "immich-private" ];
 assert containers.immich-valkey.networks == [ "immich-private" ];
 assert containers.immich-machine-learning.networks == [ "immich-private" ];
-assert builtins.all (container: container.ports == [ ]) [
-  containers.immich-server
-  containers.immich-postgres
-  containers.immich-valkey
-  containers.immich-machine-learning
-];
+assert builtins.all (container: container.ports == [ ]) immichContainers;
+assert builtins.all (container: builtins.match ".*@sha256:[0-9a-f]{64}" container.image != null)
+  immichContainers;
 assert builtins.elem "/${hostname}/${constants.hosts.nemo.ip}" nemo.services.dnsmasq.settings.address;
 assert builtins.match ".*http://${hostname}.*reverse_proxy ${service.ip}:${toString service.port}.*"
   nemo.sops.templates.Caddyfile.content != null;
