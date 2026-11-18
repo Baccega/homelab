@@ -40,6 +40,7 @@
           };
         };
       };
+      nixosModules.fido = import ./hosts/fido/configuration.nix;
       nixosConfigurations = {
         laika = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";

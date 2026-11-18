@@ -21,6 +21,12 @@ let
   esphomeIp = constants.services.esphome.ip;
   sunshineIp = constants.services.sunshine.ip;
   sunshine = constants.services.sunshine;
+  fido = config.homelab.fido;
+  relayPort = toString constants.services.plex.relayPort;
+  blockFido = lib.optionalString (fido != null) ''
+    iifname "tailscale0" ip saddr ${fido.ipv4} drop
+    iifname "tailscale0" ip6 saddr ${fido.ipv6} drop
+  '';
 in
 {
   networking.firewall.enable = false;
@@ -31,6 +37,12 @@ in
       table inet filter {
         chain input {
           type filter hook input priority 0; policy drop;
+
+          ${lib.optionalString (fido != null) ''
+            iifname "tailscale0" ip saddr ${fido.ipv4} ip daddr ${constants.hosts.nemo.tailscaleIp} tcp dport ${relayPort} accept
+            tcp dport ${relayPort} drop
+          ''}
+          ${blockFido}
 
           ct state established,related accept
           ct state invalid drop
@@ -55,6 +67,8 @@ in
 
         chain forward {
           type filter hook forward priority 0; policy drop;
+
+          ${blockFido}
 
           ct state established,related accept
           ct state invalid drop
