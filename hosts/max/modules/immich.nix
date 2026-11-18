@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ config, pkgs, ... }:
 let
   constants = import ../../../constants.nix;
   service = constants.services.immich;
@@ -8,7 +8,7 @@ let
   state = "/var/lib/immich";
   backupDir = "${state}/backup";
   media = "${backupDir}/media";
-  passwordFile = "${state}/credentials/db-password";
+  passwordFile = "/etc/immich/db-password";
   nas = constants.mountPoints.configurations.path;
   podman = "${pkgs.podman}/bin/podman";
 in
@@ -17,35 +17,18 @@ in
     "d ${state} 0700 root root -"
     "d ${backupDir} 0700 root root -"
     "d ${media} 0700 root root -"
-    "d ${state}/postgres 0700 root root -"
     "d ${state}/models 0700 root root -"
   ];
 
   systemd.services = {
     immich-setup = {
-      description = "Prepare the Immich private network and database password";
-      after = [ "systemd-tmpfiles-setup.service" ];
+      description = "Prepare the Immich machine-learning network";
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
-        StateDirectory = "immich/credentials";
-        StateDirectoryMode = "0700";
       };
       script = ''
         set -eu
-        umask 077
-        if [ ! -s "${passwordFile}" ]; then
-          for marker in "${state}/postgres/PG_VERSION" "${state}/postgres"/*/PG_VERSION; do
-            if [ -e "$marker" ]; then
-              echo "Restore the existing Immich database password before starting."
-              exit 1
-            fi
-          done
-          tmp=$(mktemp "${passwordFile}.XXXXXX")
-          trap 'rm -f "$tmp"' EXIT
-          ${pkgs.openssl}/bin/openssl rand -hex 32 > "$tmp"
-          mv "$tmp" "${passwordFile}"
-        fi
         if ! ${podman} network exists ${privateNetwork}; then
           ${podman} network create ${privateNetwork}
         fi
@@ -53,8 +36,9 @@ in
     };
 
     podman-immich-server = {
+      unitConfig.ConditionPathExists = passwordFile;
       requires = [ "immich-setup.service" "create-podman-network-${lanNetwork}.service" ];
-      after = [ "immich-setup.service" "create-podman-network-${lanNetwork}.service" ];
+      after = [ "immich-setup.service" "create-podman-network-${lanNetwork}.service" "sops-nix.service" ];
     };
     backup-immich = {
       unitConfig = {
@@ -62,49 +46,33 @@ in
         AssertPathIsMountPoint = nas;
       };
     };
-  } // lib.genAttrs [ "podman-immich-postgres" "podman-immich-valkey" "podman-immich-machine-learning" ] (_: {
-    requires = [ "immich-setup.service" ];
-    after = [ "immich-setup.service" ];
-  });
+    podman-immich-machine-learning = {
+      requires = [ "immich-setup.service" ];
+      after = [ "immich-setup.service" ];
+    };
+  };
 
   homelab.oci-containers = {
     immich-server = {
       image = "ghcr.io/immich-app/immich-server:${version}@sha256:7c489add298fc2f92cda4c777de6462aa206877e04087b815f62c7664af0b53b";
-      dependsOn = [ "immich-postgres" "immich-valkey" "immich-machine-learning" ];
+      dependsOn = [ "postgres" "redis" "immich-machine-learning" ];
+      environmentFiles = [ config.sops.secrets.redis-env.path ];
       environment = {
-        DB_HOSTNAME = "immich-postgres";
+        DB_HOSTNAME = constants.services.postgres.ip;
+        DB_PORT = toString constants.services.postgres.port;
         DB_USERNAME = "immich";
         DB_DATABASE_NAME = "immich";
         DB_PASSWORD_FILE = "/run/immich/db-password";
-        DB_VECTOR_EXTENSION = "vectorchord";
-        REDIS_HOSTNAME = "immich-valkey";
+        DB_VECTOR_EXTENSION = "pgvector";
+        REDIS_HOSTNAME = constants.services.redis.ip;
+        REDIS_PORT = toString constants.services.redis.port;
+        REDIS_DBINDEX = "1";
       };
       volumes = [
         "${media}:/data"
         "${passwordFile}:/run/immich/db-password:ro"
       ];
       networks = [ "${lanNetwork}:ip=${service.ip}" privateNetwork ];
-    };
-
-    immich-postgres = {
-      image = "ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23";
-      environment = {
-        POSTGRES_USER = "immich";
-        POSTGRES_DB = "immich";
-        POSTGRES_PASSWORD_FILE = "/run/immich/db-password";
-        POSTGRES_INITDB_ARGS = "--data-checksums";
-      };
-      volumes = [
-        "${state}/postgres:/var/lib/postgresql/data"
-        "${passwordFile}:/run/immich/db-password:ro"
-      ];
-      networks = [ privateNetwork ];
-      extraOptions = [ "--shm-size=128m" ];
-    };
-
-    immich-valkey = {
-      image = "docker.io/valkey/valkey:9@sha256:418652cfb58ef879d4978c33553735d7147016032d5aefaa14c828e611eb9dfd";
-      networks = [ privateNetwork ];
     };
 
     immich-machine-learning = {
@@ -127,7 +95,8 @@ in
         preBackupScript = ''
           umask 077
           dump=$(mktemp "${backupDir}/immich.dump.XXXXXX.tmp")
-          if ! ${podman} exec immich-postgres pg_dump -U immich -d immich -Fc > "$dump"; then
+          if ! ${podman} exec postgres sh -c \
+            'PGPASSWORD="$POSTGRES_PASSWORD" exec pg_dump -h 127.0.0.1 -U paperless -d immich -Fc' > "$dump"; then
             rm -f "$dump"
             exit 1
           fi
