@@ -49,8 +49,8 @@ max/
 ## Immich on Max
 
 Immich runs at `https://immich.baccegasandro.dev`. Nemo serves it through Caddy
-and split DNS. LAN clients use Immich sign-in directly. Remote clients use
-Cloudflare Access and then Immich sign-in.
+and split DNS. Use the LAN for normal browser sign-in. Remote clients must send
+the two Cloudflare Access service-token headers before Immich sign-in.
 
 ### Before deployment
 

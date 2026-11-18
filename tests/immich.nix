@@ -24,10 +24,16 @@ assert builtins.all (container: container.ports == [ ]) immichContainers;
 assert builtins.all (container: builtins.match ".*@sha256:[0-9a-f]{64}" container.image != null)
   immichContainers;
 assert builtins.elem "/${hostname}/${constants.hosts.nemo.ip}" nemo.services.dnsmasq.settings.address;
-assert builtins.match ".*http://${hostname}.*reverse_proxy ${service.ip}:${toString service.port}.*"
-  nemo.sops.templates.Caddyfile.content != null;
-assert builtins.match ".*header_up -CF-Access-Client-Secret.*"
-  nemo.sops.templates.Caddyfile.content != null;
+assert flake.inputs.nixpkgs.lib.hasInfix (builtins.concatStringsSep "\n" [
+  "http://${hostname}, ${hostname} {"
+  "  import cloudflare_tls"
+  "  reverse_proxy ${service.ip}:${toString service.port} {"
+  "    header_up -CF-Access-Client-Id"
+  "    header_up -CF-Access-Client-Secret"
+  "    header_up -Cf-Access-Jwt-Assertion"
+  "  }"
+  "}"
+]) nemo.sops.templates.Caddyfile.content;
 assert backup.source == "/var/lib/immich/backup";
 assert backup.preBackupScript != null;
 assert max.systemd.services.backup-immich.unitConfig.AssertPathIsMountPoint == backup.nfsMount;

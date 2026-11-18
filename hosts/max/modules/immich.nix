@@ -35,10 +35,12 @@ in
         set -eu
         umask 077
         if [ ! -s "${passwordFile}" ]; then
-          if [ -e "${state}/postgres/PG_VERSION" ]; then
-            echo "Restore the existing Immich database password before starting."
-            exit 1
-          fi
+          for marker in "${state}/postgres/PG_VERSION" "${state}/postgres"/*/PG_VERSION; do
+            if [ -e "$marker" ]; then
+              echo "Restore the existing Immich database password before starting."
+              exit 1
+            fi
+          done
           tmp=$(mktemp "${passwordFile}.XXXXXX")
           trap 'rm -f "$tmp"' EXIT
           ${pkgs.openssl}/bin/openssl rand -hex 32 > "$tmp"
