@@ -79,7 +79,7 @@ the two Cloudflare Access service-token headers before Immich sign-in.
    leave the origin ports private.
    [Cloudflare origin settings](https://developers.cloudflare.com/tunnel/reference/origin-parameters/)
 3. From outside the LAN, check that a request to `/api/server/ping` without
-   headers gets an Access denial or redirect, and that the same request with
+   headers is blocked by Access, and that the same request with
    `CF-Access-Client-Id` and `CF-Access-Client-Secret` returns Immich's
    `{"res":"pong"}`. Add both headers in the mobile app's custom headers
    settings and sign in with your Immich account. Keep these credentials out
@@ -111,8 +111,14 @@ Run `sudo systemctl start backup-immich.service` after the first test upload.
 Check the unit log and restore its snapshot to a scratch location. On an
 isolated recovery host, restore `media/` to `/var/lib/immich/backup/media`.
 Start only the matching PostgreSQL container with an empty database and a
-fresh runtime password. With the server stopped, restore the archive with
-`sudo podman exec -i immich-postgres pg_restore --exit-on-error -U immich -d immich < immich.dump`.
+fresh runtime password. With the server stopped, copy and restore the archive.
+
+```sh
+sudo podman cp immich.dump immich-postgres:/tmp/immich.dump
+sudo podman exec immich-postgres pg_restore --exit-on-error -U immich -d immich /tmp/immich.dump
+sudo podman exec immich-postgres rm /tmp/immich.dump
+```
+
 Then start Immich at the backed-up version and check that the test asset opens.
 Complete this check before relying on Immich as a photo backup.
 [Immich backup ordering](https://docs.immich.app/administration/backup-and-restore/#backup-ordering)
