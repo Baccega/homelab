@@ -421,7 +421,7 @@
             port = 3000;
             sshPort = 2222;
             subdomain = "git";
-            exposure = "lan";
+            exposure = "internet";
             monitoring = {
                 enable = true;
                 tag = "Main Network - Service";
