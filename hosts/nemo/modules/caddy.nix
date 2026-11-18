@@ -52,6 +52,14 @@ let
     ++ (
       if service.subdomain == constants.services.speedtest.subdomain then
         speedtestProxy service
+      else if service.subdomain == constants.services.immich.subdomain then
+        [
+          "  reverse_proxy ${service.ip}:${toString service.port} {"
+          "    header_up -CF-Access-Client-Id"
+          "    header_up -CF-Access-Client-Secret"
+          "    header_up -Cf-Access-Jwt-Assertion"
+          "  }"
+        ]
       else
         [ "  reverse_proxy ${service.ip}:${toString service.port}" ]
     )
