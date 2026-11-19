@@ -416,6 +416,12 @@
             audioPort = 48000;
             micPort = 48002;
         };
+        immich = {
+            ip = "192.168.20.233";
+            port = 2283;
+            subdomain = "immich";
+            exposure = "internet";
+        };
         forgejo = {
             ip = "192.168.20.232";
             port = 3000;
