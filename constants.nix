@@ -147,6 +147,7 @@
         plex = {
             ip = "192.168.20.201";
             port = 32400;
+            relayPort = 32401;
             subdomain = "plex";
             exposure = "internet";
             monitoring = {

@@ -22,6 +22,7 @@ in
 		./modules/cloudflared.nix
 		./modules/caddy.nix
 		./modules/firewall.nix
+		./modules/plex-relay.nix
 		./modules/avahi.nix
 		./modules/beszel-agent.nix
 		../../modules/common/base.nix
