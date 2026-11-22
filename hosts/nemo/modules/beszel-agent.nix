@@ -13,7 +13,7 @@ let
 in
 {
   homelab.oci-containers.beszel-agent = {
-    image = "docker.io/henrygd/beszel-agent:latest@sha256:cb6868012964d7a68debaa2c84bb72285e5f08531e81f506bd4c493bf052e41c";
+    image = "docker.io/henrygd/beszel-agent:latest@sha256:343254226ae57a5cc6f8c23c755b1464730aba2abc7043116a2e222711ec6e1a";
     environment = {
       LISTEN = toString constants.services.beszel.agentPort;
       HUB_URL = "http://${constants.services.beszel.ip}:${toString constants.services.beszel.port}";

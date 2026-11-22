@@ -22,7 +22,7 @@ let
 in
 {
   homelab.oci-containers.paperless = {
-    image = "ghcr.io/paperless-ngx/paperless-ngx:latest@sha256:d704e84f88300eb6ab001ab15720a2330ff99169cf9f94d6b8fcc44b63a84c84";
+    image = "ghcr.io/paperless-ngx/paperless-ngx:latest@sha256:8508853b8a0f8394074260957d0be186c8c64f346973b24a7583de4580f306b9";
     environment = {
       USERMAP_UID = toString constants.users.alfred.uid;
       USERMAP_GID = toString constants.groups.users;
@@ -87,7 +87,7 @@ in
   };
 
   homelab.oci-containers.paperless-tika = {
-    image = "docker.io/apache/tika:latest@sha256:b99f19c4fd76237dafe7d22f719b9bddfa9a449da687c597a41e2f6d9a595418";
+    image = "docker.io/apache/tika:latest@sha256:0f0fbd7f053a2a9941b816ce6d6974493f5527f40c4d3491f9c2cecec30e612c";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
     ];
