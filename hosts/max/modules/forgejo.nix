@@ -14,7 +14,7 @@ let
 in
 {
   homelab.oci-containers.forgejo = {
-    image = "codeberg.org/forgejo/forgejo:17@sha256:fcd19ff4ebc85fb098a67e8e1d0d5a84d07dd6e8a23edcfdfd5b71a6178953be";
+    image = "codeberg.org/forgejo/forgejo:17@sha256:879f4f10a98e3e167b32cde5f7ae3af0163d50bfacf567559a27a0e95a95670c";
     environment = {
       FORGEJO__server__DOMAIN = hostname;
       FORGEJO__server__ROOT_URL = rootUrl;
