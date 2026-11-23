@@ -427,6 +427,17 @@
                 tag = "Main Network - Service";
             };
         };
+        immich = {
+            ip = "192.168.20.233";
+            port = 2283;
+            subdomain = "photos";
+            exposure = "internet";
+        };
+        immichMachineLearning = {
+            ip = "192.168.20.234";
+            port = 3003;
+            exposure = "lan";
+        };
     };
     networkGear = {
         switch1 = {

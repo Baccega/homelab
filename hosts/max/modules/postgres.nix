@@ -23,7 +23,7 @@ in
   ];
 
   homelab.oci-containers.postgres = {
-    image = "docker.io/library/postgres:18@sha256:eb63372c1e05c755f55fa30cbd07aecc443676fc6c0fa90b9002d01537841e1a";
+    image = "docker.io/pgvector/pgvector:0.8.7-pg18-trixie@sha256:ab49524d18df7200b74ac9a475e1db6297fc1eb57da4c214c63d10ecc4b754fa";
     environment = {
       POSTGRES_DB = "paperless";
       POSTGRES_USER = "paperless";
@@ -56,8 +56,8 @@ in
     jobs = [
       {
         name = "postgres";
-        # The dumps directory is the backup source; the dump itself is produced
-        # by the pre-backup script below.
+        # This job covers Paperless and Forgejo. The Immich job stores its dump
+        # with the media files so both are available in one snapshot.
         source = dumpsDir;
         nfsMount = constants.mountPoints.configurations.path;
         destination = "postgres";

@@ -1,7 +1,6 @@
 # Redis on Max
-# Runs on the shared ipvlan network so services can reach it by IP. Redis only
-# holds Paperless' task queue/cache, so it is not critical, but a daily RDB
-# snapshot is still synced to the NAS over NFS for completeness.
+# Shared IPvlan service for Paperless and Immich queues and caches.
+# A daily RDB snapshot is backed up to the NAS.
 {
   config,
   lib,
