@@ -20,6 +20,10 @@
         paperless-env = {
             sopsFile = ../../../secrets/max-secrets.json;
         };
+        immich-env = {
+            sopsFile = ../../../secrets/max-secrets.json;
+            restartUnits = [ "podman-immich.service" ];
+        };
         forgejo-env = {
             sopsFile = ../../../secrets/max-secrets.json;
         };

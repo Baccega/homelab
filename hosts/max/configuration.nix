@@ -41,6 +41,7 @@ in
 		./modules/couchdb.nix
 		./modules/opengym.nix
 		./modules/forgejo.nix
+		./modules/immich.nix
 		./modules/ai-stack.nix
 		./modules/gaming-vm.nix
 		# 1050 Ti is bound to vfio for bolt
