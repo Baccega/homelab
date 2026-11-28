@@ -14,7 +14,7 @@ let
 in
 {
   homelab.oci-containers.redis = {
-    image = "docker.io/library/redis:8@sha256:1f88291b4c57bdf249f02eb085a8669889b2d2954e91d4de5118a5da6b78dd53";
+    image = "docker.io/library/redis:8@sha256:56a1737794e36c3ebe8a4544a8ab421af3ab1a6488fb2238aec228c404933fed";
     environmentFiles = [
       config.sops.secrets.max-docker-env.path
       config.sops.secrets.redis-env.path
